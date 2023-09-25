@@ -8,15 +8,18 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ../sae501-502copietest:/var/www/html
+      - ../sae501-502-theotime-martel:/var/www/html
     container_name: apachePHP
 
   mysql:
-    image: mysql:latest   
+    image: mysql:latest  
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: nathiotime
     container_name: mysql
+    #build:
+      #context: .
+      #dockerfile: ./DockerfileSQL
     ports:
       - "3306:3306"
     volumes:
