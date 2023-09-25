@@ -11,7 +11,7 @@
 <body class="bg-light">
 <?php include('../includes/header.php'); ?>
 <div class="container mt-5">
-    <!-- Le reste de votre contenu ici -->
+    
 <p>testpage2</p>
 </div>
 </body>
