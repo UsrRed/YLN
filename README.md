@@ -1,7 +1,45 @@
 # SAÉ501-502-THEOTIME-MARTEL
 
+## README
+
+### A propos de ce project
+
+Le projet SAE501-502 avait pour but de créer un comparateur entre deux identités en s’appuyant sur les statistiques de Wikipédia. 
+
+Ce projet est réalisé par : 
+* THÉOTIME Lukas
+* MARTEL Nathan
+
+### Principales caractéristiques 
+
+Les principales caractéristiques du projet sont les suivantes : 
+* Création de nouveaux comptes (fonctionnelle)
+* Authentification avec nom d'utilisateur et mot de passe (fonctionnelle)
+* Système de désauthentification/déconnexion (fonctionnelle)
+* Stockage des utilisateurs et des différentes comparaisons avec la date dans la base de données (fonctionnelle)
+* Choix de mettre en favoris une comparaison en fonction de l'utilisateur (non disponible pour le moment)
+* Création automatique des tables dans la base de données (fonctionnelle)
+* Système d'historique des comparaisons en fonction de l'utilisateur (presque fonctionnelle)
+* Comparaison des deux entités en fonction des statistiques de Wikipédia (non fonctionnelle)
+* Utilisation du framework SlimV4 avec ses routes (fonctionnelle) 
+* Le site WEB est responsive design (en cours)
+
+### Comment installer l'application ?
+
+* Quel script exécuter pour créer les tables dans la base de données ?
+La création des tables dans la base de données est automatique. Nous avons utilisé "mysqli_multi_query". De ce fait, dès lors qu'une connexion se fait à la base de données et à l'aide d'un script .sql, une variable $tables (qui contient les commandes pour la création de table (avec un IF NOT EXISTS)) est lancée pour créer de manière automatique les tables.
+* Que faut-il démarrer ?
+Après avoir cloner le projet et s'être déplacé dans le répertoire du projet (sae501-502-theotime-martel), il faut s'assurer de télécharger en premier lieu le logiciel podman et le script podman-compose (dnf|apt-get|yum install podman podman-compose). En fonction des machines, il est bon de récupérer l'image de nos deux conteneurs (podman pull docker.io/library/mysql:latest & podman pull docker.io/library/php:7.4-apache). Par la suite, il faut démarrer le fichier docker-compose.yaml qui contient et spécifie la configuration de nos conteneurs (podman-compose -f docker-compose.yaml up -d) toujours dans le répertoire sae501-502-theotime-martel. 
+
+### Comment utiliser l'application ?
+
+Après avoir démarré le fichier .yaml, il est possible de l'utiliser avec un navigateur. Le conteneur PHP/Apache founit l'IHM et il est possible de se connecter en local sur le port 8080 (localhost:8080). A partir de cette page, il est possible de s'inscrire/se connecter si votre compte est déjà inscrit en cliquant sur la page "Connexion" en haut à droite du navigateur. Après s'être inscrit, le message "inscription réussie" devrait s'afficher et pareil pour se connecter, le message "Vous êtes connecté" devrait s'afficher également. Il est alors possible de réaliser une comparaison entre deux entités en se rendant sur la page "Comparaison". Enfin, un historique de vos comparaisons (avec l'heure à laquelle vous avez réaliser cette comparaison (propre à l'utilisateur)) est disponible sur la page "Historique". Il est également possible de se déconnecter sur cette page.
+
+### Points d'améliorations ?
 
 
+
+<!--
 ## Getting started
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
@@ -90,3 +128,4 @@ For open source projects, say how it is licensed.
 
 ## Project status
 If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+-->
