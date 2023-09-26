@@ -43,9 +43,8 @@ CREATE TABLE IF NOT EXISTS Favoris (
     FOREIGN KEY (historique_id) REFERENCES Historique(id)
 );";
 
-#Bout de code par Tony Hulot, Lukas Theotime et Nathan Martel : 
-
-# A la suite d'erreur type : Commands out of sync; you can't run this command now 
+#Merci à Tony Hulot pour nous avoir aidé à écrire le bout de code suivant et ainsi ne plus avoir d'erreur :  
+#A la suite d'erreur type : Commands out of sync; you can't run this command now 
 
 if (mysqli_multi_query($connexion, $tables)) { #On utilise mysqli_multi_query car il y a plusieurs requêtes à la base de données.
 	do { # Boucle pour lire et traiter les résultats des requêtes SQL qui ont été éxécutées avant : 
@@ -65,7 +64,6 @@ if (mysqli_multi_query($connexion, $tables)) { #On utilise mysqli_multi_query ca
 #https://dev.mysql.com/doc/refman/8.0/en/commands-out-of-sync.html
 #https://www.php.net/manual/fr/mysqli.multi-query.php
 #https://stackoverflow.com/questions/614671/commands-out-of-sync-you-cant-run-this-command-now
-
 
 ?>
 

@@ -13,45 +13,28 @@
         include('./includes/header.php'); 
 ?>
 <div class ="container mt-5">
-<form method="post" action="./Pages/traitement/trait_comparaison.php">
+<form method="post" action="./Pages/traitement/trait_comparaison.php"> <!--Pour envoyer les données du formulaire vers la page de traitement de comparaison -->
 
 <div class="row">
-            <div class = "col-md-6">
+          <div class = "col-md-6">
                 <input type="text" class="form-control" placeholder="Comparaison 1" name="comparaison1" id="comparaison1"> 
-            </div>
+           </div>
             <div class="col-md-6">
                 <input type="text" class="form-control" placeholder="Comparaison 2" name="comparaison2" id="comparaison2">
             </div>
-        </div>
+       </div>
         <div class="row mt-3 ">
             <div class="col-md-12 text-center">
-                VS
-            </div>
+         VS
+           </div>
         </div>
-        <div class=" row mt-3">
+       <div class=" row mt-3">
             <div class = "col-md-12 text-center">
                 <button type="submit" class = "btn btn-danger">Go</button>
             </div>
-	</div>
-
-</form>
-
 </div>
-
-<?php
-	
-#use Slim\Factory\AppFactory;
-#use Psr\Http\Message\ResponseInterface as Response;
-#use Psr\Http\Message\ServerRequestInterface as Request;
-
-#require __DIR__ . '/PackageSlimV4/vendor/autoload.php';
-
-#$app->get('/phpinfo', function(Request $request, Response $response) {
-	#phpinfo();
-	#return $response;
-#});
-
-?>
+</form>
+</div>
 </body>
 </html>
 
