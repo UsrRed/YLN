@@ -17,14 +17,12 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: nathiotime
     container_name: mysql
-    #build:
-      #context: .
-      #dockerfile: ./DockerfileSQL
     ports:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql:z
-      #- ./DataBDD/tables.sql:/docker-entrypoint-initdb.d/tables.sql
-
+     
 volumes: 
   db_data:
+
+

@@ -1,3 +1,0 @@
-FROM mysql:latest
-
-RUN mysql -uroot -proot > ./ 
