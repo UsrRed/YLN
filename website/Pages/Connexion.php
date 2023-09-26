@@ -33,6 +33,7 @@
 
         <input type="submit" value="S'inscrire">
     </form>
+    <a href="traitement/trait_deconnexion.php" class="btn btn-danger">Déconnexion</a>
 
 </div>
 </body>
