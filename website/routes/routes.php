@@ -23,7 +23,7 @@ return function (App $app) {
     });
 
     //retourne si le lien entre la BD et le serveur web est actif
-    $app->get('/Pages/connexion', function (Request $request, Response $response) {
+    $app->get('/Pages/Connexion', function (Request $request, Response $response) {
 
         // Récupération des données du formulaire
         $user = $_POST['utilisateur'];
@@ -71,6 +71,12 @@ return function (App $app) {
         }
 
 */
+
+        $app->get('/phpinfo', function (Request $request, Response $response) {
+            phpinfo();
+            return $response;
+        });
+
     });
 
 };
