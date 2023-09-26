@@ -2,29 +2,28 @@
 
 ## README
 
-### A propos de ce project
+### About this project
 
-Le projet SAE501-502 avait pour but de créer un comparateur entre deux identités en s’appuyant sur les statistiques de Wikipédia. 
+The SAE501-502 project aimed to create a comparator between two identities based on Wikipedia statistics.
 
-Ce projet est réalisé par : 
+The authors of this projcet are : 
 * THÉOTIME Lukas
 * MARTEL Nathan
 
-### Principales caractéristiques 
+### Key features
 
-Les principales caractéristiques du projet sont les suivantes : 
-* Création de nouveaux comptes (fonctionnelle)
-* Authentification avec nom d'utilisateur et mot de passe (fonctionnelle)
-* Système de désauthentification/déconnexion (fonctionnelle)
-* Stockage des utilisateurs et des différentes comparaisons avec la date dans la base de données (fonctionnelle)
-* Choix de mettre en favoris une comparaison en fonction de l'utilisateur (non disponible pour le moment)
-* Création automatique des tables dans la base de données (fonctionnelle)
-* Système d'historique des comparaisons en fonction de l'utilisateur (presque fonctionnelle)
-* Comparaison des deux entités en fonction des statistiques de Wikipédia (non fonctionnelle)
-* Utilisation du framework SlimV4 avec ses routes (fonctionnelle) 
-* Le site WEB est responsive design (en cours)
+The main features of the project are as follows:
 
-### Comment installer l'application ?
+* Creation of new accounts (functional)
+* Authentication with username and password (functional)
+* Logout/Deauthentication system (functional)
+* Storage of users and different comparisons with dates in the database (functional)
+* Option to favorite a comparison based on the user (not available at the moment)
+* Automatic creation of tables in the database (functional)
+* Comparison history system based on the user (almost functional)
+* Comparison of two entities based on Wikipedia statistics (non-functional)
+* Use of the SlimV4 framework with its routes (functional)
+* The website is responsive design (in progress)### Comment installer l'application ?
 
 * Quel script exécuter pour créer les tables dans la base de données ?
 La création des tables dans la base de données est automatique. Nous avons utilisé `mysqli_multi_query`. De ce fait, dès lors qu'une connexion se fait à la base de données et à l'aide d'un script .sql, une variable $tables (qui contient les commandes pour la création de table (avec un `IF NOT EXISTS`)) est lancée pour créer de manière automatique les tables.
