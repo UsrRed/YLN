@@ -36,13 +36,13 @@ Therefore, as soon as a connection is made to the database, by using an .sql scr
 * Where to start ?
 First, clone the project from the Git depository and move on to this project directory (sae501-502-theotime-martel).
 Then, download the podman software and the podman-compose script (`dnf|apt-get|yum install podman podman-compose`).
-Depending on the machines, you have to pull the original image of the two containers (`podman pull docker.io/library/mysql:latest` & `podman pull docker.io/library/php:7.4-apache`).
+Depending on the machines, you have to pull the original image of the three containers (`podman pull docker.io/library/mysql:latest` & `podman pull docker.io/library/php:8.2-fpm` & `podman pull docker.io/library/nginx:alpine`).
 To finish, start the docker-compose.yaml file, which contains and specifies the configuration of our containers (`podman-compose -f docker-compose.yaml up -d`).
 
 
 ### How to use the application ?
 
-Once the .yaml file is started, open a web browser and search `localhost:8080` (the PHP/Apache container provides the GUI, and you can connect locally to port 8080).
+Once the .yaml file is started, open a web browser and search `localhost:8080` (the PHP and nginx container provides the GUI, and you can connect locally to port 8080).
 From this page, it's possible to register/login with an account by clicking on the "Login" page in the top right-hand corner of the page.
 If you are registering, the message "Registration successful" should appear (same for logging in with the message "You are logged in").
 Once logged in, it is possible to make a comparison between two entities by clicking to the "Comparison" page.
