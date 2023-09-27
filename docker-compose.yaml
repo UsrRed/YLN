@@ -27,10 +27,10 @@ services:
       - db_data:/var/lib/mysql:z
 
   php:
-    image: php:8-fpm
-    #build:
-      #context: .
-      #dockerfile: ./DockerfilePHP
+    #image: php:8.2-fpm
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - 9000:9000
     container_name: php
