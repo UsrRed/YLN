@@ -1,15 +1,19 @@
 version: "3.8"
 services:
-  php:
-    #image: php:7.4-apache
-    build:
-      context: .
-      dockerfile: Dockerfile
+  nginx:
+    image: docker.io/library/nginx:alpine
+    #build:
+      #context: .
+      #dockerfile: Dockerfile
     ports:
       - "8080:80"
     volumes:
-      - ../sae501-502-theotime-martel/website:/var/www/html:z
-    container_name: apachePHP
+      - ../sae501-502-theotime-martel/website:/usr/share/nginx/html:z
+      - ../sae501-502-theotime-martel/website/Pages/configNGINX:/etc/nginx/conf.d:z
+    container_name: nginx
+
+    links:
+      - php
 
   mysql:
     image: mysql:latest  
@@ -21,7 +25,18 @@ services:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql:z
-     
+
+  php:
+    image: php:8-fpm
+    #build:
+      #context: .
+      #dockerfile: ./DockerfilePHP
+    ports:
+      - 9000:9000
+    container_name: php
+    volumes :
+      - ../sae501-502-theotime-martel/website:/usr/share/nginx/html:z
+
 volumes: 
   db_data:
 
