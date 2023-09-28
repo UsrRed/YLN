@@ -9,7 +9,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body class="bg-light">
-<?php include('../includes/header.php'); ?>
+<?php include('/home/includes/header.php'); ?>
 <div class="container mt-5">
     
 Page pour les favoris des comparaisons en fonction de l'utilisateur

@@ -11,10 +11,10 @@
 </head>
 
 <body class="bg-light">
-    <?php include('./../includes/header.php'); ?>
+    <?php include('/home/includes/header.php'); ?>
     <div class="container mt-5">
         <h1>Connexion</h1>
-        <form action="./traitement/trait_connexion.php" method="post">
+        <form action="/trait_connexion" method="post">
             <div class="form-group">
                 <label for="utilisateur">Nom d'utilisateur :</label>
                 <input type="text" class="form-control" id="utilisateur" name="utilisateur" placeholder="Entrez votre nom d'utilisateur" required>
@@ -28,7 +28,7 @@
 	    <div class="d-flex justify-content-between"> 
 	<!--Pour que ce soit aligné avec le formulaire, a droite, source : https://getbootstrap.com/docs/4.0/utilities/flex/ -->
                 <button type="submit" class="btn btn-danger">Se connecter</button>
-                <a href="traitement/trait_deconnexion.php" class="btn btn-danger">Déconnexion</a>
+                <a href="/trait_deconnexion" class="btn btn-danger">Déconnexion</a>
             </div>
         </form>
     </div>

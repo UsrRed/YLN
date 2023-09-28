@@ -10,10 +10,10 @@
 </head>
 <body class="bg-light">
 <?php 
-        include('./includes/header.php'); 
+        include('/home/includes/header.php'); 
 ?>
 <div class ="container mt-5">
-<form method="post" action="./Pages/traitement/trait_comparaison.php"> <!--Pour envoyer les données du formulaire vers la page de traitement de comparaison -->
+<form method="post" action="/trait_comparaison"> <!--Pour envoyer les données du formulaire vers la page de traitement de comparaison -->
 
 <div class="row">
           <div class = "col-md-6">
@@ -25,7 +25,7 @@
        </div>
         <div class="row mt-3 ">
             <div class="col-md-12 text-center">
-VSSSSSSSSSSSSSSSSS
+VS
            </div>
         </div>
        <div class=" row mt-3">

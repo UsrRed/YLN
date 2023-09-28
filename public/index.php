@@ -40,12 +40,125 @@ $app->get('/hello/{name}', function (Request $request, Response $response, $args
     return $response;
 });
 
+#Aide pour les routes : https://openclassrooms.com/forum/sujet/a-quoi-sert-obstart-27525
+
+$app->get('/Inscription', function (Request $request, Response $response, $args) {
+
+    $file = '/home/Pages/Inscription.php';
+    ob_start(); #Mise en mémoire "tampon" pour stocker temporairement le fichier
+    include($file); #Inclu le fichier dans la mise en mémoire "tampon"
+    $output = ob_get_clean(); #Récupère le contenu du tampon de sortie
+
+    #Ecrit le contenu du fichier dans la variable réponse
+    $response->getBody()->write($output);
+
+    return $response;
+});   
 
 $app->get('/', function (Request $request, Response $response, $args) {
-    $response->getBody()->write("Hello world!");
+
+    $file = '/home/index.php';
+
+    ob_start();
+    include($file);
+    $output = ob_get_clean(); 
+    $response->getBody()->write($output);
     return $response;
+
 });
 
+$app->get('/Historique', function (Request $request, Response $response, $args) {
+
+    $file = '/home/Pages/Historique.php';
+
+    ob_start();
+    include($file);
+    $output = ob_get_clean(); 
+    $response->getBody()->write($output);
+    return $response;
+
+}); 
+
+$app->get('/Connexion', function (Request $request, Response $response, $args) {
+
+    $file = '/home/Pages/Connexion.php';
+
+    ob_start(); 
+    include($file); 
+    $output = ob_get_clean(); 
+    $response->getBody()->write($output);
+
+    return $response;
+
+}); 
+
+$app->get('/Favoris', function (Request $request, Response $response, $args) {
+
+    $file = '/home/Pages/Favoris.php';
+
+    ob_start(); 
+    include($file); 
+    $output = ob_get_clean(); 
+    $response->getBody()->write($output);
+
+    return $response;
+
+}); 
+
+
+$app->get('/trait_deconnexion', function (Request $request, Response $response, $args) {
+
+    $file = '/home/Pages/traitement/trait_deconnexion.php';
+
+    ob_start(); 
+    include($file); 
+    $output = ob_get_clean(); 
+    $response->getBody()->write($output);
+ 
+    return $response;
+
+});
+
+
+$app->post('/trait_inscription', function (Request $request, Response $response, $args) {
+
+    $file = '/home/Pages/traitement/trait_inscription.php';
+
+    ob_start(); 
+    include($file); 
+    $output = ob_get_clean(); 
+    $response->getBody()->write($output);
+ 
+    return $response;
+
+});
+
+$app->post('/trait_comparaison', function (Request $request, Response $response, $args) {
+
+    $file = '/home/Pages/traitement/trait_comparaison.php';
+
+    ob_start(); 
+    include($file); 
+    $output = ob_get_clean(); 
+    $response->getBody()->write($output);
+ 
+    return $response;
+
+});
+
+
+$app->post('/trait_connexion', function (Request $request, Response $response, $args) {
+
+    $file = '/home/Pages/traitement/trait_connexion.php';
+
+    ob_start(); 
+    include($file); 
+    $output = ob_get_clean(); 
+    $response->getBody()->write($output);
+ 
+    return $response;
+
+});
 
 // Run app
 $app->run();

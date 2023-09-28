@@ -7,7 +7,7 @@
 
 <?php
     
-include('./../configBDD/config.php');
+include('/home/Pages/configBDD/config.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") { #Si la requête est de type post (type post dans les paramètres du formulaire)
     $comparaison1=$_POST["comparaison1"];

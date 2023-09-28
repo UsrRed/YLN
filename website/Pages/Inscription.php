@@ -11,10 +11,10 @@
 </head>
 
 <body class="bg-light">
-    <?php include('./../includes/header.php'); ?>
+    <?php include('/home/includes/header.php'); ?>
     <div class="container mt-5">
         <h1>Inscription</h1>
-        <form action="./traitement/trait_inscription.php" method="post">
+        <form action="/trait_inscription" method="post">
             <div class="form-group">
                 <label for="nouv_utilisateur">Nouveau nom d'utilisateur :</label>
                 <input type="text" class="form-control" id="nouv_utilisateur" name="nouv_utilisateur" placeholder="Entrez votre nouveau nom d'utilisateur" required>

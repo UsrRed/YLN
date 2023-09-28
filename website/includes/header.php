@@ -21,19 +21,19 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/index.php">Comparaison</a>
+                    <a class="nav-link" href="/">Comparaison</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Pages/Historique">Historique</a>
+                    <a class="nav-link" href="/Historique">Historique</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Pages/Inscription.php">Inscription</a>
+                    <a class="nav-link" href="/Inscription">Inscription</a>
 		</li>
 		<li>
-		    <a class="nav-link" href="/Pages/Connexion.php">Connexion</a>
+		    <a class="nav-link" href="/Connexion">Connexion</a>
 		</li>
 		<li>
-		    <a class="nav-link" href="/Pages/Favoris.php">Favoris</a>
+		    <a class="nav-link" href="/Favoris">Favoris</a>
 		</li>
             </ul>
         </div>

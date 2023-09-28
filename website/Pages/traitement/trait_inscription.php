@@ -2,7 +2,7 @@
 
 #Connexion à la base de données :
 
-include('./../configBDD/config.php');
+include('/home/Pages/configBDD/config.php');
 
 #Récupération des donnés du formulaire
 

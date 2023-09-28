@@ -27,16 +27,17 @@ services:
       - db_data:/var/lib/mysql:z
 
   php:
-    image: php:8.2-fpm
-    #build:
-      #context: .
-      #dockerfile: Dockerfile
+    #image: php:8.2-fpm
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - 9000:9000
     container_name: php
     volumes :
       - ../sae501-502-theotime-martel/public:/usr/share/nginx/html:z
       - ../sae501-502-theotime-martel/composer:/usr/share/nginx/composer:z
+      - ../sae501-502-theotime-martel/website:/home:z
 volumes: 
   db_data:
 
