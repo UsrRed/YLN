@@ -1,0 +1,14 @@
+{
+    "name": "root/composer",
+    "autoload": {
+        "psr-4": {
+            "Root\\Composer\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Loukas"
+        }
+    ],
+    "require": {}
+}

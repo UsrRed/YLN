@@ -24,7 +24,7 @@
                     <a class="nav-link" href="/index.php">Comparaison</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Pages/Historique.php">Historique</a>
+                    <a class="nav-link" href="/Pages/Historique">Historique</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/Pages/Inscription.php">Inscription</a>
