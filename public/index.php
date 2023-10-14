@@ -61,7 +61,7 @@ $app->get('/', function (Request $request, Response $response, $args) {
 
     ob_start();
     include($file);
-    $output = ob_get_clean(); 
+    $output = ob_get_clean();
     $response->getBody()->write($output);
     return $response;
 
@@ -73,46 +73,46 @@ $app->get('/Historique', function (Request $request, Response $response, $args) 
 
     ob_start();
     include($file);
-    $output = ob_get_clean(); 
+    $output = ob_get_clean();
     $response->getBody()->write($output);
     return $response;
 
-}); 
+});
 
 $app->get('/Connexion', function (Request $request, Response $response, $args) {
 
     $file = '/home/Pages/Connexion.php';
 
-    ob_start(); 
-    include($file); 
-    $output = ob_get_clean(); 
+    ob_start();
+    include($file);
+    $output = ob_get_clean();
     $response->getBody()->write($output);
 
     return $response;
 
-}); 
+});
 
 $app->get('/Favoris', function (Request $request, Response $response, $args) {
 
     $file = '/home/Pages/Favoris.php';
 
-    ob_start(); 
-    include($file); 
-    $output = ob_get_clean(); 
+    ob_start();
+    include($file);
+    $output = ob_get_clean();
     $response->getBody()->write($output);
 
     return $response;
 
-}); 
+});
 
 
 $app->get('/trait_deconnexion', function (Request $request, Response $response, $args) {
 
     $file = '/home/Pages/traitement/trait_deconnexion.php';
 
-    ob_start(); 
-    include($file); 
-    $output = ob_get_clean(); 
+    ob_start();
+    include($file);
+    $output = ob_get_clean();
     $response->getBody()->write($output);
  
     return $response;
@@ -124,9 +124,9 @@ $app->post('/trait_inscription', function (Request $request, Response $response,
 
     $file = '/home/Pages/traitement/trait_inscription.php';
 
-    ob_start(); 
-    include($file); 
-    $output = ob_get_clean(); 
+    ob_start();
+    include($file);
+    $output = ob_get_clean();
     $response->getBody()->write($output);
  
     return $response;
@@ -137,9 +137,9 @@ $app->post('/trait_comparaison', function (Request $request, Response $response,
 
     $file = '/home/Pages/traitement/trait_comparaison.php';
 
-    ob_start(); 
-    include($file); 
-    $output = ob_get_clean(); 
+    ob_start();
+    include($file);
+    $output = ob_get_clean();
     $response->getBody()->write($output);
  
     return $response;
@@ -151,16 +151,21 @@ $app->post('/trait_connexion', function (Request $request, Response $response, $
 
     $file = '/home/Pages/traitement/trait_connexion.php';
 
-    ob_start(); 
-    include($file); 
-    $output = ob_get_clean(); 
+    ob_start();
+    include($file);
+    $output = ob_get_clean();
     $response->getBody()->write($output);
  
     return $response;
 
 });
 
+
+$app->get('/phpinfo', function (Request $request, Response $response) {
+        phpinfo();
+        return $response;
+        });
+
+
 // Run app
 $app->run();
-
-

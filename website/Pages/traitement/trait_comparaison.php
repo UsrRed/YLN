@@ -1,3 +1,14 @@
+<?php
+session_start(); // Démarrer la session
+
+if (!isset($_SESSION['utilisateur'])) {
+    // Si l'utilisateur n'est pas connecté, redirigez-le vers la page de connexion
+    header("Location: /Connexion");
+    exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,48 +17,52 @@
 <body>
 
 <?php
-    
+
+
+$nom_utilisateur = $_SESSION['utilisateur']; #Pour récupérer le nom d'utilisateur depuis la session
+
+# On fait la connexion à la base de données
 include('/home/Pages/configBDD/config.php');
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") { #Si la requête est de type post (type post dans les paramètres du formulaire)
-    $comparaison1=$_POST["comparaison1"];
-    $comparaison2= $_POST["comparaison2"];
-    
-    if (!empty($comparaison1) && !empty($comparaison2)) { #On regarde si les champs comparaisons sont vides ou non
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $comparaison1 = $_POST["comparaison1"];
+    $comparaison2 = $_POST["comparaison2"];
 
-        #POUR LE MOMENT JE METS L'ID A 1, ON VERRA APRES
-    	$utilisateur_id = 1; 
+    if (!empty($comparaison1) && !empty($comparaison2)) {
+        #On récupère l'ID de l'utilisateur avec une Requête sql
+        $query_utilisateur = "SELECT id FROM Utilisateur WHERE nom_utilisateur = ?";
+        $stmt = $connexion->prepare($query_utilisateur);
+        $stmt->bind_param("s", $nom_utilisateur);
+        $stmt->execute();
+        $result_utilisateur = $stmt->get_result();
+	# On remarque si l'uilisateur est trouvé comme ça on aura son ID avec la colonne dans la table utilisateurs
+        if ($result_utilisateur && $result_utilisateur->num_rows == 1) {
+            $row_utilisateur = $result_utilisateur->fetch_assoc();
+            $utilisateur_id = $row_utilisateur['id']; #La on a l'ID de l'utilisateur
+        } else {
+            #Cas où l'utilisateur n'est pas trouvé, go redirigier vers la page de connexion ???????????????????
+        }
+	$stmt->close(); 
 
-        #Requête SQL pour insérer les données de la comparaison dans la table "Historique"
+        #Requête SQL pour inséré les données de la comparaison dans la table Historique
         $sql = "INSERT INTO Historique (utilisateur_id, comparaison1, comparaison2, date) VALUES (?, ?, ?, NOW())";
 
-	#Stocke la requête SQL
-	
-	$stmt = $connexion->prepare($sql); 
-	
-	
-	$stmt->bind_param("iss", $utilisateur_id, $comparaison1, $comparaison2); #Entier (i), et 2x string (ss), pour lier (https://www.php.net/manual/en/mysqli-stmt.bind-param.php)
+        $stmt = $connexion->prepare($sql);
+        $stmt->bind_param("iss", $utilisateur_id, $comparaison1, $comparaison2);
 
-	#Après on exécute la requête
         if ($stmt->execute()) {
             echo "Vous avez comparé $comparaison1 avec $comparaison2";
         } else {
-            echo "Une erreur est survenue lors de l'ajout de la comparaison.";
+            echo "Une erreur est survenue lors de l'ajout de la comparaison : " . $stmt->error;
         }
-
-        $stmt->close();
+        $stmt->close(); 
     } else {
         echo "Veuillez entrer des valeurs pour les comparaisons.";
     }
 }
 
-#Enfin on ferme la connexio
 $connexion->close();
 ?>
 
-
 </body>
 </html>
-
-
-
