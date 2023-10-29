@@ -178,7 +178,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         echo "Veuillez entrer des valeurs pour les comparaisons.";
     }
-}
 
 #$connexion->close();
 
