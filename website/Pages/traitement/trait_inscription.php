@@ -14,9 +14,9 @@ $nouv_motdepasse= $_POST['nouv_motdepasse'];
 $sql ="INSERT INTO Utilisateur (nom_utilisateur, mot_de_passe) VALUES ('$nouv_utilisateur', '$nouv_motdepasse')";
 
 if (mysqli_query($connexion, $sql)) {
-    echo "Inscription réussi !";
+	header("Location: /Connexion");
 } else {
-    echo "Erreur lors de l'inscription : ";
+    	echo "Erreur lors de l'inscription. Essayez à nouveau";
 }
 
 mysqli_close($connexion);

@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS Favoris (
     id INT AUTO_INCREMENT PRIMARY KEY,
     utilisateur_id INT NOT NULL,
     historique_id INT NOT NULL,
+    date_favoris DATETIME,
     FOREIGN KEY (utilisateur_id) REFERENCES Utilisateur(id),
     FOREIGN KEY (historique_id) REFERENCES Historique(id)
 );";
