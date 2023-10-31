@@ -6,7 +6,7 @@
 
 The SAE501-502 project aimed to create a comparator between two identities based on Wikipedia statistics.
 
-The authros of this projcet are : 
+The authors of this projcet are : 
 
 * THÉOTIME Lukas
 * MARTEL Nathan
