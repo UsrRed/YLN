@@ -131,7 +131,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'nom' => '/\| nom \s+=\s+(.*)\n/i',
         'surnoms' => '/\| surnoms \s+=\s+(.*)\n/i',
         'date de fondation' => '/\| date de fondation \s+=\s+(.*)\n/i',
-	'équipement sportif' => '/\| équipement sportif \s+=\s+(.*)\n/i',i
+	'équipement sportif' => '/\| équipement sportif \s+=\s+(.*)\n/i',
 
 	#...
 	#...
