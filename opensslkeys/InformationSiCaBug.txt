@@ -1,3 +1,12 @@
+1) #openssl genpkey -algorithm RSA -out myserver.key
+2) #openssl req -new -x509 -key myserver.key -out myserver.crt
+3) Les mettre dans un répertoire style openssl_dir
+4) Faire un volume de ce répertoire
+- ../sae501-502-theotime-martel/opensslkeys:/home:z
+
+------------------------------------------------------------------
+Configuration nginx conf.d : 
+
 server {
     listen 80;
     listen 443 ssl;
@@ -32,3 +41,4 @@ server {
         deny all;
     }
 }
+
