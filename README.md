@@ -52,9 +52,9 @@ Depending on your machine, you may need to pull the original image for the three
 
 Afterward, launch the "docker-compose.yaml" file, which contains and specifies the configuration of our containers using the following command : `podman-compose -f docker-compose.yaml up -d`
 
-Once the "docker-compose" file is running, execute the "IpMonSite.sh" script (`bash IpMonSite.sh|./IpMonSite.sh`). This will provide you with the IP address of the application, with or without load balancing, according to your preferrence.
+Once the "docker-compose" file is running, execute the "IpMonSite.sh" script (`bash IpMonSite.sh|./IpMonSite.sh`). This will provide you with the IP address of the application.
 
-If you have chosen an application with load balancing, it's necessary to run the load balancing software before accessing the aplication. To do this, execute the "haproxy_config.sh" script (`bash haproxy_config.sh|./haproxy_config.sh`). This script will define the two IP addresses of the nginx servers and execute the command `haproxy -f loadbalancing/haproxy.cfg &`, make sure to include the "&" to allow it to run in the background and to finish the previous command. This command will start the load balancing service in daemon mode. You can now use the application with a web browser.
+If you have chosen an application with load balancing, it's necessary to run the load balancing software before accessing the aplication. To do this, execute the "haproxy_config.sh" script (`bash haproxy_config.sh|./haproxy_config.sh`). This script will define the two IP addresses of the nginx servers and execute the command `haproxy -f loadbalancing/haproxy.cfg &`, make sure to include the "&" to allow it to run in the background and to finish the previous command. This command will start the load balancing service in daemon mode. You can now use the application with a web browser. Make sure there is only one running HaProxy service by running the 'jobs -p' command. If this is not the case, kill the other daemons using the following command : `kill -9 [ID]`.
 
 ### How to use the application ?
 
