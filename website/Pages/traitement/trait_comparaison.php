@@ -3,8 +3,8 @@ session_start(); # Pour démarrer la session
 
 if (!isset($_SESSION['utilisateur'])) {
 	#Si l'utilisateur n'est pas connecté, on vers la page de connexion
-    	header("Location: /Connexion");
-    	exit();
+	header("Location: /Connexion");
+	exit();
 }
 ?>
 
@@ -12,11 +12,11 @@ if (!isset($_SESSION['utilisateur'])) {
 <html>
 <head>
 	<title>SAE501-502-THEOTIME-MARTEL</title>
-    	<meta charset="utf-8">
-    	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    	<!-- Pour avoir bootstrap version 4.5.2 : https://getbootstrap.com/docs/4.5/getting-started/introduction/-->
-    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<!-- Pour avoir bootstrap version 4.5.2 : https://getbootstrap.com/docs/4.5/getting-started/introduction/-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body class="bg-light">
 <?php include('/home/includes/header.php'); ?>
@@ -30,24 +30,22 @@ include('/home/Pages/configBDD/config.php');
 #echo "test";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$comparaison1 = $_POST["comparaison1"];
-    	$comparaison2 = $_POST["comparaison2"];
+	$comparaison2 = $_POST["comparaison2"];
 	#echo "$comparaison1 $comparaison2";
 	#echo "test";
-    	if (!empty($comparaison1) && !empty($comparaison2)) {
-        # On récupère l'ID de l'utilisateur avec une Requête SQL
-        	$query_utilisateur = "SELECT id FROM Utilisateur WHERE nom_utilisateur = ?";
-        	$stmt = $connexion->prepare($query_utilisateur);
-        	$stmt->bind_param("s", $nom_utilisateur);
-        	$stmt->execute();
-        	$result_utilisateur = $stmt->get_result();
-
-        	$ligne_utilisateur_table = $result_utilisateur->fetch_assoc();
-        	$utilisateur_id = $ligne_utilisateur_table['id']; # Là on a l'ID de l'utilisateur
-        } else {
-            	echo "L'utilisateur n'a pas été trouvé.";
-        }
+	if (!empty($comparaison1) && !empty($comparaison2)) {
+	# On récupère l'ID de l'utilisateur avec une Requête SQL
+		$query_utilisateur = "SELECT id FROM Utilisateur WHERE nom_utilisateur = ?";
+		$stmt = $connexion->prepare($query_utilisateur);
+		$stmt->bind_param("s", $nom_utilisateur);
+		$stmt->execute();
+		$result_utilisateur = $stmt->get_result();
+		$ligne_utilisateur_table = $result_utilisateur->fetch_assoc();
+		$utilisateur_id = $ligne_utilisateur_table['id']; # Là on a l'ID de l'utilisateur
+	} else {
+		echo "L'utilisateur n'a pas été trouvé.";
+	}
 	$stmt->close();
-
 	$sql = "INSERT INTO Historique (utilisateur_id, comparaison1, comparaison2, date) VALUES (?, ?, ?, NOW())";
 	$stmt = $connexion->prepare($sql);
 	$stmt->bind_param("iss", $utilisateur_id, $comparaison1, $comparaison2);
@@ -56,18 +54,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	#echo "$comparaison1";
 	#echo "$comparaison2";
 	#$connexion->close();
-
+	
 	#Requête API MediaWiki pour les deux entités. On récupère les données dans les variables au format json (elle utilise json_decode)
 
-        $data1 = fetchWikiData($comparaison1);
-        $data2 = fetchWikiData($comparaison2);
+	$data1 = fetchWikiData($comparaison1);
+	$data2 = fetchWikiData($comparaison2);
 	
 	#echo $data1;
 	#echo $data2;
 
 	#Infobox entière, manque plus qu'à les parser pour avoir les données qu'on souhaite
 
-        $infobox1 = "";
+	$infobox1 = "";
 	$infobox2 = "";
 
 	#--------------------------ATTRIBUTS A CRÉER-----------------------------#
@@ -95,17 +93,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		#echo "$infobox1";
 	}
 	# On fait pareil pour la deuxième comparaison/entité
-        if (isset($data2['query']['pages'])) {
-            	$temp = reset($data2['query']['pages']);
+	if (isset($data2['query']['pages'])) {
+		$temp = reset($data2['query']['pages']);
 		$infobox2 = $temp['revisions'][0]['*'];
 		#echo "testtt";
-        }
+	}
 
 	?>
 
 	<div class="container mt-5">
 	
-	<h1>Comparaison entre <u><?php echo $comparaison1; ?></u> et <u><?php echo $comparaison2; ?></u> :</h1> <!--A changer, trouver un moyen, horrible -->
+	<h2><u><?php echo $comparaison1; ?></u> VS  <u><?php echo $comparaison2; ?></u> :</h2> <!--A changer, trouver un moyen, horrible -->
 
 	<?php
 
@@ -132,6 +130,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'surnoms' => '/\| surnoms \s+=\s+(.*)\n/i',
         'date de fondation' => '/\| date de fondation \s+=\s+(.*)\n/i',
 	'équipement sportif' => '/\| équipement sportif \s+=\s+(.*)\n/i',
+	'statut professionnel' => '/\| statut professionnel \s+=\s+(.*)\n/i',
+	'siège' => '/\| siège \s+=\s+(.*)\n/i',
+	'propriétaire' => '/\| propriétaire \s+=\s+(.*)\n/i',
+	'président' => '/\| président \s+=\s+(.*)\n/i',
+	'entraineur' => '/\| entraineur \s+=\s+(.*)\n/i',
+	'joueur le plus capé' => '/\| joueur le plus capé \s+=\s+(.*)\n/i',
+	'meilleur buteur' => '/\| meilleur buteur \s+=\s+(.*)\n/i',
+	'championnat actuel' => '/\| championnat actuel \s+=\s+(.*)\n/i',
+	'site web' => '/\| site web \s+=\s+(.*)\n/i',
+	'palmarès national' => '/\| palmarès national \s+=\s+(.*)\n/i',
+	'palmarès international' => '/\| palmarès international \s+=\s+(.*)\n/i',
+
 
 	#...
 	#...
@@ -189,9 +199,9 @@ $connexion->close();
 #Fonction dont nous ne sommes pas l'auteur. @Author : Owen, https://www.developpez.com 
 
 function fetchWikiData($Titre) { #Décupère les données des pages depuis l'API MediaWiki
-    $URL = "https://fr.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=" . urlencode($Titre) . "&rvprop=content&origin=*"; #URL
-    $response = file_get_contents($URL); #Effectue du requête GET à l'URL de l'API
-    return json_decode($response, true); #Pour mettre le format json
+	$URL = "https://fr.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=" . urlencode($Titre) . "&rvprop=content&origin=*"; #URL
+	$response = file_get_contents($URL); #Effectue du requête GET à l'URL de l'API
+	return json_decode($response, true); #Pour mettre le format json
 }
 ?>
 </div>

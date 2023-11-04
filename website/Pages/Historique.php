@@ -61,32 +61,32 @@ $resultat_historique = mysqli_query($connexion, $req_historique);
 </head>
 <body class="bg-light">
 	<?php include('/home/includes/header.php'); ?>
-    	<div class="container mt-5">
-        <h2>Historique des comparaisons pour <?php echo $_SESSION['utilisateur']; ?> :</h2>
-        <br/><br/>
-        <table class="table table-bordered">
-        	<thead>
-               		<tr><th>Comparaison 1</th><th>Comparaison 2</th><th>Date</th> </tr>
-            	</thead>
-            	<tbody>
-                <?php
-               	while ($ligne_histo = mysqli_fetch_assoc($resultat_historique)) { #Pour n'avoir qu'une seule ligne qu'on affiche après et tout ça dans une boucle pour parcourir toute la table
-                	echo "<tr><td>" . $ligne_histo["comparaison1"] . "</td><td>" . $ligne_histo["comparaison2"] . "</td><td>" . $ligne_histo["date"] . "</td></tr>";
-                }
-                ?>
-            	</tbody>
-        </table>
+	<div class="container mt-5">
+	<h2>Historique des comparaisons pour <?php echo $_SESSION['utilisateur']; ?> :</h2>
+	<br/><br/>
+	<table class="table table-bordered">
+		<thead>
+			<tr><th>Comparaison 1</th><th>Comparaison 2</th><th>Date</th> </tr>
+		</thead>
+		<tbody>
+		<?php
+			while ($ligne_histo = mysqli_fetch_assoc($resultat_historique)) { #Pour n'avoir qu'une seule ligne qu'on affiche après et tout ça dans une boucle pour parcourir toute la table
+			echo "<tr><td>" . $ligne_histo["comparaison1"] . "</td><td>" . $ligne_histo["comparaison2"] . "</td><td>" . $ligne_histo["date"] . "</td></tr>";
+		}
+		?>
+		</tbody>
+	</table>
 
-        <div class="pagination">
-        	<?php
-            	for ($page = 1; $page <= $nombre_pages; $page++) { #Pour toutes les pages (automatiques en fonction de nb num row du coup normalement)
+	<div class="pagination">
+		<?php
+		for ($page = 1; $page <= $nombre_pages; $page++) { #Pour toutes les pages (automatiques en fonction de nb num row du coup normalement)
 			#echo $page;
 			echo '<a href="?page=' . $page . '" class="btn btn-outline-primary">' . $page . '</a>'; #Il fait le ? car let's go j'ai trouvé, il faut spécifier le param de la page sinon ca fonctionne pas !
 			echo "&ensp;";
 			#echo "testtttt";
-	    	}
-            	?>
-    	</div>
+			}
+		?>
+	</div>
 	</div>
 </body>
 </html>

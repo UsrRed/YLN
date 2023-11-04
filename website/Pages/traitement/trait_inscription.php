@@ -16,9 +16,8 @@ $sql ="INSERT INTO Utilisateur (nom_utilisateur, mot_de_passe) VALUES ('$nouv_ut
 if (mysqli_query($connexion, $sql)) {
 	header("Location: /Connexion");
 } else {
-    	echo "Erreur lors de l'inscription. Essayez à nouveau";
+	echo "Erreur lors de l'inscription. Essayez à nouveau";
 }
 
 mysqli_close($connexion);
 ?>
-

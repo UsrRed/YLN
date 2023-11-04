@@ -44,9 +44,9 @@ $app->get('/hello/{name}', function (Request $request, Response $response, $args
 
 $app->get('/Inscription', function (Request $request, Response $response, $args) {
 
-    $file = '/home/Pages/Inscription.php';
+    $fich = '/home/Pages/Inscription.php';
     ob_start(); #Mise en mémoire "tampon" pour stocker temporairement le fichier
-    include($file); #Inclu le fichier dans la mise en mémoire "tampon"
+    include($fich); #Inclu le fichier dans la mise en mémoire "tampon"
     $output = ob_get_clean(); #Récupère le contenu du tampon de sortie
 
     #Ecrit le contenu du fichier dans la variable réponse
@@ -57,10 +57,10 @@ $app->get('/Inscription', function (Request $request, Response $response, $args)
 
 $app->get('/', function (Request $request, Response $response, $args) {
 
-    $file = '/home/index.php';
+    $fich = '/home/index.php';
 
     ob_start();
-    include($file);
+    include($fich);
     $output = ob_get_clean();
     $response->getBody()->write($output);
     return $response;
@@ -69,10 +69,10 @@ $app->get('/', function (Request $request, Response $response, $args) {
 
 $app->get('/Historique', function (Request $request, Response $response, $args) {
 
-    $file = '/home/Pages/Historique.php';
+    $fich = '/home/Pages/Historique.php';
 
     ob_start();
-    include($file);
+    include($fich);
     $output = ob_get_clean();
     $response->getBody()->write($output);
     return $response;
@@ -81,10 +81,10 @@ $app->get('/Historique', function (Request $request, Response $response, $args) 
 
 $app->get('/Connexion', function (Request $request, Response $response, $args) {
 
-    $file = '/home/Pages/Connexion.php';
+    $fich = '/home/Pages/Connexion.php';
 
     ob_start();
-    include($file);
+    include($fich);
     $output = ob_get_clean();
     $response->getBody()->write($output);
 
@@ -94,10 +94,10 @@ $app->get('/Connexion', function (Request $request, Response $response, $args) {
 
 $app->get('/Favoris', function (Request $request, Response $response, $args) {
 
-    $file = '/home/Pages/Favoris.php';
+    $fich = '/home/Pages/Favoris.php';
 
     ob_start();
-    include($file);
+    include($fich);
     $output = ob_get_clean();
     $response->getBody()->write($output);
 
@@ -108,10 +108,10 @@ $app->get('/Favoris', function (Request $request, Response $response, $args) {
 
 $app->get('/trait_deconnexion', function (Request $request, Response $response, $args) {
 
-    $file = '/home/Pages/traitement/trait_deconnexion.php';
+    $fich = '/home/Pages/traitement/trait_deconnexion.php';
 
     ob_start();
-    include($file);
+    include($fich);
     $output = ob_get_clean();
     $response->getBody()->write($output);
  
@@ -122,10 +122,10 @@ $app->get('/trait_deconnexion', function (Request $request, Response $response, 
 
 $app->post('/trait_inscription', function (Request $request, Response $response, $args) {
 
-    $file = '/home/Pages/traitement/trait_inscription.php';
+    $fich = '/home/Pages/traitement/trait_inscription.php';
 
     ob_start();
-    include($file);
+    include($fich);
     $output = ob_get_clean();
     $response->getBody()->write($output);
  
@@ -135,10 +135,10 @@ $app->post('/trait_inscription', function (Request $request, Response $response,
 
 $app->post('/trait_comparaison', function (Request $request, Response $response, $args) {
 
-    $file = '/home/Pages/traitement/trait_comparaison.php';
+    $fich = '/home/Pages/traitement/trait_comparaison.php';
 
     ob_start();
-    include($file);
+    include($fich);
     $output = ob_get_clean();
     $response->getBody()->write($output);
  
@@ -149,10 +149,10 @@ $app->post('/trait_comparaison', function (Request $request, Response $response,
 
 $app->post('/trait_connexion', function (Request $request, Response $response, $args) {
 
-    $file = '/home/Pages/traitement/trait_connexion.php';
+    $fich = '/home/Pages/traitement/trait_connexion.php';
 
     ob_start();
-    include($file);
+    include($fich);
     $output = ob_get_clean();
     $response->getBody()->write($output);
  
@@ -160,7 +160,94 @@ $app->post('/trait_connexion', function (Request $request, Response $response, $
 
 });
 
+$app->post('/trait_favoris', function (Request $request, Response $response, $args) {
 
+    $fich = '/home/Pages/traitement/trait_favoris.php';
+
+    ob_start();
+    include($fich);
+    $output = ob_get_clean();
+    $response->getBody()->write($output);
+ 
+    return $response;
+
+});
+
+$app->get('/Paramètres', function (Request $request, Response $response, $args) {
+    $fich = '/home/Pages/Paramètres.php';
+
+    ob_start();
+    include($fich);
+    $output = ob_get_clean();
+    $response->getBody()->write($output);
+
+    return $response;
+});
+
+$app->post('/trait_changement_mdp', function (Request $request, Response $response, $args) {
+
+    $fich = '/home/Pages/traitement/trait_changement_mdp.php';
+
+    ob_start();
+    include($fich);
+    $output = ob_get_clean();
+    $response->getBody()->write($output);
+ 
+    return $response;
+
+});
+
+$app->post('/trait_changement_theme', function (Request $request, Response $response, $args) {
+
+    $fich = '/home/Pages/traitement/trait_changement_theme.php';
+
+    ob_start();
+    include($fich);
+    $output = ob_get_clean();
+    $response->getBody()->write($output);
+ 
+    return $response;
+
+});
+
+$app->post('/trait_support', function (Request $request, Response $response, $args) {
+
+    $fich = '/home/Pages/traitement/trait_support.php';
+
+    ob_start();
+    include($fich);
+    $output = ob_get_clean();
+    $response->getBody()->write($output);
+ 
+    return $response;
+
+});
+
+$app->post('/trait_suppression', function (Request $request, Response $response, $args) {
+
+    $fich = '/home/Pages/traitement/trait_suppresion.php';
+
+    ob_start();
+    include($fich);
+    $output = ob_get_clean();
+    $response->getBody()->write($output);
+ 
+    return $response;
+
+});
+
+$app->get('/trait_changement_mdp_formulaire', function (Request $request, Response $response, $args) {
+
+    $fich = '/home/Pages/traitement/trait_changement_mdp_formulaire.php';
+
+    ob_start();
+    include($fich);
+    $output = ob_get_clean();
+    $response->getBody()->write($output);
+ 
+    return $response;
+
+});
 $app->get('/phpinfo', function (Request $request, Response $response) {
         phpinfo();
         return $response;
@@ -169,3 +256,4 @@ $app->get('/phpinfo', function (Request $request, Response $response) {
 
 // Run app
 $app->run();
+
