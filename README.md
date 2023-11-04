@@ -7,6 +7,7 @@
 The SAE501-502 project aimed to create a comparator between two identities based on Wikipedia statistics.
 
 The authors of this projcet are : 
+
 * THÉOTIME Lukas
 * MARTEL Nathan
 
@@ -18,37 +19,52 @@ The main features of the project are as follows:
 * Creation of new accounts (functional)
 * Authentication with username and password (functional)
 * Logout/Deauthentication system (functional)
-* Storage of users and different comparisons with dates in the database (functional)
-* Option to favorite a comparison based on the user (not available at the moment)
-* Automatic creation of tables in the database (functional)
-* Comparison history system based on the user (almost functional)
-* Comparison of two entities based on Wikipedia statistics (non-functional)
-* Use of the SlimV4 framework with its routes (functional)
-* The website is responsive design (in progress)
+* Storage of users and different comparisons with dates in the database (functional) (functional).
+* Option to favorite a comparison based on the user (functional)
+* Automatically create tables in the database (functional).
+* Log in and save data in the database (functional).
+* User-based comparison history (functional).
+* Compare two entiites using Wikipedia statistics (almost functionnal).
+* Use the SlimV4 framework with its routes (functional)
+* The website is responsive design (functional)
+* Pagination of History and Favorites pages (functional)
+* The website is available in two languages: French and English (non-functional).
+* Website security: Prevention of SQL injections (non-functional)
+* Encryption of database information (non-functional).
+* Website security: Implementation of HTTPS to encrypt exchanged data (functional).
+* Website security: Security and redondancy mechanism (Load Balancing) to ensure continuous availability (functional).
+* Fault tolerance, one maximum fault (functional)
+* Adding a superuser with privileged access. This superuser can access all the site's features, including viewing the whole history, all favorites, all users, etc. (non-functional)
 
 
 ### What script to execute to create tables in the database?
 
 * What script to run to create tables ?
+
 The creation of the tables in the database is automatic. To do it, we use `mysqli_multi_query`.
 Therefore, as soon as a connection is made to the database, by using an .sql script, a $tables variable (which contains the commands for creating tables with an `IF NOT EXISTS`) is launched automatically to create the tables.
 
 * Where to start ?
-First, clone the project from the Git depository and move on to this project directory (sae501-502-theotime-martel).
-Then, download the podman software and the podman-compose script (`dnf|apt-get|yum install podman podman-compose`).
-Depending on the machines, you have to pull the original image of the three containers (`podman pull docker.io/library/mysql:latest` & `podman pull docker.io/library/php:8.2-fpm` & `podman pull docker.io/library/nginx:alpine`).
-To finish, start the docker-compose.yaml file, which contains and specifies the configuration of our containers (`podman-compose -f docker-compose.yaml up -d`).
 
+First, clne the project from the Git repository and navigate to the project directory (`cd sae501-502-theotime-martel`). Next, download the Podman software and the Podman-compose script using the appropriate package manager (`dnf|apt-get|yum install podman podman-compose`).
+
+Depending on your machine, you may need to pull the original image for the three containers (`podman pull docker.io/library/mysql:latest` & `podman pull docker.io/library/php:8.2-fpm` & `podman pull docker.io/library/nginx:alpine`). To do this, run the "ScriptImage" script, and the images should be imported.
+
+Afterward, launch the "docker-compose.yaml" file, which contains and specifies the configuration of our containers using the following command : `podman-compose -f docker-compose.yaml up -d`
+
+Once the "docker-compose" file is running, execute the "IpMonSite.sh" script (`bash IpMonSite.sh|./IpMonSite.sh`). This will provide you with the IP address of the application, with or without load balancing, according to your preferrence.
+
+If you have chosen an application with load balancing, it's necessary to run the load balancing software before accessing the aplication. To do this, execute the "haproxy_config.sh" script (`bash haproxy_config.sh|./haproxy_config.sh`). This script will define the two IP addresses of the nginx servers and execute the command `haproxy -f loadbalancing/haproxy.cfg &`, make sure to include the "&" to allow it to run in the background and to finish the previous command. This command will start the load balancing service in daemon mode. You can now use the application with a web browser.
 
 ### How to use the application ?
 
-Once the .yaml file is started, open a web browser and search `localhost:8080` (the PHP and nginx container provides the GUI, and you can connect locally to port 8080).
-From this page, it's possible to register/login with an account by clicking on the "Login" page in the top right-hand corner of the page.
-If you are registering, the message "Registration successful" should appear (same for logging in with the message "You are logged in").
-Once logged in, it is possible to make a comparison between two entities by clicking to the "Comparison" page.
-In addition, a time-stamped comparison history is available on the "History" page.
-Once all manipulations have been completed, you can disconnect by clicking on the "Disconnect" button.
+Once the .yaml file is started, open a web browser and enter `https://[IP_Address_Provided_By_The_IpMonSite.sh_script]` (the PHP and Nginx container provides the user interface). You can also connect using HTTP: `http://[IP_Address_Provided_By_The_IpMonSite.sh_script]`.
 
+From this page, it is possible to register/login with an account by clicking on the "Login" page in the top right-hand corner of the page. If you register, you will need to log in with the same login credentials.
+
+Once logged in, it is possible to compare two entities by clicking on the "Comparison" page and entering the title of a Wikipedia page, such as "Paris_Saint-Germain_Football_Club" and "Olympique_de_Marseille". You can also add your favorite comparisons by clicking the "Add to Favorites" button and view your favorites on the Favorites page.
+
+Additionally, a timestamped comparison history is available on the "History" page. Once all operations are completed, you can log out by clicking the "Logout" button. It is not possible to compare two identities or view the history and favorites without logging in.
 
 ### Improvement notes ?
 

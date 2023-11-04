@@ -1,20 +1,38 @@
 version: "3.8"
 services:
-  nginx:
+  nginx1:
     image: docker.io/library/nginx:alpine
-    #build:
-      #context: .
-      #dockerfile: Dockerfile
     ports:
       - "8080:80"
     volumes:
       - ../sae501-502-theotime-martel/public:/usr/share/nginx/html:z
       - ../sae501-502-theotime-martel/website/Pages/configNGINX:/etc/nginx/conf.d:z
       - ../sae501-502-theotime-martel/opensslkeys:/home:z
-    container_name: nginx
-
+    container_name: nginx1
     links:
       - php
+
+  nginx2:
+    image: docker.io/library/nginx:alpine
+    ports:
+      - "8081:80"
+    volumes:
+      - ../sae501-502-theotime-martel/public:/usr/share/nginx/html:z
+      - ../sae501-502-theotime-martel/website/Pages/configNGINX:/etc/nginx/conf.d:z
+      - ../sae501-502-theotime-martel/opensslkeys:/home:z
+    container_name: nginx2
+    links:
+      - php
+
+  #haproxy:
+    #image: haproxy:alpine
+    #container_name: haproxy
+    #ports:
+      #- "80:80"
+      #- "443:443"
+    #volumes:
+      #- ../sae501-502-theotime-martel/opensslkeys/myserver.pem:/etc/ssl/certs/myserver.pem:z
+      #- ../sae501-502-theotime-martel/loadbalancing:/usr/local/etc/haproxy:z
 
   mysql:
     image: mysql:latest  
@@ -39,7 +57,6 @@ services:
       - ../sae501-502-theotime-martel/public:/usr/share/nginx/html:z
       - ../sae501-502-theotime-martel/composer:/usr/share/nginx/composer:z
       - ../sae501-502-theotime-martel/website:/home:z
+
 volumes: 
   db_data:
-
-
