@@ -32,7 +32,7 @@ if (mysqli_num_rows($res) === 1) { # On vérifie que l'utilisateur existe
 		session_destroy(); # On le déconnecte
 	?>
 		<script>
-			alert("Le mot de passe a été changé avec succès");
+			alert("Le mot de passe a été changé avec succès, a prèsent, reconnectez-vous");
 			window.location.href = "/Connexion";
 		</script>
 	<?php

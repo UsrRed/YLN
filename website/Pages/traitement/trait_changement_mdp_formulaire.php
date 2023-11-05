@@ -16,6 +16,7 @@ $nom_utilisateur = $_SESSION['utilisateur'];
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body class="bg-light">
+	<?php include('/home/includes/header.php'); ?>
 		<div class="container mt-5">
 		<h1 class="mb-4">Changer votre mot de passe <?php echo $nom_utilisateur; ?></h1>
 		<form action="/trait_changement_mdp" method="post">

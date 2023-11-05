@@ -197,9 +197,9 @@ $app->post('/trait_changement_mdp', function (Request $request, Response $respon
 
 });
 
-$app->post('/trait_changement_theme', function (Request $request, Response $response, $args) {
+$app->get('/trait_profil', function (Request $request, Response $response, $args) {
 
-    $fich = '/home/Pages/traitement/trait_changement_theme.php';
+    $fich = '/home/Pages/traitement/trait_profil.php';
 
     ob_start();
     include($fich);
@@ -210,7 +210,33 @@ $app->post('/trait_changement_theme', function (Request $request, Response $resp
 
 });
 
-$app->post('/trait_support', function (Request $request, Response $response, $args) {
+$app->get('/trait_mdp_appli', function (Request $request, Response $response, $args) {
+
+    $fich = '/home/Pages/traitement/trait_mdp_appli.php';
+
+    ob_start();
+    include($fich);
+    $output = ob_get_clean();
+    $response->getBody()->write($output);
+ 
+    return $response;
+
+});
+
+$app->post('/trait_info_profil', function (Request $request, Response $response, $args) {
+
+    $fich = '/home/Pages/traitement/trait_info_profil.php';
+
+    ob_start();
+    include($fich);
+    $output = ob_get_clean();
+    $response->getBody()->write($output);
+ 
+    return $response;
+
+});
+
+$app->get('/trait_support', function (Request $request, Response $response, $args) {
 
     $fich = '/home/Pages/traitement/trait_support.php';
 
@@ -223,9 +249,46 @@ $app->post('/trait_support', function (Request $request, Response $response, $ar
 
 });
 
+$app->post('/trait_envoi_mail', function (Request $request, Response $response, $args) {
+
+    $fich = '/home/Pages/traitement/trait_envoi_mail.php';
+
+    ob_start();
+    include($fich);
+    $output = ob_get_clean();
+    $response->getBody()->write($output);
+ 
+    return $response;
+
+});
+
+$app->get('/trait_faq', function (Request $request, Response $response, $args) {
+
+	$fich = '/home/Pages/traitement/trait_faq.php';
+	ob_start();
+	include($fich);
+	$output = ob_get_clean();
+	$response->getBody()->write($output);
+
+});
+
+
+$app->get('/admin', function (Request $request, Response $response, $args) {
+
+    $fich = '/home/Pages/Admin.php';
+
+    ob_start();
+    include($fich);
+    $output = ob_get_clean();
+    $response->getBody()->write($output);
+ 
+    return $response;
+
+});
+
 $app->post('/trait_suppression', function (Request $request, Response $response, $args) {
 
-    $fich = '/home/Pages/traitement/trait_suppresion.php';
+    $fich = '/home/Pages/traitement/trait_suppression.php';
 
     ob_start();
     include($fich);
@@ -248,12 +311,26 @@ $app->get('/trait_changement_mdp_formulaire', function (Request $request, Respon
     return $response;
 
 });
+
+
+$app->get('/trait_suppression_formulaire', function (Request $request, Response $response, $args) {
+
+    $fich = '/home/Pages/traitement/trait_suppression_formulaire.php';
+
+    ob_start();
+    include($fich);
+    $output = ob_get_clean();
+    $response->getBody()->write($output);
+ 
+    return $response;
+
+});
+
 $app->get('/phpinfo', function (Request $request, Response $response) {
         phpinfo();
         return $response;
         });
 
-
-// Run app
+#Run app
 $app->run();
 

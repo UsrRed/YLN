@@ -37,9 +37,9 @@ $nom_utilisateur = $_SESSION['utilisateur'];
 				</div>
 			<div class="card mb-4">
 				<div class="card-body">
-					<h5><b>Changer de thème</b></h5>
-					<p>Cliquez sur le bouton pour choisir entre thème clair et sombre :</p>
-					<a href="/trait_changement_theme" class="btn btn-danger">Changer de thème</a>
+					<h5><b>Votre profil</b></h5>
+					<p>Cliquez sur le bouton pour compléter les informations de votre profil :</p>
+					<a href="/trait_profil" class="btn btn-danger">Votre profil</a>
 				</div>
 			</div>
 			</div>
@@ -48,7 +48,7 @@ $nom_utilisateur = $_SESSION['utilisateur'];
 					<div class="card-body">
 					<h5><b>Supprimer le compte</b></h5>
 					<p>Cliquez sur le bouton ci-dessous pour supprimer votre compte :</p>
-					<a href="/trait_suppression" class="btn btn-danger">Supprimer le compte</a>
+					<a href="/trait_suppression_formulaire" class="btn btn-danger">Supprimer le compte</a>
 				</div>
 			</div>
 			<div class="card mb-4">

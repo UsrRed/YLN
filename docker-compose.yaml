@@ -8,6 +8,7 @@ services:
       - ../sae501-502-theotime-martel/public:/usr/share/nginx/html:z
       - ../sae501-502-theotime-martel/website/Pages/configNGINX:/etc/nginx/conf.d:z
       - ../sae501-502-theotime-martel/opensslkeys:/home:z
+      - ../sae501-502-theotime-martel/composer:/usr/share/nginx/composer:z
     container_name: nginx1
     links:
       - php
@@ -20,6 +21,7 @@ services:
       - ../sae501-502-theotime-martel/public:/usr/share/nginx/html:z
       - ../sae501-502-theotime-martel/website/Pages/configNGINX:/etc/nginx/conf.d:z
       - ../sae501-502-theotime-martel/opensslkeys:/home:z
+      - ../sae501-502-theotime-martel/composer:/usr/share/nginx/composer:z
     container_name: nginx2
     links:
       - php
@@ -57,6 +59,6 @@ services:
       - ../sae501-502-theotime-martel/public:/usr/share/nginx/html:z
       - ../sae501-502-theotime-martel/composer:/usr/share/nginx/composer:z
       - ../sae501-502-theotime-martel/website:/home:z
-
+      - ../sae501-502-theotime-martel/.msmtprc:/root/.msmtprc:z
 volumes: 
   db_data:

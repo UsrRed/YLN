@@ -23,7 +23,10 @@ USE nathiotime;
 CREATE TABLE IF NOT EXISTS Utilisateur (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	nom_utilisateur VARCHAR(25) NOT NULL,
-	mot_de_passe VARCHAR(50) NOT NULL
+	mot_de_passe VARCHAR(50) NOT NULL,
+	age INT,
+	adresse_email VARCHAR(100),
+	mot_de_passe_application VARCHAR(100)
 );
 
 CREATE TABLE IF NOT EXISTS Historique (
@@ -42,7 +45,20 @@ CREATE TABLE IF NOT EXISTS Favoris (
 	date_favoris DATETIME,
 	FOREIGN KEY (utilisateur_id) REFERENCES Utilisateur(id),
 	FOREIGN KEY (historique_id) REFERENCES Historique(id)
+);
+
+CREATE TABLE IF NOT EXISTS FAQ (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	utilisateur_id INT NOT NULL,
+	objet VARCHAR(100) NOT NULL,
+	corps VARCHAR (255) NOT NULL,
+	date_submission DATETIME,
+	FOREIGN KEY (utilisateur_id) REFERENCES Utilisateur(id)
 );";
+
+
+
+
 
 #Merci à Tony Hulot pour nous avoir aidé à écrire le bout de code suivant et ainsi ne plus avoir d'erreur :  
 #A la suite d'erreur type : Commands out of sync; you can't run this command now 
