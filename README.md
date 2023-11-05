@@ -35,7 +35,8 @@ The main features of the project are as follows:
 * Website security: Security and redondancy mechanism (Load Balancing) to ensure continuous availability (functional).
 * Fault tolerance, one maximum fault (functional)
 * Adding a superuser with privileged access. This superuser can access all the site's features, including viewing the whole history, all favorites, all users, etc. (non-functional)
-
+* Settings page where the user can add information to their profile, change/update their password, delete their account, and submit a question to the user support: an email is sent to the site administrators. (functiona)
+* The application administrator can access a private page containing all user questions (support inquiries), and he is the only one who have access to this page. (functional)
 
 ### What script to execute to create tables in the database?
 
