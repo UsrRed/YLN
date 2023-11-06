@@ -23,7 +23,7 @@ if podman images | grep "nginx" && podman images | grep "php" && podman ps | gre
     echo "Images des conteneurs présentes sur l'OS physique"
 else
     echo "Pulling des images pour le lancement des conteneurs.."
-    bash ./info/ScriptImage
+    bash ./ScriptImage.sh
 fi
 echo "###########################################"
 # Vérification si les conteneurs sont déjà en cours d'exécution
@@ -35,11 +35,10 @@ else
 fi
 
 # Exécution du script haproxy_config.sh
-bash ./loadbalancing/haproxy_config.sh
+bash ./haproxy_config.sh
 
 # Démarrage de HAProxy avec votre configuration
-bash haproxy -f loadbalancing/haproxy.cfg &
+nohup haproxy -f loadbalancing/haproxy.cfg &
 echo "###########################################"
 # Exécution du script IpMonSite
-bash ./info/IpMonSite.sh
-
+bash ./IpMonSite.sh

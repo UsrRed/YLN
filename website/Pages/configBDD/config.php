@@ -82,5 +82,16 @@ if (mysqli_multi_query($connexion, $tables)) { #On utilise mysqli_multi_query ca
 #https://www.php.net/manual/fr/mysqli.multi-query.php
 #https://stackoverflow.com/questions/614671/commands-out-of-sync-you-cant-run-this-command-now
 
-?>
 
+#Test pour l'insert d'un utilisateur pour éviter un bug : 
+
+
+# Insertion dans la table Utilisateur si la ligne n'existe pas
+#$insertUtilisateur = "INSERT IGNORE INTO Utilisateur (nom_utilisateur, mot_de_passe, age, adresse_email, mot_de_passe_application) VALUES ('admin', 'admin', 20, 'admin@sae.rt', 'test test test test')";
+
+# Insertion dans la table FAQ si la ligne n'existe pas
+#$insertFAQ = "INSERT IGNORE INTO FAQ (utilisateur_id, objet, corps, date_submission) VALUES (999, 'test', 'test', '2023-11-06 12:35:52')";
+
+#mysqli_query($connexion, $insertFAQ);
+
+?>

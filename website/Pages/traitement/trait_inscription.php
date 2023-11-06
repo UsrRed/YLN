@@ -21,11 +21,13 @@ if(mysqli_num_rows($res) > 0) {
                 window.location.href= "/Inscription";
         </script>
 <?php
-} #else {
+} else {
 
 #Insertion des données dans la base de données
 
 $sql ="INSERT INTO Utilisateur (nom_utilisateur, mot_de_passe) VALUES ('$nouv_utilisateur', '$nouv_motdepasse')";
+
+}
 
 if (mysqli_query($connexion, $sql)) {
 	?>

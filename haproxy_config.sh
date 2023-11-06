@@ -1,28 +1,32 @@
 #!/bin/sh
 
-#Adresses IP des conteneurs
+# Adresses IP des conteneurs
 IP_NGINX1=$(podman inspect nginx1 | grep -oP '"IPAddress": "\K[^"]+')
 IP_NGINX2=$(podman inspect nginx2 | grep -oP '"IPAddress": "\K[^"]+')
 
 # Fichier de config HAProxy
-cat <<EOF > ./loadbalancing/haproxy.cfg
-global
+echo "global" > ./loadbalancing/haproxy.cfg
+echo "    user root" >> ./loadbalancing/haproxy.cfg
+echo "" >> ./loadbalancing/haproxy.cfg
 
-    user root
+echo "defaults" >> ./loadbalancing/haproxy.cfg
+echo "    mode http" >> ./loadbalancing/haproxy.cfg
+echo "    timeout connect 5000ms" >> ./loadbalancing/haproxy.cfg
+echo "    timeout client 5000ms" >> ./loadbalancing/haproxy.cfg
+echo "    timeout server 5000ms" >> ./loadbalancing/haproxy.cfg
+echo "" >> ./loadbalancing/haproxy.cfg
 
-defaults
-    mode http
-    timeout connect 5000ms
-    timeout client 5000ms
-    timeout server 5000ms
+echo "frontend main" >> ./loadbalancing/haproxy.cfg
+echo "    bind *:80" >> ./loadbalancing/haproxy.cfg
+echo "    bind *:443 ssl crt ./opensslkeys/myserver.pem" >> ./loadbalancing/haproxy.cfg
+echo "    default_backend nginx" >> ./loadbalancing/haproxy.cfg
+echo "" >> ./loadbalancing/haproxy.cfg
 
-frontend main
-    bind *:80
-    bind *:443 ssl crt ./opensslkeys/myserver.pem
-    default_backend nginx
+echo "backend nginx" >> ./loadbalancing/haproxy.cfg
+echo "    balance roundrobin" >> ./loadbalancing/haproxy.cfg
+echo "    server nginx1 $IP_NGINX1:80 check" >> ./loadbalancing/haproxy.cfg
+echo "    server nginx2 $IP_NGINX2:80 check" >> ./loadbalancing/haproxy.cfg
 
-backend nginx
-    balance roundrobin
-    server nginx1 $IP_NGINX1:80 check
-    server nginx2 $IP_NGINX2:80 check
-EOF
+#sleep 2
+
+#haproxy -f loadbalancing/haproxy.cfg &
