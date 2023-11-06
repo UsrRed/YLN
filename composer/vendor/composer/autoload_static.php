@@ -19,16 +19,13 @@ class ComposerStaticInitbc81ac38d3c31eaee82d7f0cf2836ef4
             'Slim\\Psr7\\' => 10,
             'Slim\\' => 5,
         ),
-        'R' => 
-        array (
-            'Root\\Composer\\' => 14,
-        ),
         'P' => 
         array (
             'Psr\\Log\\' => 8,
             'Psr\\Http\\Server\\' => 16,
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Container\\' => 14,
+            'PHPMailer\\PHPMailer\\' => 20,
         ),
         'F' => 
         array (
@@ -50,10 +47,6 @@ class ComposerStaticInitbc81ac38d3c31eaee82d7f0cf2836ef4
         array (
             0 => __DIR__ . '/..' . '/slim/slim/Slim',
         ),
-        'Root\\Composer\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/src',
-        ),
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/src',
@@ -71,6 +64,10 @@ class ComposerStaticInitbc81ac38d3c31eaee82d7f0cf2836ef4
         'Psr\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
         'Fig\\Http\\Message\\' => 
         array (

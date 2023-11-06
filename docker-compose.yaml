@@ -60,5 +60,6 @@ services:
       - ../sae501-502-theotime-martel/composer:/usr/share/nginx/composer:z
       - ../sae501-502-theotime-martel/website:/home:z
       - ../sae501-502-theotime-martel/.msmtprc:/root/.msmtprc:z
+      #- ../sae501-502-theotime-martel/PHPMailer:/usr/share/nginx/PHPMailer:z
 volumes: 
   db_data:
