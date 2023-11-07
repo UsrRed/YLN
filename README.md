@@ -52,8 +52,8 @@ First, clne the project from the Git repository and navigate to the project dire
 Depending on your machine, you may need to pull the original image for the three containers (`podman pull docker.io/library/mysql:latest` & `podman pull docker.io/library/php:8.2-fpm` & `podman pull docker.io/library/nginx:alpine`). To do this, run the "ScriptImage" script, and the images should be imported.
 
 Afterward, launch the "docker-compose.yaml" file, which contains and specifies the configuration of our containers using the following command : `podman-compose -f docker-compose.yaml up -d`
-
-Once the "docker-compose" file is running, execute the "IpMonSite.sh" script (`bash IpMonSite.sh|./IpMonSite.sh`). This will provide you with the IP address of the application, with or without load balancing, according to your preferrence.
+<!--
+Once the "docker-compose" file is running, execute the "IpMonSite.sh" script (`bash IpMonSite.sh|./IpMonSite.sh`). This will provide you with the IP address of the application, with or without load balancing, according to your preferrence.-->
 
 If you have chosen an application with load balancing, it's necessary to run the load balancing software before accessing the aplication. To do this, execute the "haproxy_config.sh" script (`bash haproxy_config.sh|./haproxy_config.sh`). This script will define the two IP addresses of the nginx servers and execute the command `haproxy -f loadbalancing/haproxy.cfg &`, make sure to include the "&" to allow it to run in the background and to finish the previous command. This command will start the load balancing service in daemon mode. You can now use the application with a web browser.
 
@@ -69,7 +69,7 @@ Additionally, a timestamped comparison history is available on the "History" pag
 
 ### Improvement notes ?
 
-
+There is a small issue in the website design. To access the Admin FAQ page (which is only accessible by the application administrator), there needs to be an administrator's entry in the FAQ table first. In other words, if the administrator has not posted questions on the FAQ page (/trait_faq), no one can access on this page.
 
 <!--
 ## Getting started

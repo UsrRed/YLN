@@ -120,14 +120,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	<?php
 
 	#Tableu qu'on va parcourir pour chaque nom on a une regex
-
+	#Attributs des infobox les plus présentes 
+	
 	$tab = array(
+
+	#attributs club de football	
 
         'nom complet' => '/\| nom complet\s+=\s+(.*)\n/i',
         'nom' => '/\| nom \s+=\s+(.*)\n/i',
         'surnoms' => '/\| surnoms \s+=\s+(.*)\n/i',
-        'date de fondation' => '/\| date de fondation \s+=\s+(.*)\n/i',
-	'équipement sportif' => '/\| équipement sportif \s+=\s+(.*)\n/i',
+       	'équipement sportif' => '/\| équipement sportif \s+=\s+(.*)\n/i',
 	'statut professionnel' => '/\| statut professionnel \s+=\s+(.*)\n/i',
 	'siège' => '/\| siège \s+=\s+(.*)\n/i',
 	'propriétaire' => '/\| propriétaire \s+=\s+(.*)\n/i',
@@ -140,6 +142,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	'palmarès national' => '/\| palmarès national \s+=\s+(.*)\n/i',
 	'palmarès international' => '/\| palmarès international \s+=\s+(.*)\n/i',
 
+	#Attributs les plus présents
+	
+	'description' => '/\| description \s+=\s+(.*)\n/i',
+	'date de naissance' => '/\| date de naissance \s+=\s+(.*)\n/i',
+	'date de décès' => '/\| date de décès \s+=\s+(.*)\n/i',
+	'nationalité' => '/\| nationalité \s+=\s+(.*)\n/i',
+	'lieu de naissance' => '/\| lieu de naissance \s+=\s+(.*)\n/i',
+	'lieu de décès' => '/\| lieu de décès \s+=\s+(.*)\n/i',
+	'profession' => '/\| profession \s+=\s+(.*)\n/i',
+	'parti politique' => '/\| parti politique \s+=\s+(.*)\n/i',
+	'langue' => '/\| langue \s+=\s+(.*)\n/i',
+	'religion' => '/\| religion \s+=\s+(.*)\n/i',
+	'éducation' => '/\| éducation \s+=\s+(.*)\n/i',
+	'références' => '/\| références \s+=\s+(.*)\n/i',
+	'biographie' => '/\| biographie \s+=\s+(.*)\n/i',
+	'genre' => '/\| genre \s+=\s+(.*)\n/i',
+	'discographie' => '/\| discographie \s+=\s+(.*)\n/i',
+	'filmographie' => '/\| filmographie \s+=\s+(.*)\n/i',
+	'prix et distinctions' => '/\| prix et distinctions \s+=\s+(.*)\n/i',
+	'famille' => '/\| famille \s+=\s+(.*)\n/i',
+	'taille' => '/\| taille \s+=\s+(.*)\n/i',
+	'poids' => '/\| poids \s+=\s+(.*)\n/i',
+	'affiliation militaire' => '/\| affiliation militaire \s+=\s+(.*)\n/i',
+	'date de fondation' => '/\| date de fondation \s+=\s+(.*)\n/i',
+	'siège social' => '/\| siège social \s+=\s+(.*)\n/i',
+	'coordonnées géographique' => '/\| coordonnées géographique \s+=\s+(.*)\n/i',
+	'statut' => '/\| staut \s+=\s+(.*)\n/i',
+	'membres fondateurs' => '/\| membres fondateurs \s+=\s+(.*)\n/i',
+	'date de création' => '/\| date de création \s+=\s+(.*)\n/i',
+	'date de dissolution' => '/\| date de dissolution \s+=\s+(.*)\n/i',
+	'slogan' => '/\| slogan \s+=\s+(.*)\n/i',
+	'durée du mandat' => '/\| durée du mandat \s+=\s+(.*)\n/i',
+	#"nombre d'employés" => "/\| nombre d'employés \s+=\s+(.*)\n/i",
+	'titre' => '/\| titre \s+=\s+(.*)\n/i',
+	'titre honorifique' => '/\| titre honorifique \s+=\s+(.*)\n/i',
+	'prédécesseur' => '/\| prédécesseur \s+=\s+(.*)\n/i',
+	'successeur' => '/\| successeur \s+=\s+(.*)\n/i',
+	'structure organisationnelle' => '/\| structure organisationnelle \s+=\s+(.*)\n/i',
+	'budget annuel' => '/\| budget annuel \s+=\s+(.*)\n/i',
+	'principales réalisations' => '/\| principales réalisations \s+=\s+(.*)\n/i',
+	'position politique' => '/\| position politique \s+=\s+(.*)\n/i',
+	'affiliation syndicale' => '/\| affiliation syndicale \s+=\s+(.*)\n/i',
+	'notation' => '/\| notation \s+=\s+(.*)\n/i',
+	'chaîne YouTube' => '/\| chaîne YouTube \s+=\s+(.*)\n/i',
+	
 	#...
 	#...
 	#...
