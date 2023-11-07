@@ -30,7 +30,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$mot_de_passe_application = $par_ligne['mot_de_passe_application'];
 	$nom_utilisateur = $par_ligne['nom_utilisateur'];
 
-	$destinataire = 'nathan.martel@etu.univ-tours.fr';
+	$destinataire1 = 'nathan.martel@etu.univ-tours.fr';
+	$destinataire2 = 'lukas.theotime@etu.univ-tours.fr';
+	$destinataire3 = 'yohann.denoyelle@etu.univ-tours.fr';
 
 	#Fichier de base de PHPMailer, https://github.com/PHPMailer/PHPMailer
 
@@ -45,8 +47,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$mail->Port = 587; 
 
 	$mail->setFrom($adresse_email, $nom_utilisateur);
-	$mail->addAddress($destinataire);
-
+	$mail->addAddress($destinataire1);
+	$mail->addAddress($destinataire2);
+	$mail->addAddress($destinataire3);
 
 	$mail->isHTML(false); 
 	$mail->Subject = $objet;
