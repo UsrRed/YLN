@@ -1,13 +1,12 @@
 <?php
 session_start(); # Pour démarrer la session
-
 if (!isset($_SESSION['utilisateur'])) {
 	#Si l'utilisateur n'est pas connecté, on vers la page de connexion
 	header("Location: /Connexion");
 	exit();
 }
-?>
 
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,11 +27,13 @@ $nom_utilisateur = $_SESSION['utilisateur']; #Pour récupérer le nom d'utilisat
 # On fait la connexion à la base de données
 include('/home/Pages/configBDD/config.php');
 #echo "test";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$comparaison1 = $_POST["comparaison1"];
 	$comparaison2 = $_POST["comparaison2"];
 	#echo "$comparaison1 $comparaison2";
 	#echo "test";
+
 	if (!empty($comparaison1) && !empty($comparaison2)) {
 	# On récupère l'ID de l'utilisateur avec une Requête SQL
 		$query_utilisateur = "SELECT id FROM Utilisateur WHERE nom_utilisateur = ?";
@@ -54,15 +55,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	#echo "$comparaison1";
 	#echo "$comparaison2";
 	#$connexion->close();
-	
-	#Requête API MediaWiki pour les deux entités. On récupère les données dans les variables au format json (elle utilise json_decode)
 
+	#Requête API MediaWiki pour les deux entités. On récupère les données dans les variables au format json (elle utilise json_decode)
 	$data1 = fetchWikiData($comparaison1);
 	$data2 = fetchWikiData($comparaison2);
-	
+
 	#echo $data1;
 	#echo $data2;
-
 	#Infobox entière, manque plus qu'à les parser pour avoir les données qu'on souhaite
 
 	$infobox1 = "";
@@ -71,10 +70,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	#--------------------------ATTRIBUTS A CRÉER-----------------------------#
 
 	#Données qu'on récupère (variables des infoboxes) : 
-
 	#$nomComplet1 = "";
 	#$nomComplet2 = "";
-
 	#$nom1 = "";
 	#$nom2 = "";
 
@@ -91,6 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		#echo "$temp";
             	$infobox1 = $temp['revisions'][0]['*']; #Contient donc les informations entières de l'infobox pour la première comparaison
 		#echo "$infobox1";
+
 	}
 	# On fait pareil pour la deuxième comparaison/entité
 	if (isset($data2['query']['pages'])) {
@@ -102,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	?>
 
 	<div class="container mt-5">
-	
+
 	<h2><u><?php echo $comparaison1; ?></u> VS  <u><?php echo $comparaison2; ?></u> :</h2> <!--A changer, trouver un moyen, horrible -->
 
 	<?php
@@ -110,8 +108,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	#------------------------------------PARSEMENT DES INFOBOX------------------------------------#
 
 	#A cet instant, toutes les données des infoboxes sont stockés dans la variable infobox1 et infobox2, on utilise maintenant des REGEX pour les parser et ainsi avoir les attributs qu'on veut
-	#--> Regex faites dans un tableau ci-dessous
-		
+	#--> Regex faites dans un tableau ci-dessous	
+
 	#------------------------------------AFFICHAGE TABLEAU ATTRIBUTS-------------------------------#
 
 	#Affiche l'attributs des deux entités s'ils ont cette information, sinon ça ne l'affiche pas. Affichement sous forme de tableau
@@ -122,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	<?php
 
 	#Tableu qu'on va parcourir pour chaque nom on a une regex
-	
+
 	$tab = array(
 
         'nom complet' => '/\| nom complet\s+=\s+(.*)\n/i',
@@ -142,7 +140,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	'palmarès national' => '/\| palmarès national \s+=\s+(.*)\n/i',
 	'palmarès international' => '/\| palmarès international \s+=\s+(.*)\n/i',
 
-
 	#...
 	#...
 	#...
@@ -154,13 +151,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	);
 
 	foreach ($tab as $temp => $garde_regex){ #temp va être temporaire donc l'attribut qu'on va récupérer pour les deux comparaisons ex : nom, surnoms, date, ...
-
 		if (preg_match($garde_regex, $infobox1, $matches1) && preg_match($garde_regex, $infobox2, $matches2)) { #doc de preg_match, fait une regex (garde_regex dans l'infobox et si ok ca va dans la variable matches1
-
 			$val1 = $matches1[1];
 			$val2 = $matches2[1];
 			#echo $val1 $val2;
 			#echo "test boucle";
+
  			if (!empty($val1) && !empty($val2) && $val1 !== $val2) {
            			echo "<tr><td>$temp</td><td>$val1</td><td>$val2</td></tr>";
        			} elseif (!empty($val1) && !empty($val2) && $val1 === $val2) { #On fait un colspan s'ils ont la même valeur d'attributs
@@ -171,43 +167,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	}
 
 	echo "</tbody></table>";
-
 	echo "<br/><br/>";
-
 	#On récupère l'ID de la comparaison pour ensuite mettre en place les favoris
 	#On ajoute l'id de la comparaison dans la table favoris pour avoir la ligne sur laquelle l'utilisateur a mis le favoris
-		
+
 	$req_id_comparaison = "SELECT id FROM Historique WHERE comparaison1 = '$comparaison1' AND comparaison2 = '$comparaison2'";
 	$resultat_id_comparaison = mysqli_query($connexion, $req_id_comparaison);
 	$ligne_id_comparaison = mysqli_fetch_assoc($resultat_id_comparaison);
 	$id_comparaison = $ligne_id_comparaison['id'];
-	#ech
 
+	#ech
 	echo '<div class="text-center mt-3">';
 	echo '<form method="post" action="/trait_favoris">';
     	echo '<input type="hidden" name="comparaison_id" value="' . $id_comparaison . '">';
     	echo '<button type="submit" class="btn btn-danger" name="ajouter_favoris">Ajouter aux favoris</button>';
 	echo '</form>';
 	echo '</div>';
-
     } else {
         echo "Veuillez entrer des valeurs pour les comparaisons.";
 }
 
 $connexion->close();
-
 #Fonction dont nous ne sommes pas l'auteur. @Author : Owen, https://www.developpez.com 
 
 function fetchWikiData($Titre) { #Décupère les données des pages depuis l'API MediaWiki
 	$URL = "https://fr.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=" . urlencode($Titre) . "&rvprop=content&origin=*"; #URL
 	$response = file_get_contents($URL); #Effectue du requête GET à l'URL de l'API
 	return json_decode($response, true); #Pour mettre le format json
+
 }
 ?>
 </div>
-
 <br/><br/>
 <p>https://fr.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=Porsche&rvprop=content&origin=*</p>
-
 </body>
 </html>
