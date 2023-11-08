@@ -67,7 +67,7 @@ $resultat_favoris_pagination = mysqli_query($connexion, $req_favoris_pagination)
 	        echo '<form method="post" action="/trait_comparaison">';
 		echo "<input type='hidden' name='comparaison1' id='comparaison1' value='" . $ligne_favori["comparaison1"] . "' />";
         	echo "<input type='hidden' name='comparaison2' id='comparaison2' value='" . $ligne_favori["comparaison2"] . "' />";
-		echo '<button type="submit" class="btn btn-info" name="ajouter_favoris">Voir</button>';
+		echo '<button type="submit" class="btn btn-info" name="Voir">Voir</button>';
         	echo '</form>';
         	echo '</div>';
 		echo "</td>";

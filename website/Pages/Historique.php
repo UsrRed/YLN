@@ -79,7 +79,7 @@ $resultat_historique = mysqli_query($connexion, $req_historique);
                 	echo '<form method="post" action="/trait_comparaison">';
                 	echo "<input type='hidden' name='comparaison1' id='comparaison1' value='" . $ligne_histo["comparaison1"] . "' />";
                 	echo "<input type='hidden' name='comparaison2' id='comparaison2' value='" . $ligne_histo["comparaison2"] . "' />";
-                	echo '<button type="submit" class="btn btn-info" name="ajouter_favoris">Voir</button>';
+                	echo '<button type="submit" class="btn btn-info" name="Voir">Voir</button>';
                 	echo '</form>';
                 	echo '</div>';
                 	echo "</td>";
