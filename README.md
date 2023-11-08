@@ -57,7 +57,7 @@ Once the "docker-compose" file is running, execute the "IpMonSite.sh" script (`b
 
 ### How to use the application ?
 
-Once the .yaml file is started, open a web browser and enter `https://[IP_Address_Provided_By_The_IpMonSite.sh_script]` (the PHP and Nginx container provides the user interface). You can also connect using HTTP: `http://[IP_Address_Provided_By_The_IpMonSite.sh_script]`. The IP address is the Haproxy container (very rarely different from 172.18.0.4) which will distribute the load between two nginx WEB containers.
+Once the .yaml file is started, open a web browser and enter `https://[IP_Address_Provided_By_The_IpMonSite.sh_script]:8443` (the PHP and Nginx container provides the user interface). You can also connect using HTTP: `http://[IP_Address_Provided_By_The_IpMonSite.sh_script]:8083`. The IP address is the Haproxy container (very rarely different from 172.18.0.4) which will distribute the load between two nginx WEB containers. Make sure to add the port.
 
 From this page, it is possible to register/login with an account by clicking on the "Login" page in the top right-hand corner of the page. If you register, you will need to log in with the same login credentials.
 

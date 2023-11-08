@@ -39,8 +39,8 @@ services:
     #image: haproxy:alpine
     container_name: haproxy
     ports:
-      - "80:80"
-      - "443:443"
+      - "8083:80"
+      - "8443:443"
     volumes:
       - ../sae501-502-theotime-martel/opensslkeys/myserver.pem:/etc/ssl/certs/myserver.pem:z
       - ../sae501-502-theotime-martel/loadbalancing/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:z
