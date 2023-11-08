@@ -54,12 +54,25 @@ $resultat_favoris_pagination = mysqli_query($connexion, $req_favoris_pagination)
 	<br/><br/>
 	<table class="table table-bordered">
 		<thead>
-			<tr><th>Comparaison 1</th><th>Comparaison 2</th><th>Date</th></tr>
+			<tr><th>Comparaison 1</th><th>Comparaison 2</th><th>Afficher</th><th>Date</th></tr>
 		</thead>
 		<tbody>
 		<?php
 	while ($ligne_favori = mysqli_fetch_assoc($resultat_favoris_pagination)) {
-		echo "<tr><td>" . $ligne_favori["comparaison1"] . "</td><td>" . $ligne_favori["comparaison2"] . "</td><td>" . $ligne_favori["date_favoris"] . "</td></tr>";
+		echo "<tr>";
+		echo "<td>" . $ligne_favori["comparaison1"] . "</td>";
+		echo "<td>" . $ligne_favori["comparaison2"] . "</td>";
+		echo "<td>";
+		echo '<div class="text-center mt-3">';
+	        echo '<form method="post" action="/trait_comparaison">';
+		echo "<input type='hidden' name='comparaison1' id='comparaison1' value='" . $ligne_favori["comparaison1"] . "' />";
+        	echo "<input type='hidden' name='comparaison2' id='comparaison2' value='" . $ligne_favori["comparaison2"] . "' />";
+		echo '<button type="submit" class="btn btn-info" name="Voir">Voir</button>';
+        	echo '</form>';
+        	echo '</div>';
+		echo "</td>";
+		echo "<td>" . $ligne_favori["date_favoris"] . "</td>";
+		echo "</tr>";
 		}
 		?>
 		</tbody>

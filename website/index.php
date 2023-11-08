@@ -31,7 +31,7 @@
 </div>
 <div class=" row mt-3">
 	<div class = "col-md-12 text-center">
-		<button type="submit" class = "btn btn-danger">Go</button>
+		<button type="submit" class = "btn btn-primary">Go</button>
 	</div>
 </div>
 </form>
