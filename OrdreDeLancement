@@ -1,4 +1,0 @@
-- Faire un podman-compose (1)
-- Exécuter le fichier haproxy_config.sh (2)
-- Lancer le haproxy en arrière plan : haproxy -f loadbalancing/haproxy.cfg (3)
-- Exécuter le script IpMonSite.sh et enfin se connecter au système logiciel (4)

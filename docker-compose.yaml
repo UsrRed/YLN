@@ -10,6 +10,9 @@ services:
       - ../sae501-502-theotime-martel/opensslkeys:/home:z
       #- ../sae501-502-theotime-martel/composer:/usr/share/nginx/composer:z
     container_name: nginx1
+    networks:
+      sae:
+        ipv4_address: 172.18.0.2
     links:
       - php
 
@@ -23,18 +26,30 @@ services:
       - ../sae501-502-theotime-martel/opensslkeys:/home:z
       #- ../sae501-502-theotime-martel/composer:/usr/share/nginx/composer:z
     container_name: nginx2
+    networks:
+      sae:
+        ipv4_address: 172.18.0.3
     links:
       - php
 
-  #haproxy:
+  haproxy:
+    build:
+      context: .
+      dockerfile: DockerfileHa
     #image: haproxy:alpine
-    #container_name: haproxy
-    #ports:
-      #- "80:80"
-      #- "443:443"
-    #volumes:
-      #- ../sae501-502-theotime-martel/opensslkeys/myserver.pem:/etc/ssl/certs/myserver.pem:z
-      #- ../sae501-502-theotime-martel/loadbalancing:/usr/local/etc/haproxy:z
+    container_name: haproxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ../sae501-502-theotime-martel/opensslkeys/myserver.pem:/etc/ssl/certs/myserver.pem:z
+      - ../sae501-502-theotime-martel/loadbalancing/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:z
+    depends_on:
+      - nginx1
+      - nginx2
+    networks:
+      sae:
+        ipv4_address: 172.18.0.4
 
   mysql:
     image: mysql:latest  
@@ -46,6 +61,9 @@ services:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql:z
+    networks:
+      sae:
+        ipv4_address: 172.18.0.5
 
   php:
     #image: php:8.2-fpm
@@ -61,5 +79,17 @@ services:
       - ../sae501-502-theotime-martel/website:/home:z
       #- ../sae501-502-theotime-martel/.msmtprc:/root/.msmtprc:z
       #- ../sae501-502-theotime-martel/PHPMailer:/usr/share/nginx/PHPMailer:z
+    networks:
+      sae:
+        ipv4_address: 172.18.0.6  
+
 volumes: 
   db_data:
+
+
+networks:
+  sae:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
