@@ -66,12 +66,26 @@ $resultat_historique = mysqli_query($connexion, $req_historique);
 	<br/><br/>
 	<table class="table table-bordered">
 		<thead>
-			<tr><th>Comparaison 1</th><th>Comparaison 2</th><th>Date</th> </tr>
+			<tr><th>Comparaison 1</th><th>Comparaison 2</th><th>Afficher</th><th>Date</th> </tr>
 		</thead>
 		<tbody>
 		<?php
-			while ($ligne_histo = mysqli_fetch_assoc($resultat_historique)) { #Pour n'avoir qu'une seule ligne qu'on affiche après et tout ça dans une boucle pour parcourir toute la table
-			echo "<tr><td>" . $ligne_histo["comparaison1"] . "</td><td>" . $ligne_histo["comparaison2"] . "</td><td>" . $ligne_histo["date"] . "</td></tr>";
+		while ($ligne_histo = mysqli_fetch_assoc($resultat_historique)) { #Pour n'avoir qu'une seule ligne qu'on affiche après et tout ça dans une boucle pour parcourir toute la table
+			echo "<tr>";
+                	echo "<td>" . $ligne_histo["comparaison1"] . "</td>";
+                	echo "<td>" . $ligne_histo["comparaison2"] . "</td>";
+                	echo "<td>";
+                	echo '<div class="text-center mt-3">';
+                	echo '<form method="post" action="/trait_comparaison">';
+                	echo "<input type='hidden' name='comparaison1' id='comparaison1' value='" . $ligne_histo["comparaison1"] . "' />";
+                	echo "<input type='hidden' name='comparaison2' id='comparaison2' value='" . $ligne_histo["comparaison2"] . "' />";
+                	echo '<button type="submit" class="btn btn-info" name="ajouter_favoris">Voir</button>';
+                	echo '</form>';
+                	echo '</div>';
+                	echo "</td>";
+                	echo "<td>" . $ligne_histo["date"] . "</td>";
+               		echo "</tr>";
+	
 		}
 		?>
 		</tbody>
