@@ -49,17 +49,15 @@ Therefore, as soon as a connection is made to the database, by using an .sql scr
 
 First, clne the project from the Git repository and navigate to the project directory (`cd sae501-502-theotime-martel`). Next, download the Podman software and the Podman-compose script using the appropriate package manager (`dnf|apt-get|yum install podman podman-compose`).
 
-Depending on your machine, you may need to pull the original image for the three containers (`podman pull docker.io/library/mysql:latest` & `podman pull docker.io/library/php:8.2-fpm` & `podman pull docker.io/library/nginx:alpine`). To do this, run the "ScriptImage" script, and the images should be imported.
+Depending on your machine, you may need to pull the original image for the three containers (`podman pull docker.io/library/mysql:latest` & `podman pull docker.io/library/php:8.2-fpm` & `podman pull docker.io/library/nginx:alpine` & `podman pull docker.io/library/haproxy:alpine`). To do this, run the "ScriptImage" script, and the images should be imported or you can do it manually.
 
 Afterward, launch the "docker-compose.yaml" file, which contains and specifies the configuration of our containers using the following command : `podman-compose -f docker-compose.yaml up -d`
 <!--
 Once the "docker-compose" file is running, execute the "IpMonSite.sh" script (`bash IpMonSite.sh|./IpMonSite.sh`). This will provide you with the IP address of the application, with or without load balancing, according to your preferrence.-->
 
-If you have chosen an application with load balancing, it's necessary to run the load balancing software before accessing the aplication. To do this, execute the "haproxy_config.sh" script (`bash haproxy_config.sh|./haproxy_config.sh`). This script will define the two IP addresses of the nginx servers and execute the command `haproxy -f loadbalancing/haproxy.cfg &`, make sure to include the "&" to allow it to run in the background and to finish the previous command. This command will start the load balancing service in daemon mode. You can now use the application with a web browser.
-
 ### How to use the application ?
 
-Once the .yaml file is started, open a web browser and enter `https://[IP_Address_Provided_By_The_IpMonSite.sh_script]` (the PHP and Nginx container provides the user interface). You can also connect using HTTP: `http://[IP_Address_Provided_By_The_IpMonSite.sh_script]`.
+Once the .yaml file is started, open a web browser and enter `https://[IP_Address_Provided_By_The_IpMonSite.sh_script]:8443` (the PHP and Nginx container provides the user interface). You can also connect using HTTP: `http://[IP_Address_Provided_By_The_IpMonSite.sh_script]:8083`. The IP address is the Haproxy container (very rarely different from 172.18.0.4) which will distribute the load between two nginx WEB containers. Make sure to add the port.
 
 From this page, it is possible to register/login with an account by clicking on the "Login" page in the top right-hand corner of the page. If you register, you will need to log in with the same login credentials.
 
