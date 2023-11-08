@@ -121,81 +121,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 	#Tableu qu'on va parcourir pour chaque nom on a une regex
 	#Attributs des infobox les plus présentes 
+	$nom_attributs = array(
+        'nom complet', 'nom', 'surnoms', 'date de fondation', 'équipement sportif', 'status professionnel', 'siège', 'propriétaire', 'président', 'entraineur', 'joueur le plus capé', 'meilleur buteur',
+        'championnat actuel', 'site web', 'palmarès national', 'palmarès international', 'description', 'date de naissance', 'date de décès', 'nationalité', 'lieu de naissance', 'lieu de décès',
+        'profession', 'parti politique', 'langue', 'religion', 'éducation', 'références', 'biographie', 'genre', 'discographie', 'filmographie', 'prix et distinctions', 'famille', 'taille', 'poids',
+        'affiliation militaire', 'date de fondation', 'siège social', 'coordonnées géographiques', 'statut', 'membres fondateurs', 'date de création', 'date de dissolution', 'slogan', 'durée du mandat',
+        'titre', 'titre honorifique', 'prédécesseur', 'successeur', 'structure organisationnelle', 'budget annuel', 'principales réalisations', 'position politique', 'affiliation syndicale', 'notation',
+        'chaîne YouTube'
+        );
 	
-	$tab = array(
+	$tab = array();
 
-	#attributs club de football	
-
-        'nom complet' => '/\| nom complet\s+=\s+(.*)\n/i',
-        'nom' => '/\| nom \s+=\s+(.*)\n/i',
-        'surnoms' => '/\| surnoms \s+=\s+(.*)\n/i',
-       	'équipement sportif' => '/\| équipement sportif \s+=\s+(.*)\n/i',
-	'statut professionnel' => '/\| statut professionnel \s+=\s+(.*)\n/i',
-	'siège' => '/\| siège \s+=\s+(.*)\n/i',
-	'propriétaire' => '/\| propriétaire \s+=\s+(.*)\n/i',
-	'président' => '/\| président \s+=\s+(.*)\n/i',
-	'entraineur' => '/\| entraineur \s+=\s+(.*)\n/i',
-	'joueur le plus capé' => '/\| joueur le plus capé \s+=\s+(.*)\n/i',
-	'meilleur buteur' => '/\| meilleur buteur \s+=\s+(.*)\n/i',
-	'championnat actuel' => '/\| championnat actuel \s+=\s+(.*)\n/i',
-	'site web' => '/\| site web \s+=\s+(.*)\n/i',
-	'palmarès national' => '/\| palmarès national \s+=\s+(.*)\n/i',
-	'palmarès international' => '/\| palmarès international \s+=\s+(.*)\n/i',
-
-	#Attributs les plus présents
-	
-	'description' => '/\| description \s+=\s+(.*)\n/i',
-	'date de naissance' => '/\| date de naissance \s+=\s+(.*)\n/i',
-	'date de décès' => '/\| date de décès \s+=\s+(.*)\n/i',
-	'nationalité' => '/\| nationalité \s+=\s+(.*)\n/i',
-	'lieu de naissance' => '/\| lieu de naissance \s+=\s+(.*)\n/i',
-	'lieu de décès' => '/\| lieu de décès \s+=\s+(.*)\n/i',
-	'profession' => '/\| profession \s+=\s+(.*)\n/i',
-	'parti politique' => '/\| parti politique \s+=\s+(.*)\n/i',
-	'langue' => '/\| langue \s+=\s+(.*)\n/i',
-	'religion' => '/\| religion \s+=\s+(.*)\n/i',
-	'éducation' => '/\| éducation \s+=\s+(.*)\n/i',
-	'références' => '/\| références \s+=\s+(.*)\n/i',
-	'biographie' => '/\| biographie \s+=\s+(.*)\n/i',
-	'genre' => '/\| genre \s+=\s+(.*)\n/i',
-	'discographie' => '/\| discographie \s+=\s+(.*)\n/i',
-	'filmographie' => '/\| filmographie \s+=\s+(.*)\n/i',
-	'prix et distinctions' => '/\| prix et distinctions \s+=\s+(.*)\n/i',
-	'famille' => '/\| famille \s+=\s+(.*)\n/i',
-	'taille' => '/\| taille \s+=\s+(.*)\n/i',
-	'poids' => '/\| poids \s+=\s+(.*)\n/i',
-	'affiliation militaire' => '/\| affiliation militaire \s+=\s+(.*)\n/i',
-	'date de fondation' => '/\| date de fondation \s+=\s+(.*)\n/i',
-	'siège social' => '/\| siège social \s+=\s+(.*)\n/i',
-	'coordonnées géographique' => '/\| coordonnées géographique \s+=\s+(.*)\n/i',
-	'statut' => '/\| staut \s+=\s+(.*)\n/i',
-	'membres fondateurs' => '/\| membres fondateurs \s+=\s+(.*)\n/i',
-	'date de création' => '/\| date de création \s+=\s+(.*)\n/i',
-	'date de dissolution' => '/\| date de dissolution \s+=\s+(.*)\n/i',
-	'slogan' => '/\| slogan \s+=\s+(.*)\n/i',
-	'durée du mandat' => '/\| durée du mandat \s+=\s+(.*)\n/i',
-	#"nombre d'employés" => "/\| nombre d'employés \s+=\s+(.*)\n/i",
-	'titre' => '/\| titre \s+=\s+(.*)\n/i',
-	'titre honorifique' => '/\| titre honorifique \s+=\s+(.*)\n/i',
-	'prédécesseur' => '/\| prédécesseur \s+=\s+(.*)\n/i',
-	'successeur' => '/\| successeur \s+=\s+(.*)\n/i',
-	'structure organisationnelle' => '/\| structure organisationnelle \s+=\s+(.*)\n/i',
-	'budget annuel' => '/\| budget annuel \s+=\s+(.*)\n/i',
-	'principales réalisations' => '/\| principales réalisations \s+=\s+(.*)\n/i',
-	'position politique' => '/\| position politique \s+=\s+(.*)\n/i',
-	'affiliation syndicale' => '/\| affiliation syndicale \s+=\s+(.*)\n/i',
-	'notation' => '/\| notation \s+=\s+(.*)\n/i',
-	'chaîne YouTube' => '/\| chaîne YouTube \s+=\s+(.*)\n/i',
-	
-	#...
-	#...
-	#...
-	#...
-	#...
-
-        #Go ajouter des trucs après
-
-	);
+	foreach ($nom_attributs as $nom_attribut) {
+    		$pattern = '/\| ' . $nom_attribut . ' \s+=\s+(.*)\n/i';
+    		$tab[$nom_attribut] = $pattern;
+	}
 
 	foreach ($tab as $temp => $garde_regex){ #temp va être temporaire donc l'attribut qu'on va récupérer pour les deux comparaisons ex : nom, surnoms, date, ...
 		if (preg_match($garde_regex, $infobox1, $matches1) && preg_match($garde_regex, $infobox2, $matches2)) { #doc de preg_match, fait une regex (garde_regex dans l'infobox et si ok ca va dans la variable matches1
