@@ -129,12 +129,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'titre', 'titre honorifique', 'prédécesseur', 'successeur', 'structure organisationnelle', 'budget annuel', 'principales réalisations', 'position politique', 'affiliation syndicale', 'notation',
         'chaîne YouTube'
         );
-	
+		
 	$tab = array();
 
 	foreach ($nom_attributs as $nom_attribut) {
     		$pattern = '/\| ' . $nom_attribut . ' \s+=\s+(.*)\n/i';
     		$tab[$nom_attribut] = $pattern;
+	}
+	$filtre_infobox = '/\{\{Infobox ([\s\S]*?)(?:\s\|\s)([\s\S]+? date de mise à jour\s+=\s[[:digit:]]{1,2}\s\S+\s[[:digit:]]{4})/m';
+	$filtre_attr_value = '/([^=]+) =([\s\S]*?)(?:\s\|\s)|(date de mise à jour)\s+=\s([[:digit:]]{1,2}\s\S+\s[[:digit:]]{4})/m';
+	$match = true;
+	preg_match_all($filtre_infobox, $infobox1, $matchinfobox1, PREG_SET_ORDER, 0);
+	preg_match_all($filtre_attr_value, $matchinfobox1[0][2], $liste_infos, PREG_SET_ORDER, 0);
+	#Le groupe 0 constitue les attributs, le groupe 1 les valeurs et le groupe 2 et 3 le dernier attrivut et la dernière valeur
+	foreach ($liste_infos as $number => $groups) {
+		echo $number;
+		if ($groups[0]!=''){
+			echo $groups[0];
+			echo "---";
+			echo $groups[1];
+		} else if ($groups[2]!='') {
+			echo $groups[2];
+			echo $groups[3];
+		}
+		echo "</br>";
 	}
 
 	foreach ($tab as $temp => $garde_regex){ #temp va être temporaire donc l'attribut qu'on va récupérer pour les deux comparaisons ex : nom, surnoms, date, ...
