@@ -119,56 +119,82 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		<table class="table table-bordered"><thead><tr><th>Attributs</th><th><?php echo $comparaison1; ?></th><th><?php echo $comparaison2;?></th></tr></thead><tbody>
 	<?php
 
-	#Tableu qu'on va parcourir pour chaque nom on a une regex
-	#Attributs des infobox les plus présentes 
-	$nom_attributs = array(
-        'nom complet', 'nom', 'surnoms', 'date de fondation', 'équipement sportif', 'status professionnel', 'siège', 'propriétaire', 'président', 'entraineur', 'joueur le plus capé', 'meilleur buteur',
-        'championnat actuel', 'site web', 'palmarès national', 'palmarès international', 'description', 'date de naissance', 'date de décès', 'nationalité', 'lieu de naissance', 'lieu de décès',
-        'profession', 'parti politique', 'langue', 'religion', 'éducation', 'références', 'biographie', 'genre', 'discographie', 'filmographie', 'prix et distinctions', 'famille', 'taille', 'poids',
-        'affiliation militaire', 'date de fondation', 'siège social', 'coordonnées géographiques', 'statut', 'membres fondateurs', 'date de création', 'date de dissolution', 'slogan', 'durée du mandat',
-        'titre', 'titre honorifique', 'prédécesseur', 'successeur', 'structure organisationnelle', 'budget annuel', 'principales réalisations', 'position politique', 'affiliation syndicale', 'notation',
-        'chaîne YouTube'
-        );
-		
-	$tab = array();
-
-	foreach ($nom_attributs as $nom_attribut) {
-    		$pattern = '/\| ' . $nom_attribut . ' \s+=\s+(.*)\n/i';
-    		$tab[$nom_attribut] = $pattern;
-	}
-	$filtre_infobox = '/\{\{Infobox ([\s\S]*?)(?:\s\|\s)([\s\S]+? date de mise à jour\s+=\s[[:digit:]]{1,2}\s\S+\s[[:digit:]]{4})/m';
-	$filtre_attr_value = '/([^=]+) =([\s\S]*?)(?:\s\|\s)|(date de mise à jour)\s+=\s([[:digit:]]{1,2}\s\S+\s[[:digit:]]{4})/m';
-	$match = true;
+	$filtre_infobox = '/\{\{Infobox ([\s\S]*?)(?:\s\|\s)([\s\S]+?\\n\}\})/m';
+	$filtre_attr_value = '/([^=]+) =([\s\S]*?)(?:\s\|\s|\\n\}\})/m';
 	preg_match_all($filtre_infobox, $infobox1, $matchinfobox1, PREG_SET_ORDER, 0);
-	preg_match_all($filtre_attr_value, $matchinfobox1[0][2], $liste_infos, PREG_SET_ORDER, 0);
-	#Le groupe 0 constitue les attributs, le groupe 1 les valeurs et le groupe 2 et 3 le dernier attrivut et la dernière valeur
-	foreach ($liste_infos as $number => $groups) {
-		echo $number;
-		if ($groups[0]!=''){
-			echo $groups[0];
-			echo "---";
-			echo $groups[1];
-		} else if ($groups[2]!='') {
-			echo $groups[2];
-			echo $groups[3];
-		}
-		echo "</br>";
+	preg_match_all($filtre_attr_value, $matchinfobox1[0][2], $liste_infos1, PREG_SET_ORDER, 0);
+	preg_match_all($filtre_infobox, $infobox2, $matchinfobox2, PREG_SET_ORDER, 0);
+	preg_match_all($filtre_attr_value, $matchinfobox2[0][2], $liste_infos2, PREG_SET_ORDER, 0);
+
+	# Le groupe 0 est le texte avant filtrage
+    # Le groupe 1 constitue les attributs, le groupe 2 les valeurs
+    /*
+	if (count($liste_infos1[count($liste_infos1)-1])>2){
+        $temp = $liste_infos1[count($liste_infos1)-1];
+        $liste_infos1[count($liste_infos1)-1] = [$temp[0], $temp[3], $temp[4], '', ''];
 	}
+	if (count($liste_infos2[count($liste_infos2)-1])>2){
+        $temp = $liste_infos2[count($liste_infos2)-1];
+        $liste_infos2[count($liste_infos2)-1] = [$temp[0], $temp[3], $temp[4], '', ''];
+    }
+    */
 
-	foreach ($tab as $temp => $garde_regex){ #temp va être temporaire donc l'attribut qu'on va récupérer pour les deux comparaisons ex : nom, surnoms, date, ...
-		if (preg_match($garde_regex, $infobox1, $matches1) && preg_match($garde_regex, $infobox2, $matches2)) { #doc de preg_match, fait une regex (garde_regex dans l'infobox et si ok ca va dans la variable matches1
-			$val1 = $matches1[1];
-			$val2 = $matches2[1];
-			#echo $val1 $val2;
-			#echo "test boucle";
+	$attributs_fusionnes = array();
 
- 			if (!empty($val1) && !empty($val2) && $val1 !== $val2) {
-           			echo "<tr><td>$temp</td><td>$val1</td><td>$val2</td></tr>";
-       			} elseif (!empty($val1) && !empty($val2) && $val1 === $val2) { #On fait un colspan s'ils ont la même valeur d'attributs
-            			echo "<tr><td>$temp</td><td colspan='2'><center>$val1</td><tr>";
-       			}
-		}
-		#echo "test3";
+	foreach ($liste_infos1 as $element) {
+        $attribut = $element[1];
+        $valeur = $element[2];
+        if (!isset($attributs_fusionnes[$attribut])) {
+                $attributs_fusionnes[$attribut] = array();
+        }
+        $attributs_fusionnes[$attribut][0] = $valeur;
+	}
+	foreach ($liste_infos2 as $element) {
+        $attribut = $element[1];
+        $valeur = $element[2];
+        if (!isset($attributs_fusionnes[$attribut])) {
+                $attributs_fusionnes[$attribut] = array();
+        }
+        $attributs_fusionnes[$attribut][1] = $valeur;
+    }
+
+    # var_dump($attributs_fusionnes);
+
+	foreach ($attributs_fusionnes as $attribut => $valeurs) {
+	    if (count($valeurs)==0) {
+	        # Donnée sans valeur
+	    } elseif (count($valeurs)==1) {
+	        # Uniquement d'un côté
+	        if (isset($valeurs[0])) {
+	            $val = traitement(simplify($attribut), $valeurs[0]);
+	            if ($val == '') {
+                    # données éléminées
+                } else {
+                    echo "<tr><td>$attribut</td><td>$val</td><td></td></tr>";
+                }
+	        }
+	        if (isset($valeurs[1])) {
+                $val = traitement(simplify($attribut), $valeurs[1]);
+                if ($val == '') {
+                    # données éléminées
+                } else {
+                    echo "<tr><td>$attribut</td><td></td><td>$val</td></tr>";
+                }
+            }
+	    } elseif (count($valeurs)==2) {
+	        $val1 = traitement(simplify($attribut), $valeurs[0]);
+            $val2 = traitement(simplify($attribut), $valeurs[1]);
+            if ($val1 == '' || $val2 == '') {
+                # données éléminées
+            }elseif ($val1 == $val2) {
+                # Même valeur : fusion du tableau
+                echo "<tr><td>$attribut</td><td colspan='2'><center>$val1</td><tr>";
+            } else {
+                echo "<tr><td>$attribut</td><td>$val1</td><td>$val2</td></tr>";
+            }
+	    } else {
+	        # erreur
+	    }
 	}
 
 	echo "</tbody></table>";
@@ -199,7 +225,34 @@ function fetchWikiData($Titre) { #Décupère les données des pages depuis l'API
 	$URL = "https://fr.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=" . urlencode($Titre) . "&rvprop=content&origin=*"; #URL
 	$response = file_get_contents($URL); #Effectue du requête GET à l'URL de l'API
 	return json_decode($response, true); #Pour mettre le format json
+}
 
+function simplify($attribut) {
+    $attribut = str_replace(' ', '', $attribut);
+    return $attribut;
+}
+
+function traitement($attribut, $valeur) {
+    # fonction pour filtrer l'affichage et le rendre plus propre
+    $banned_attributs = array(
+    'couleurboîte', 'titreblanc', 'logo', 'taillelogo', 'nometlogo', 'nomidentifiant', 'taille',
+    'espace', 'tailledrapeau'
+    );
+    $banned_caracters = array(
+    'Langue|en|texte=', '[', ']', '{', '}', '|'
+    );
+    foreach ($banned_attributs as $test) {
+        if ($test == $attribut) {
+            return "";
+        }
+    }
+    if (preg_replace('/\s+/', '', $valeur) == "") {
+        $valeur = '';
+    }
+    foreach ($banned_caracters as $modification) {
+        $valeur = str_replace($modification, '', $valeur);
+    }
+    return $valeur;
 }
 ?>
 </div>
