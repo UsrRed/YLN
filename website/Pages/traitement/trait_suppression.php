@@ -17,6 +17,9 @@ $utilisateur_id = $_SESSION['utilisateur_id'];
 
 #Il faut d'abord supprimer les favoris, sinon problème et pareil pour l'historique
 
+$suppression_faq_req = "DELETE FROM FAQ WHERE utilisateur_id = $utilisateur_id";
+$suppression_faq_rey = mysqli_query($connexion, $suppression_faq_req);
+
 $suppression_favoris_req = "DELETE FROM Favoris WHERE utilisateur_id = $utilisateur_id";
 $suppression_favoris_res = mysqli_query($connexion, $suppression_favoris_req);
 

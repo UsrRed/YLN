@@ -206,13 +206,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	        # Donnée sans valeur
 	    } elseif (count($valeurs)==1) {
 	        # Uniquement d'un côté
-	        if (isset($valeurs[0])) {
+	        /*if (isset($valeurs[0])) {
 	            $val = traitement(simplify($attribut), $valeurs[0]);
 	            if ($val == '') {
                     # données éléminées
                 } else {
                     echo "<tr><td>$attribut</td><td>$val</td><td></td></tr>";
-                }
+		}
 	        }
 	        if (isset($valeurs[1])) {
                 $val = traitement(simplify($attribut), $valeurs[1]);
@@ -220,14 +220,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     # données éléminées
                 } else {
                     echo "<tr><td>$attribut</td><td></td><td>$val</td></tr>";
-                }
-            }
-	    } elseif (count($valeurs)==2) {
+		}
+		}*/
+		 
+	    } 
+	    elseif (count($valeurs)==2) {
 	        $val1 = traitement(simplify($attribut), $valeurs[0]);
             $val2 = traitement(simplify($attribut), $valeurs[1]);
             if ($val1 == '' || $val2 == '') {
                 # données éléminées
-            }elseif ($val1 == $val2) {
+            } elseif ($val1 == $val2) {
                 # Même valeur : fusion du tableau
                 echo "<tr><td>$attribut</td><td colspan='2'><center>$val1</td><tr>";
             } else {
@@ -311,3 +313,4 @@ function recupWikiDataInfo($Titre){
 <!--<p>https://fr.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=Porsche&rvprop=content&origin=*</p>-->
 </body>
 </html>
+

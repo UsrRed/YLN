@@ -11,7 +11,7 @@ fi
 
 #Normalement l'adresse IP du haproxy ne change, c'est 172.18.0.4, mais on s'assure quand meme
 
-AdresseIP=$(podman inspect haproxy | grep -e "\"IPAddress\"" | cut -d":" -f2 | grep -oP "[0-9]{2,3}(\.[0-9]+)+") #Tout sauf un "" car il y a un attribut IpAddress="" par moment
+AdresseIP=$(podman inspect haproxy | grep -oP '"IPAddress": "\K[^"]+') #Tout sauf un "" car il y a un attribut IpAddress="" par moment
 
 #AdresseIP=$(ip a | grep podman* | grep inet | grep -oP '(?<=inet )[\d.]+') #espace après inet pour ne prendre que l'adresse IP après inet, donc pas le brd et on regarde des chiffres ou des points (\d.)
 

@@ -2,4 +2,3 @@ FROM haproxy:alpine
 
 COPY ./opensslkeys/myserver.pem /usr/local/etc/haproxy/
 COPY ./loadbalancing/haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg
-
