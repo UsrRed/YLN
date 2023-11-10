@@ -9,6 +9,11 @@ if (!isset($_SESSION['utilisateur_id'])) {
 include('/home/Pages/configBDD/config.php');
 
 $utilisateur_id = $_SESSION['utilisateur_id'];
+$nom_utilisateur = $_SESSION['utilisateur'];
+
+if ($nom_utilisateur !== 'admin') {
+	header("Location : /");
+}
 
 $req_faq = "SELECT FAQ.*, Utilisateur.adresse_email, Utilisateur.nom_utilisateur FROM FAQ, Utilisateur WHERE FAQ.utilisateur_id = Utilisateur.id";
 $resultat_faq = $connexion->query($req_faq);
