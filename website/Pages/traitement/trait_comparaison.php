@@ -57,8 +57,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	#$connexion->close();
 
 	#Requête API MediaWiki pour les deux entités. On récupère les données dans les variables au format json (elle utilise json_decode)
-	$data1 = fetchWikiData($comparaison1);
-	$data2 = fetchWikiData($comparaison2);
+	$data1 = recupWikiData($comparaison1);
+	$data2 = recupWikiData($comparaison2);
+
+	$datainfo1 = recupWikiDataInfo($comparaison1);
+	$datainfo2 = recupWikiDataInfo($comparaison2);
 
 	#echo $data1;
 	#echo $data2;
@@ -66,6 +69,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 	$infobox1 = "";
 	$infobox2 = "";
+
+	$info1 = "";
+	$info2 = "";
 
 	#--------------------------ATTRIBUTS A CRÉER-----------------------------#
 
@@ -88,14 +94,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		#echo "$temp";
             	$infobox1 = $temp['revisions'][0]['*']; #Contient donc les informations entières de l'infobox pour la première comparaison
 		#echo "$infobox1";
-
+		
+	} else {
+		echo "Aucune infobox trouvée pour la page $comparaison1";
 	}
 	# On fait pareil pour la deuxième comparaison/entité
 	if (isset($data2['query']['pages'])) {
 		$temp = reset($data2['query']['pages']);
 		$infobox2 = $temp['revisions'][0]['*'];
 		#echo "testtt";
+	} else {
+
+		echo "Aucune infobox trouvée pour la page $comparaison2";
 	}
+
+	#Pour les infos de la page : 
+	
+
+	if (isset($datainfo1['query']['pages'])) {
+		$page_info1 = reset($datainfo1['query']['pages']); #Comme d'hab, on prend la première page (il n'y en a qu'une normalement)
+
+		$page_long1 = $page_info1['length'];
+		#$page_protection1 = $page_info1['protection'];
+		$page_modif1 = $page_info1['touched'];
+		$page_watchers1 = $page_info1['watchers'];
+		$page_url1 = $page_info1['fullurl'];
+	}
+
+
+	if (isset($datainfo2['query']['pages'])) { #Pareil
+		$page_info2 = reset($datainfo2['query']['pages']);
+
+		$page_long2 = $page_info2['length'];
+		#$page_protection2 = $page_info2['protection'];
+		$page_modif2 = $page_info2['touched'];		
+		$page_watchers2 = $page_info2['watchers'];
+		$page_url2 = $page_info2['fullurl']; 
+	}
+
+       	#echo "Watchers : $page_watchers1";
 
 	?>
 
@@ -116,7 +153,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 	?>
 		<br/><br/>
-		<table class="table table-bordered"><thead><tr><th>Attributs</th><th><?php echo $comparaison1; ?></th><th><?php echo $comparaison2;?></th></tr></thead><tbody>
+		<table class="table table-bordered table-responsive"><thead><tr><th>Attributs</th><th><?php echo $comparaison1; ?></th><th><?php echo $comparaison2;?></th></tr></thead><tbody>
+		<tr><td>URL</td><td><a href='<?php echo $page_url1; ?>'><?php echo $page_url1;?> </a></td><td><a href='<?php echo $page_url2; ?>'><?php echo $page_url2;?></a></td></tr>
+		<tr><td>Longueur de la page</td><td><?php echo $page_long1; ?> octets</td><td><?php echo $page_long2; ?> octets</td></tr>
+		<tr><td>Dernière modification</td><td><?php echo $page_modif1; ?></td><td><?php echo $page_modif2; ?> </td></tr>
+		<tr><td>Nombre de favoris</td><td><?php echo $page_watchers1; ?></td><td><?php echo $page_watchers2; ?></td></tr>
 	<?php
 
 	$filtre_infobox = '/\{\{Infobox ([\s\S]*?)(?:\s\|\s)([\s\S]+?\\n\}\})/m';
@@ -216,13 +257,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	echo '</div>';
     } else {
         echo "Veuillez entrer des valeurs pour les comparaisons.";
-}
+    }
+	
 
 $connexion->close();
-#Fonction dont nous ne sommes pas l'auteur. @Author : Owen, https://www.developpez.com 
 
-function fetchWikiData($Titre) { #Décupère les données des pages depuis l'API MediaWiki
-	$URL = "https://fr.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=" . urlencode($Titre) . "&rvprop=content&origin=*"; #URL
+function recupWikiData($Titre) { #Décupère les données des pages depuis l'API MediaWiki
+	$URL = "https://fr.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=" . urlencode($Titre) . "&rvprop=content&origin=*"; #URL pour les données des infobox
 	$response = file_get_contents($URL); #Effectue du requête GET à l'URL de l'API
 	return json_decode($response, true); #Pour mettre le format json
 }
@@ -254,9 +295,19 @@ function traitement($attribut, $valeur) {
     }
     return $valeur;
 }
+
+function recupWikiDataInfo($Titre){
+	$URL1 = "https://fr.wikipedia.org/w/api.php?action=query&format=json&titles=" . urlencode($Titre) . "&prop=info&inprop=protection|talkid|watched|watchers|visitingwatchers|notificationtimestamp|subjectid|url|readable|preload|displaytitle|normalizedtitle|prefixedtitle|delegated&origin=*";
+	$response = file_get_contents($URL1);
+	return json_decode($response, true);
+
+}
+
 ?>
+
+
 </div>
 <br/><br/>
-<p>https://fr.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=Porsche&rvprop=content&origin=*</p>
+<!--<p>https://fr.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=Porsche&rvprop=content&origin=*</p>-->
 </body>
 </html>
