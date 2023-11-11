@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$mail->Port = 587; 
 
 		$mail->setFrom('sae501502@gmail.com', 'SAE501-502 - mot de passe');
-		$mail->addAddress($vrai_adresse_email); #adresse e-mail récupérée depuis la base de données. Le destinataire
+		$mail->addAddress($vrai_adresse_email); #adresse e-mail récupérée depuis la base de données
 
 		$mail->isHTML(false); 
 		$mail->Subject = 'Oublie du mot de passe';
