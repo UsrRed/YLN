@@ -30,6 +30,10 @@
 				<button type="submit" class="btn btn-danger">Se connecter</button>
 				<a href="/trait_deconnexion" class="btn btn-danger">Déconnexion</a>
 			</div>
+
+			<small class="form-text text-muted">
+				<a href="/trait_mdp_oublie_formulaire">Mot de passe oublié ?</a>
+			</small>
 		</form>
 	</div>
 </body>

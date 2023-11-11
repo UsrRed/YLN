@@ -27,8 +27,8 @@ if ($resul) {
 		$_SESSION['utilisateur'] = $utilisateur;
 		?>
 		<script>
-			alert("Connexion réussie, bienvenue sur l'application");
-			window.location.href = "/";
+			alert("Connexion réussie. Vous pouvez dès maintenant compléter votre profil en ajoutant des informations ou commencer à l'utiliser l'application");
+			window.location.href = "/trait_profil";
 		</script>
 		<?php
 

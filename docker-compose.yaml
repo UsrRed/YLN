@@ -49,7 +49,7 @@ services:
       - nginx2
     networks:
       sae:
-        #ipv4_address: 172.18.0.4
+        #ipv4_address: 172.18.0.253
 
   mysql:
     image: mysql:latest  
