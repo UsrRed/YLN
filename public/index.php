@@ -326,6 +326,34 @@ $app->get('/trait_suppression_formulaire', function (Request $request, Response 
 
 });
 
+$app->get('/trait_mdp_oublie_formulaire', function (Request $request, Response $response, $args) {
+
+	$fich = '/home/Pages/traitement/trait_mdp_oublie_formulaire.php';
+
+	ob_start();
+	include($fich);
+	$output = ob_get_clean();
+	$response->getBody()->write($output);
+
+	return $response;
+
+});
+
+$app->post('/trait_mdp_oublie', function (Request $request, Response $response, $args) {
+
+        $fich = '/home/Pages/traitement/trait_mdp_oublie.php';
+
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+
+        return $response;
+
+});
+
+
+	
 $app->get('/phpinfo', function (Request $request, Response $response) {
         phpinfo();
         return $response;

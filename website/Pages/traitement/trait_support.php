@@ -23,7 +23,7 @@ if (!isset($_SESSION['utilisateur'])) {
 <?php include('/home/includes/header.php'); ?>
 	<div class="container mt-5">
 		<h2>Contactez le support</h2><br/>
-<small>Assurez vous qu'avoir correctement complété votre profil sur <a href="/trait_profil">cette page </a>sinon, l'envoi de mail ne se fera pas</small><br/>
+<small>Assurez vous d'avoir correctement complété votre profil sur <a href="/trait_profil">cette page </a>sinon, l'envoi de mail ne se fera pas</small><br/>
 <br/><br/>
 <form action="/trait_envoi_mail" method="post">
 	<div class="form-group">
