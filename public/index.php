@@ -352,6 +352,19 @@ $app->post('/trait_mdp_oublie', function (Request $request, Response $response, 
 
 });
 
+$app->post('/trait_telechargement', function (Request $request, Response $response, $args) {
+
+        $fich = '/home/Pages/traitement/trait_telechargement.php';
+
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+
+        return $response;
+
+});
+
 
 	
 $app->get('/phpinfo', function (Request $request, Response $response) {

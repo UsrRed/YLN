@@ -241,7 +241,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	}
 
 	echo "</tbody></table>";
-	echo "<br/><br/>";
+	#echo "<br/><br/>";
 	#On récupère l'ID de la comparaison pour ensuite mettre en place les favoris
 	#On ajoute l'id de la comparaison dans la table favoris pour avoir la ligne sur laquelle l'utilisateur a mis le favoris
 
@@ -251,16 +251,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$id_comparaison = $ligne_id_comparaison['id'];
 
 	#ech
-	echo '<div class="text-center mt-3">';
-	echo '<form method="post" action="/trait_favoris">';
-    	echo '<input type="hidden" name="comparaison_id" value="' . $id_comparaison . '">';
-    	echo '<button type="submit" class="btn btn-danger" name="ajouter_favoris">Ajouter aux favoris</button>';
-	echo '</form>';
-	echo '</div>';
-    } else {
-        echo "Veuillez entrer des valeurs pour les comparaisons.";
-    }
-	
+?>
+
+<!--On utilise le même style des boutons que pour la page Connexion -->
+
+<div class="container mt-3 d-flex justify-content-between">
+	<form method="post" action="/trait_telechargement" class="d-flex justify-content-between">
+		<button type="submit" class="btn btn-danger" name="telecharger_csv">Télécharger le CSV</button>
+	</form>
+	<br/>		
+	<form method="post" action="/trait_favoris">
+		<input type="hidden" name="comparaison_id" value="<?php echo $id_comparaison; ?>">
+		<button type="submit" class="btn btn-danger" name="ajouter_favoris">Ajouter aux favoris</button>
+		
+	</form>
+</div>
+
+<?php
+
+}
 
 $connexion->close();
 
@@ -271,31 +280,30 @@ function recupWikiData($Titre) { #Décupère les données des pages depuis l'API
 }
 
 function simplify($attribut) {
-    $attribut = str_replace(' ', '', $attribut);
-    return $attribut;
+	$attribut = str_replace(' ', '', $attribut);
+	return $attribut;
 }
 
 function traitement($attribut, $valeur) {
-    # fonction pour filtrer l'affichage et le rendre plus propre
-    $banned_attributs = array(
-    'couleurboîte', 'titreblanc', 'logo', 'taillelogo', 'nometlogo', 'nomidentifiant', 'taille',
-    'espace', 'tailledrapeau'
-    );
-    $banned_caracters = array(
-    'Langue|en|texte=', '[', ']', '{', '}', '|'
-    );
-    foreach ($banned_attributs as $test) {
-        if ($test == $attribut) {
-            return "";
-        }
-    }
-    if (preg_replace('/\s+/', '', $valeur) == "") {
-        $valeur = '';
-    }
-    foreach ($banned_caracters as $modification) {
-        $valeur = str_replace($modification, '', $valeur);
-    }
-    return $valeur;
+	# fonction pour filtrer l'affichage et le rendre plus propre
+	$banned_attributs = array(
+	'couleurboîte', 'titreblanc', 'logo', 'taillelogo', 'nometlogo', 'nomidentifiant', 'taille', 'espace', 'tailledrapeau');
+	$banned_caracters = array('Langue|en|texte=', '[', ']', '{', '}', '|');
+
+	foreach ($banned_attributs as $test) {
+		if ($test == $attribut) {
+			return "";
+		}
+	}
+
+	if (preg_replace('/\s+/', '', $valeur) == "") {
+		$valeur = '';
+	}
+	
+	foreach ($banned_caracters as $modification) {
+		$valeur = str_replace($modification, '', $valeur);
+	}
+	return $valeur;
 }
 
 function recupWikiDataInfo($Titre){
@@ -305,12 +313,16 @@ function recupWikiDataInfo($Titre){
 
 }
 
+#On sauvegarde des variables dans la session de l'utilisateur pour faire le téléchargement
+
+$_SESSION['attributs_fusionnes'] = $attributs_fusionnes;
+$_SESSION['comparaison1'] = $comparaison1;
+$_SESSION['comparaison2'] = $comparaison2;
+
 ?>
 
-
 </div>
-<br/><br/>
+<br/>
 <!--<p>https://fr.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=Porsche&rvprop=content&origin=*</p>-->
 </body>
 </html>
-
