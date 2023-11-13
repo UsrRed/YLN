@@ -74,31 +74,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 #Pour envoyer l'e-mail
 
                 if (!$mail->send()) {
-                ?>
-                        <script>
-                                alert("Erreur lors de l'envoi de l'e-mail");
-                                window.location.href = "/trait_mdp_oublie_formulaire";
-                        </script>
-                <?php
-                        #echo 'Erreur lors de l'envoi de l'e-mail';
+                    session_start();
+                    $_SESSION['status'] = "danger";
+                    $_SESSION['message'] = "Erreur lors de l'envoi de l'e-mail";
+                    header("Location: /trait_mdp_oublie_formulaire");
                 } else {
-                        #echo 'E-mail envoyé avec succès, consultez vos -emails.';
-                ?>
-                        <script>
-                                alert("E-mail envoyé avec succès, consulez vos e-mails");
-                                window.location.href = "/Connexion";
-                        </script>
-                <?php
+                    session_start();
+                    $_SESSION['status'] = "success";
+                    $_SESSION['message'] = "E-mail envoyé avec succès, consulez vos e-mails";
+                    header("Location: /Connexion");
                 }
 
         } else {
-                #echo "Les données ne correspondent pas. Veuillez vérifier vos informations.";
-                ?>
-                <script>
-                        alert("Les données ne correspondent pas. Veuillez vérifier vos informations.");
-                        window.location.href = "/trait_mdp_oublie_formulaire";
-                </script>
-                <?php
+            #echo "Les données ne correspondent pas. Veuillez vérifier vos informations.";
+            session_start();
+            $_SESSION['status'] = "success";
+            $_SESSION['message'] = "Les données ne correspondent pas. Veuillez vérifier vos informations.";
+            header("Location: /trait_mdp_oublie_formulaire");
         }
 
         $stmt->close();

@@ -6,6 +6,9 @@
 session_start();
 
 if (!isset($_SESSION['utilisateur_id'])) {
+	session_start();
+	$_SESSION['status'] = "primary";
+	$_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
 	header("Location: /Connexion");
 	exit();
 }
@@ -30,13 +33,8 @@ $suppression_req = "DELETE FROM Utilisateur WHERE nom_utilisateur = '$utilisateu
 $suppression_res = mysqli_query($connexion, $suppression_req);
 
 session_destroy();
-?>
-<script>
-alert("Le compte <?php echo $utilisateur; ?> a bien été supprimé");
-	window.location.href = "/Inscription";
-</script>
-<?php
-
-#header("Location: /Connexion");
-
+session_start();
+$_SESSION['status'] = "success";
+$_SESSION['message'] = "Le compte " . $utilisateur . " a bien été supprimé";
+header("Location: /Inscription");
 ?>

@@ -2,7 +2,9 @@
 session_start(); # Pour démarrer la session
 
 if (!isset($_SESSION['utilisateur'])) {
-	#Si l'utilisateur n'est pas connecté, on vers la page de connexion
+    session_start();
+    $_SESSION['status'] = "primary";
+    $_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
 	header("Location: /Connexion");
 	exit();
 }
@@ -23,6 +25,7 @@ if (!isset($_SESSION['utilisateur'])) {
     <?php include('/home/includes/header.php'); ?>
     <div class="container mt-5">
         <h2>Complétez votre compte</h2>
+        <?php afficher_etat(); ?>
         <form action="/trait_info_profil" method="post">
             <div class="form-group">
                 <label for="age">Âge :</label>

@@ -2,6 +2,9 @@
 session_start();
 
 if (!isset($_SESSION['utilisateur'])) {
+    session_start();
+    $_SESSION['status'] = "primary";
+    $_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
 	header("Location: /Connexion");
 	exit();
 }
@@ -25,6 +28,7 @@ $nom_utilisateur = $_SESSION['utilisateur'];
 	<?php include('/home/includes/header.php'); ?>
 	<div class="container mt-5">
 	<h2>Paramètres de <?php echo $_SESSION['utilisateur']; ?> :</h2>
+    <?php afficher_etat(); ?>
 	<br/>
 		<div class="row">
 			<div class="col-md-6">
