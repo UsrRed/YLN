@@ -13,9 +13,19 @@ include('/home/Pages/configBDD/config.php');
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $utilisateur = $_POST["utilisateur"];
+        $utilisateur = filter_var($utilisateur, FILTER_UNSAFE_RAW);
         $email = $_POST["email"];
+        $email = filter_var($email, FILTER_SANITIZE_EMAIL);
         $age = $_POST["age"];
+        $age = filter_var($age, FILTER_SANITIZE_NUMBER_INT);
+        if ($age<0 || $age>125){
+                if (session_status() == PHP_SESSION_NONE) session_start();
+                $_SESSION['status'] = "warning";
+                $_SESSION['message'] = "Merci de saisir un âge valide";
+                header("Location: /trait_mdp_oublie_formulaire");
+        }
         $motdepasse = $_POST["motdepasse"];
+        $motdepasse = filter_var($motdepasse, FILTER_UNSAFE_RAW);
 
         #On vérif les données du formulaire en fonction de celles dans la base de données. On se sert des données du formulaire et son fait une requête avec pour voir s'il y a des lignes qui ressortent dans la base de données
 
@@ -71,12 +81,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 #Pour envoyer l'e-mail
 
                 if (!$mail->send()) {
-                        session_start();
+                        if (session_status() == PHP_SESSION_NONE) session_start();
                         $_SESSION['status'] = "danger";
                         $_SESSION['message'] = "Erreur lors de l'envoi de l'e-mail";
                         header("Location: /trait_mdp_oublie_formulaire");
                 } else {
-                        session_start();
+                        if (session_status() == PHP_SESSION_NONE) session_start();
                         $_SESSION['status'] = "success";
                         $_SESSION['message'] = "E-mail envoyé avec succès, consulez vos e-mails";
                         header("Location: /Connexion");
@@ -84,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         } else {
                 #echo "Les données ne correspondent pas. Veuillez vérifier vos informations.";
-                session_start();
+                if (session_status() == PHP_SESSION_NONE) session_start();
                 $_SESSION['status'] = "success";
                 $_SESSION['message'] = "Les données ne correspondent pas. Veuillez vérifier vos informations.";
                 header("Location: /trait_mdp_oublie_formulaire");

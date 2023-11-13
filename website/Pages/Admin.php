@@ -1,8 +1,8 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) session_start();
 
 if (!isset($_SESSION['utilisateur_id'])) {
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) session_start();
         $_SESSION['status'] = "primary";
         $_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
         header("Location: /Connexion");
@@ -52,7 +52,7 @@ $resultat_faq = $connexion->query($req_faq);
 <?php include('/home/includes/header.php'); ?>
 <body class="bg-light">
 <div class="container mt-5">
-    <h2>Liste des Questions Fréquemment Posées (FAQ)</h2><br/>
+    <h2>Foire Aux Questions (FAQ)</h2><br/>
         <?php afficher_etat(); ?>
     <table class="table table-bordered">
         <thead>

@@ -1,5 +1,5 @@
 <?php
-session_start(); #Page uniquement accessible lorsque l'on est connecté
+if (session_status() == PHP_SESSION_NONE) session_start(); #Page uniquement accessible lorsque l'on est connecté
 
 # Détruit la session de l'utilisateur : 
 session_destroy();

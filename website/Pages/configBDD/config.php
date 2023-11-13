@@ -23,7 +23,7 @@ USE nathiotime;
 CREATE TABLE IF NOT EXISTS Utilisateur (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	nom_utilisateur VARCHAR(25) NOT NULL,
-	mot_de_passe VARCHAR(50) NOT NULL,
+	mot_de_passe CHAR(60) NOT NULL,
 	age INT,
 	adresse_email VARCHAR(100),
 	mot_de_passe_application VARCHAR(100)
@@ -67,8 +67,8 @@ if (mysqli_multi_query($connexion, $tables)) { #On utilise mysqli_multi_query ca
 	do { # Boucle pour lire et traiter les résultats des requêtes SQL qui ont été éxécutées avant : 
 		if ($res_ancienne_requete = mysqli_store_result($connexion)) { # On vérifie si des résultats sont disponibles pour les requêtes SQLs précédentes
 			mysqli_free_result($res_ancienne_requete); # On "libère" la mémoire utilisée lors du traitement des anciennes requêtes
-			}
-		} while (mysqli_next_result($connexion)); 
+		}
+	} while (mysqli_next_result($connexion));
 	echo "";
 } else {
 	echo "Erreur lors de la création des tables";

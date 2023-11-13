@@ -71,9 +71,8 @@
                 <div class="text-right">
 			<span class="navbar-text">
 			<?php
-            if (session_status() == PHP_SESSION_NONE) {
-                    session_start();
-            }
+            if (session_status() == PHP_SESSION_NONE) session_start();
+
             if (isset($_SESSION['utilisateur_id'])) {
                     echo '<span class="text-success"><b> &ensp;&ensp; Connecté</b></span>';
             } else {

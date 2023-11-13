@@ -1,7 +1,6 @@
 <?php
-session_start(); # Pour démarrer la session
+if (session_status() == PHP_SESSION_NONE) session_start(); # Pour démarrer la session
 if (!isset($_SESSION['utilisateur'])) {
-        session_start();
         $_SESSION['status'] = "primary";
         $_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
         header("Location: /Connexion");
@@ -34,7 +33,9 @@ include('/home/Pages/configBDD/config.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $comparaison1 = $_POST["comparaison1"];
+$comparaison1 = filter_var($comparaison1, FILTER_UNSAFE_RAW);
 $comparaison2 = $_POST["comparaison2"];
+$comparaison2 = filter_var($comparaison2, FILTER_UNSAFE_RAW);
 #echo "$comparaison1 $comparaison2";
 #echo "test";
 

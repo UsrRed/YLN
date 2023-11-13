@@ -1,7 +1,7 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) session_start();
 if (!isset($_SESSION['utilisateur_id'])) {
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) session_start();
         $_SESSION['status'] = "primary";
         $_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
         header("Location: /Connexion");
@@ -15,8 +15,9 @@ $id_utilisateur = $_SESSION['utilisateur_id'];
 
 #Requête pour récupérer les favoris de l'utilisateur avec jonction avec la table Historique pour avoir les deux comparaisons.
 $req_favoris = "SELECT Favoris.*, Historique.comparaison1, Historique.comparaison2
-		FROM Favoris, Historique
-		WHERE Favoris.historique_id = Historique.id AND Favoris.utilisateur_id = '$id_utilisateur'";
+		        FROM Favoris, Historique
+		        WHERE Favoris.historique_id = Historique.id AND Favoris.utilisateur_id = '$id_utilisateur'
+		        ORDER BY date DESC";
 $resultat_favoris = mysqli_query($connexion, $req_favoris);
 
 #Utilise la même technique de pagination que pour la page historique, commentaires pour explication sur le fichier Historique.php 

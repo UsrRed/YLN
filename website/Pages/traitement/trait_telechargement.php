@@ -2,10 +2,10 @@
 
 <?php
 
-session_start();
+if (session_status() == PHP_SESSION_NONE) session_start();
 
 if (!isset($_SESSION['utilisateur'])) {
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) session_start();
         $_SESSION['status'] = "primary";
         $_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
         header("Location: /Connexion");

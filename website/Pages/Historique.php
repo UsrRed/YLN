@@ -1,8 +1,8 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) session_start();
 
 if (!isset($_SESSION['utilisateur'])) {
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) session_start();
         $_SESSION['status'] = "primary";
         $_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
         header("Location: /Connexion");
@@ -12,10 +12,11 @@ if (!isset($_SESSION['utilisateur'])) {
 include('/home/Pages/configBDD/config.php');
 
 $nom_utilisateur = $_SESSION['utilisateur'];
-$req_utilisateur = "SELECT id FROM Utilisateur WHERE nom_utilisateur = '$nom_utilisateur'";
-$result_utilisateur = mysqli_query($connexion, $req_utilisateur);
-$ligne_utilisateur = mysqli_fetch_assoc($result_utilisateur);
-$id_utilisateur = $ligne_utilisateur['id'];
+$id_utilisateur = $_SESSION['utilisateur_id'];
+#$req_utilisateur = "SELECT id FROM Utilisateur WHERE nom_utilisateur = '$nom_utilisateur'";
+#$result_utilisateur = mysqli_query($connexion, $req_utilisateur);
+#$ligne_utilisateur = mysqli_fetch_assoc($result_utilisateur);
+#$id_utilisateur = $ligne_utilisateur['id'];
 
 #echo $nom_utilisateur;
 #echo id_utilisateur;
@@ -48,7 +49,7 @@ $page_actuelle = isset($_GET['page']) ? $_GET['page'] : 1;
 $limite = ($page_actuelle - 1) * $resultats_par_page; #point de départ de récup des données
 #$page_actuelle = 4;
 #echo "$limite"; (30 --> ok)
-$req_historique = "SELECT * FROM Historique WHERE utilisateur_id = '$id_utilisateur' LIMIT $limite, $resultats_par_page"; #Pour ne récupérer seulement $resultats_par_page (ex : 20) éléments à partir du limite (ex : 10ème)  élément
+$req_historique = "SELECT * FROM Historique WHERE utilisateur_id = '$id_utilisateur' ORDER BY date DESC LIMIT $limite, $resultats_par_page"; #Pour ne récupérer seulement $resultats_par_page (ex : 20) éléments à partir du limite (ex : 10ème)  élément
 $resultat_historique = mysqli_query($connexion, $req_historique);
 #echo resultat_historique;
 ?>
