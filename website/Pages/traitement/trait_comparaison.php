@@ -1,7 +1,9 @@
 <?php
 session_start(); # Pour démarrer la session
 if (!isset($_SESSION['utilisateur'])) {
-	#Si l'utilisateur n'est pas connecté, on vers la page de connexion
+    session_start();
+    $_SESSION['status'] = "primary";
+    $_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
 	header("Location: /Connexion");
 	exit();
 }
@@ -20,6 +22,8 @@ if (!isset($_SESSION['utilisateur'])) {
 <body class="bg-light">
 <?php include('/home/includes/header.php'); ?>
 <?php
+afficher_etat();
+
 $nom_utilisateur = $_SESSION['utilisateur']; #Pour récupérer le nom d'utilisateur depuis la session
 #echo "nom_utilisateur";
 #echo "nom_utilisateur";
@@ -257,12 +261,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <div class="container mt-3 d-flex justify-content-between">
 	<form method="post" action="/trait_telechargement" class="d-flex justify-content-between">
-		<button type="submit" class="btn btn-danger" name="telecharger_csv">Télécharger le CSV</button>
+		<button type="submit" class="btn btn-dark" name="telecharger_csv">Télécharger le CSV</button>
 	</form>
 	<br/>		
 	<form method="post" action="/trait_favoris">
 		<input type="hidden" name="comparaison_id" value="<?php echo $id_comparaison; ?>">
-		<button type="submit" class="btn btn-danger" name="ajouter_favoris">Ajouter aux favoris</button>
+		<button type="submit" class="btn btn-success" name="ajouter_favoris">Ajouter aux favoris</button>
 		
 	</form>
 </div>

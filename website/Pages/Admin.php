@@ -2,6 +2,9 @@
 session_start();
 
 if (!isset($_SESSION['utilisateur_id'])) {
+    session_start();
+    $_SESSION['status'] = "primary";
+    $_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
 	header("Location: /Connexion");
 	exit();
 }
@@ -58,6 +61,7 @@ $resultat_faq = $connexion->query($req_faq);
 	<?php include('/home/includes/header.php'); ?>
 	<div class="container mt-5">
 		<h2>Liste des Questions Fréquemment Posées (FAQ)</h2><br/>
+        <?php afficher_etat(); ?>
 		<table class="table table-bordered">
 			<thead>
 				<tr>

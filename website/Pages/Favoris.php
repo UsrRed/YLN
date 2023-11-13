@@ -1,6 +1,9 @@
 <?php
 session_start();
 if (!isset($_SESSION['utilisateur_id'])) {
+    session_start();
+    $_SESSION['status'] = "primary";
+    $_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
 	header("Location: /Connexion");
 	exit();
 }
@@ -52,6 +55,7 @@ $resultat_favoris_pagination = mysqli_query($connexion, $req_favoris_pagination)
 <div class="container mt-5">
 	<h2>Favoris des comparaisons pour <?php echo $_SESSION['utilisateur']; ?> :</h2>
 	<br/><br/>
+    <?php afficher_etat(); ?>
 	<table class="table table-bordered">
 		<thead>
 			<tr><th>Comparaison 1</th><th>Comparaison 2</th><th>Afficher</th><th>Date</th></tr>

@@ -2,6 +2,9 @@
 session_start();
 
 if (!isset($_SESSION['utilisateur_id'])) {
+    session_start();
+    $_SESSION['status'] = "primary";
+    $_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
     header("Location: /Connexion");
     exit();
 }
@@ -30,36 +33,28 @@ if (mysqli_num_rows($res) === 1) { # On vérifie que l'utilisateur existe
 		$modif_req = "UPDATE Utilisateur SET mot_de_passe = '$nouveauMotDePasse' WHERE nom_utilisateur = '$utilisateur'";
 		$modif_res = mysqli_query($connexion, $modif_req);
 		session_destroy(); # On le déconnecte
-	?>
-		<script>
-			alert("Le mot de passe a été changé avec succès, a prèsent, reconnectez-vous");
-			window.location.href = "/Connexion";
-		</script>
-	<?php
+        session_start();
+        $_SESSION['status'] = "success";
+        $_SESSION['message'] = "Le mot de passe a été changé avec succès, a prèsent, reconnectez-vous";
+        header("Location: /Connexion");
 	} else {
-	?>
-		<script>
-			alert("Le nouveau mot de passe ne correspond pas à la confirmation");
-			window.location.href= "/trait_changement_mdp_formulaire";
-		</script>
-	<?php	
+        session_start();
+        $_SESSION['status'] = "warning";
+        $_SESSION['message'] = "Le nouveau mot de passe ne correspond pas à la confirmation";
+        header("Location: /trait_changement_mdp_formulaire");
 	}
 	} else {
-	?>
-		<script>
-			alert("Le mot de passe actuel est incorrect");
-			window.location.href= "/trait_changement_mdp_formulaire";
-		</script>
-	<?php
+        session_start();
+        $_SESSION['status'] = "warning";
+        $_SESSION['message'] = "Le mot de passe actuel est incorrect";
+        header("Location: /trait_changement_mdp_formulaire");
 	}
 } else {
 	# Si ça va là, l'utilisateur n'existe pas
-	?>
-		<script>
-			alert("L'utilisateur n'existe pas");
-			window.location.href="/trait_changement_mdp_formulaire";
-		</script>
-	<?php
+    session_start();
+    $_SESSION['status'] = "danger";
+    $_SESSION['message'] = "L'utilisateur n'existe pas";
+    header("Location: /trait_changement_mdp_formulaire");
 }
 mysqli_close($connexion);
 ?>

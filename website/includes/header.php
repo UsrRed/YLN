@@ -76,6 +76,15 @@
 			} else {
 				echo '<span class="text-danger"><b> &ensp;&ensp; Déconnecté</b></span>';
 			}
+            function afficher_etat(){
+                if(isset($_SESSION['status']) && isset($_SESSION['message'])){
+                    echo "<div class=\"alert alert-" . $_SESSION['status'] . "\" role=\"alert\">";
+                    echo $_SESSION['message'];
+                    echo "</div>";
+                    unset($_SESSION['status']);
+                    unset($_SESSION['message']);
+                }
+            }
 			?>
 			</span>
 		</div>

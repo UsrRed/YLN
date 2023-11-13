@@ -25,27 +25,21 @@ if ($resul) {
 		session_start(); # On démarre sa session
 		$_SESSION['utilisateur_id'] = $id_utilisateur; # Stocke l'ID de l'utilisateur dans la session
 		$_SESSION['utilisateur'] = $utilisateur;
-		?>
-		<script>
-			alert("Connexion réussie. Vous pouvez dès maintenant compléter votre profil en ajoutant des informations ou commencer à l'utiliser l'application");
-			window.location.href = "/trait_profil";
-		</script>
-		<?php
 
+        session_start();
+        $_SESSION['status'] = "success";
+        $_SESSION['message'] = "Vous êtes désormais connecté !";
+        header("Location: /trait_profil");
 		#header("Location: /");
 		exit();
 	} else {
 		# Si la variable resul n'est pas de 1, l'utilisateur n'existe pas et n'est donc pas connecté
 		
 		#echo "Erreur de connexion à la base de données : " . mysqli_connect_error();
-?>
-
-
-		<script>
-			alert("Vous n'êtes pas connecté, les informations de connexion sont incorrectes");
-			window.location.href = "/Connexion";
-		</script>
-	<?php
+        session_start();
+        $_SESSION['status'] = "danger";
+        $_SESSION['message'] = "Mauvais nom d'utilisateur ou mot de passe !";
+        header("Location: /Connexion");
 		#$message = "Vous n'êtes pas connecté, les informations de connexion sont incorrectes";
 		}
 } else {

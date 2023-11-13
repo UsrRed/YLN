@@ -2,7 +2,9 @@
 session_start(); # Pour démarrer la session
 
 if (!isset($_SESSION['utilisateur'])) {
-	#Si l'utilisateur n'est pas connecté, on vers la page de connexion
+    session_start();
+    $_SESSION['status'] = "primary";
+    $_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
 	header("Location: /Connexion");
 	exit();
 }
@@ -22,6 +24,7 @@ if (!isset($_SESSION['utilisateur'])) {
 <body class="bg-light">
     <?php include('/home/includes/header.php'); ?>
     <div class="container mt-5">
+        <?php afficher_etat(); ?>
         <h2>Qu'est-ce qu'un mot de passe d'application ?</h2><br/>
 		<p>Le mot de passe d'application que vous saisissez servira à l'envoi d'un mail aux créateurs de l'application lorsque vous poserez une question sur la page <b>Support et questions</b>. C'est un mot de passe temporaire qui est généré aléatoirement par gmail comportant 16 lettres et qu'il est possible de supprimer à tout instant. De plus, il est stocké dans la base de données qui est propre à la machine.</p>
 	<br/>

@@ -14,6 +14,7 @@
 	<?php include('/home/includes/header.php'); ?>
 	<div class="container mt-5">
 	<h1>Connexion</h1>
+        <?php afficher_etat(); ?>
 		<form action="/trait_connexion" method="post">
 			<div class="form-group">
 				<label for="utilisateur">Nom d'utilisateur :</label>
@@ -27,7 +28,7 @@
 
 			<div class="d-flex justify-content-between"> 
 		<!--Pour que ce soit aligné avec le formulaire, a droite, source : https://getbootstrap.com/docs/4.0/utilities/flex/ -->
-				<button type="submit" class="btn btn-danger">Se connecter</button>
+				<button type="submit" class="btn btn-success">Se connecter</button>
 				<a href="/trait_deconnexion" class="btn btn-danger">Déconnexion</a>
 			</div>
 

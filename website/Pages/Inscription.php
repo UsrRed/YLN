@@ -14,6 +14,7 @@
 	<?php include('/home/includes/header.php'); ?>
 	<div class="container mt-5">
 		<h1>Inscription</h1>
+        <?php afficher_etat(); ?>
 		<form action="/trait_inscription" method="post">
 			<div class="form-group">
 				<label for="nouv_utilisateur">Nouveau nom d'utilisateur :</label>
@@ -26,7 +27,7 @@
 			</div>
 
 			<div class="d-flex justify-content-between">
-				<button type="submit" class="btn btn-danger">S'inscrire</button>
+				<button type="submit" class="btn btn-success">S'inscrire</button>
 			</div>
 		</form>
 	</div>

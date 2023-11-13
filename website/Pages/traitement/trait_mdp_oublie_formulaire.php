@@ -15,6 +15,7 @@
 	<h2>Mot de passe oublié ?</h2>
 	<br/><small>Assurez vous d'avoir <b>auparavant complété votre profil</b> sur <a href="/trait_profil">cette page </a>sinon, l'envoi de mail et la réinitialisation du mot de passene se fera pas.</small><br/>
 	<small>Les champs adresse e-mail sont une vérification de l'identité.</small><br/><br/>
+    <?php afficher_etat(); ?>
 	<form action="/trait_mdp_oublie" method="post">
             <div class="form-group">
                 <label for="utilisateur">Nom d'utilisateur :</label>

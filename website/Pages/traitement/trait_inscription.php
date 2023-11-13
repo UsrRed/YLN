@@ -15,12 +15,10 @@ $verif = "SELECT * FROM Utilisateur WHERE nom_utilisateur = '$nouv_utilisateur'"
 $res = mysqli_query($connexion, $verif);
 
 if(mysqli_num_rows($res) > 0) {
-?>
-        <script>
-                alert("Cet utilisateur existe déjà");
-                window.location.href= "/Inscription";
-        </script>
-<?php
+    session_start();
+    $_SESSION['status'] = "warning";
+    $_SESSION['message'] = "Cet utilisateur existe déjà";
+    header("Location: /Inscription");
 } else {
 
 #Insertion des données dans la base de données
@@ -30,22 +28,15 @@ $sql ="INSERT INTO Utilisateur (nom_utilisateur, mot_de_passe) VALUES ('$nouv_ut
 }
 
 if (mysqli_query($connexion, $sql)) {
-	?>
-	<script>
-		alert("Inscription réussie, veuillez-vous connecter");
-		window.location.href = "/Connexion";
-	</script>		
-	<?php
-	#header("Location: /Connexion");
+    session_start();
+    $_SESSION['status'] = "success";
+    $_SESSION['message'] = "Inscription réussie, veuillez-vous connecter";
+    header("Location: /Connexion");
 } else {
-?>
-	<script>
-		alert("Erreur lors de l'inscription. Essayez à nouveau";
-		window.location.href = "/Inscription";
-	</script>
-	<?php
-	#echo "Erreur lors de l'inscription. Essayez à nouveau";
+    session_start();
+    $_SESSION['status'] = "danger";
+    $_SESSION['message'] = "Erreur lors de l'inscription. Essayez à nouveau";
+    header("Location: /Inscription");
 }
-#}
 mysqli_close($connexion);
 ?>

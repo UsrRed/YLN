@@ -2,8 +2,11 @@
 session_start();
 
 if (!isset($_SESSION['utilisateur'])) {
+    session_start();
+    $_SESSION['status'] = "primary";
+    $_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
 	header("Location: /Connexion");
-    	exit();
+    exit();
 }
 
 include('/home/Pages/configBDD/config.php');
@@ -64,6 +67,7 @@ $resultat_historique = mysqli_query($connexion, $req_historique);
 	<div class="container mt-5">
 	<h2>Historique des comparaisons pour <?php echo $_SESSION['utilisateur']; ?> :</h2>
 	<br/><br/>
+    <?php afficher_etat(); ?>
 	<table class="table table-bordered">
 		<thead>
 			<tr><th>Comparaison 1</th><th>Comparaison 2</th><th>Afficher</th><th>Date</th> </tr>

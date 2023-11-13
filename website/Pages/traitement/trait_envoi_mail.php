@@ -2,6 +2,9 @@
 session_start();
 
 if (!isset($_SESSION['utilisateur_id'])) {
+	session_start();
+	$_SESSION['status'] = "primary";
+	$_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
 	header("Location: /Connexion");
 	exit();
 }
@@ -57,21 +60,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 	if ($mail->send()) {
-
-		?>
-		<script>
-			alert("Mail envoyé avec succès ! On vous répondra dans les plus brefs délais");
-			window.location.href = "/";
-		</script>
-		<?php
+        session_start();
+        $_SESSION['status'] = "success";
+        $_SESSION['message'] = "Mail envoyé avec succès ! On vous répondra dans les plus brefs délais";
+        header("Location: /");
 	} else {
-
-		?>
-		<script>
-			alert("Erreur lors de l'envoi du mail.");
-			window.location.href = "/trait_support";
-		</script>
-		<?php
+        session_start();
+        $_SESSION['status'] = "danger";
+        $_SESSION['message'] = "Erreur lors de l'envoi du mail.";
+        header("Location: /trait_support");
 	}
 
 	#Trace dans la base de données : 
