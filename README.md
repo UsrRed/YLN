@@ -74,8 +74,6 @@ You don't have access to the FAQ page; only the administrator does. This page co
 
 ### Improvement notes ?
 
-There is a small issue in the website design. To access the Admin FAQ page (which is only accessible by the application administrator), there needs to be an administrator's entry in the FAQ table first. In other words, if the administrator has not posted questions on the FAQ page (/trait_faq), no one can access on this page.
-
 
 <!--
 ## Getting started
