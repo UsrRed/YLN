@@ -53,17 +53,9 @@ $resultat_historique = mysqli_query($connexion, $req_historique);
 #echo resultat_historique;
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<title>SAE501-502-THEOTIME-MARTEL</title>
-    	<meta charset="utf-8">
-    	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</head>
+<?php include('/home/includes/header.php'); ?>
+
 <body class="bg-light">
-	<?php include('/home/includes/header.php'); ?>
 	<div class="container mt-5">
 	<h2>Historique des comparaisons pour <?php echo $_SESSION['utilisateur']; ?> :</h2>
 	<br/><br/>
@@ -107,4 +99,3 @@ $resultat_historique = mysqli_query($connexion, $req_historique);
 	</div>
 	</div>
 </body>
-</html>

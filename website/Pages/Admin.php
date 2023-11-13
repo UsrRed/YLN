@@ -48,17 +48,9 @@ $limite = ($page_actuelle - 1) * $resultats_par_page;
 $req_faq = "SELECT FAQ.*, Utilisateur.adresse_email, Utilisateur.nom_utilisateur FROM FAQ, Utilisateur WHERE FAQ.utilisateur_id = Utilisateur.id LIMIT $limite, $resultats_par_page";
 $resultat_faq = $connexion->query($req_faq);
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-	<title>SAE501-502-THEOTIME-MARTEL</title>
-	<meta charset="utf-8">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</head>
+
+<?php include('/home/includes/header.php'); ?>
 <body class="bg-light">
-	<?php include('/home/includes/header.php'); ?>
 	<div class="container mt-5">
 		<h2>Liste des Questions Fréquemment Posées (FAQ)</h2><br/>
         <?php afficher_etat(); ?>
@@ -96,5 +88,4 @@ $resultat_faq = $connexion->query($req_faq);
 		</div>
 	</div>
 </body>
-</html>
 

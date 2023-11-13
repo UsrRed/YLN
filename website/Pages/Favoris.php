@@ -41,17 +41,11 @@ $resultat_favoris_pagination = mysqli_query($connexion, $req_favoris_pagination)
 
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<title>SAE501-502-THEOTIME-MARTEL</title>
-	<meta charset="utf-8">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</head>
-<body class="bg-light">
+
 <?php include('/home/includes/header.php'); ?>
+
+<body class="bg-light">
+
 <div class="container mt-5">
 	<h2>Favoris des comparaisons pour <?php echo $_SESSION['utilisateur']; ?> :</h2>
 	<br/><br/>
@@ -95,4 +89,3 @@ $resultat_favoris_pagination = mysqli_query($connexion, $req_favoris_pagination)
 	</div>
 </div>
 </body>
-</html>
