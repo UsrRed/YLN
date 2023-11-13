@@ -29,7 +29,7 @@ if ($nom_utilisateur !== 'admin') {
 	echo "<br/>--> Si vous êtes connecté en tant qu'admin et que vous obtenez ce message : <br/><br/>1)Rendez-vous sur la page 'support et questions' en étant connecté en tant qu'admin <br/>2)Envoyez n'importe qu'elle objet et n'importe qu'elle corps en saisissant au moins un caractère dans les deux champs du formulaire<br/>3) Cliquez sur ok pour fermer l'alerte après avoir soumis le formulaire<br/>4)Cliquez sur l'onglet FAQ et cela devrait fonctionner";
     session_start();
     $_SESSION['status'] = "warning";
-    $_SESSION['message'] = "Vous n'êtes pas autorisé à accéder à cette page. Seul l'admin peut y accéder. Redirection vers la page d'accueil...";
+    $_SESSION['message'] = "Vous n'êtes pas autorisé à accéder à cette page. Seul l'admin peut y accéder.";
     header("Location: /");
     exit();
 } else {
