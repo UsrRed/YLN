@@ -1,4 +1,5 @@
 <?php
+
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
@@ -15,18 +16,18 @@ require __DIR__ . '/../composer/vendor/autoload.php';
 $app = AppFactory::create();
 
 /**
-  * The routing middleware should be added earlier than the ErrorMiddleware
-  * Otherwise exceptions thrown from it will not be handled by the middleware
-  */
+ * The routing middleware should be added earlier than the ErrorMiddleware
+ * Otherwise exceptions thrown from it will not be handled by the middleware
+ */
 $app->addRoutingMiddleware();
 
 /**
  * Add Error Middleware
  *
- * @param bool                  $displayErrorDetails -> Should be set to false in production
- * @param bool                  $logErrors -> Parameter is passed to the default ErrorHandler
- * @param bool                  $logErrorDetails -> Display error details in error log
- * @param LoggerInterface|null  $logger -> Optional PSR-3 Logger  
+ * @param bool $displayErrorDetails -> Should be set to false in production
+ * @param bool $logErrors -> Parameter is passed to the default ErrorHandler
+ * @param bool $logErrorDetails -> Display error details in error log
+ * @param LoggerInterface|null $logger -> Optional PSR-3 Logger
  *
  * Note: This middleware should be added last. It will not handle any exceptions/errors
  * for middleware added after it.
@@ -35,307 +36,307 @@ $errorMiddleware = $app->addErrorMiddleware(true, true, true);
 
 // Define app routes
 $app->get('/hello/{name}', function (Request $request, Response $response, $args) {
-    $name = $args['name'];
-    $response->getBody()->write("Hello, $name");
-    return $response;
+        $name = $args['name'];
+        $response->getBody()->write("Hello, $name");
+        return $response;
 });
 
 #Aide pour les routes : https://openclassrooms.com/forum/sujet/a-quoi-sert-obstart-27525
 
 $app->get('/Inscription', function (Request $request, Response $response, $args) {
 
-    $fich = '/home/Pages/Inscription.php';
-    ob_start(); #Mise en mémoire "tampon" pour stocker temporairement le fichier
-    include($fich); #Inclu le fichier dans la mise en mémoire "tampon"
-    $output = ob_get_clean(); #Récupère le contenu du tampon de sortie
+        $fich = '/home/Pages/Inscription.php';
+        ob_start(); #Mise en mémoire "tampon" pour stocker temporairement le fichier
+        include($fich); #Inclu le fichier dans la mise en mémoire "tampon"
+        $output = ob_get_clean(); #Récupère le contenu du tampon de sortie
 
-    #Ecrit le contenu du fichier dans la variable réponse
-    $response->getBody()->write($output);
+        #Ecrit le contenu du fichier dans la variable réponse
+        $response->getBody()->write($output);
 
-    return $response;
-});   
+        return $response;
+});
 
 $app->get('/', function (Request $request, Response $response, $args) {
 
-    $fich = '/home/index.php';
+        $fich = '/home/index.php';
 
-    ob_start();
-    include($fich);
-    $output = ob_get_clean();
-    $response->getBody()->write($output);
-    return $response;
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+        return $response;
 
 });
 
 $app->get('/Historique', function (Request $request, Response $response, $args) {
 
-    $fich = '/home/Pages/Historique.php';
+        $fich = '/home/Pages/Historique.php';
 
-    ob_start();
-    include($fich);
-    $output = ob_get_clean();
-    $response->getBody()->write($output);
-    return $response;
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+        return $response;
 
 });
 
 $app->get('/Connexion', function (Request $request, Response $response, $args) {
 
-    $fich = '/home/Pages/Connexion.php';
+        $fich = '/home/Pages/Connexion.php';
 
-    ob_start();
-    include($fich);
-    $output = ob_get_clean();
-    $response->getBody()->write($output);
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
 
-    return $response;
+        return $response;
 
 });
 
 $app->get('/Favoris', function (Request $request, Response $response, $args) {
 
-    $fich = '/home/Pages/Favoris.php';
+        $fich = '/home/Pages/Favoris.php';
 
-    ob_start();
-    include($fich);
-    $output = ob_get_clean();
-    $response->getBody()->write($output);
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
 
-    return $response;
+        return $response;
 
 });
 
 
 $app->get('/trait_deconnexion', function (Request $request, Response $response, $args) {
 
-    $fich = '/home/Pages/traitement/trait_deconnexion.php';
+        $fich = '/home/Pages/traitement/trait_deconnexion.php';
 
-    ob_start();
-    include($fich);
-    $output = ob_get_clean();
-    $response->getBody()->write($output);
- 
-    return $response;
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+
+        return $response;
 
 });
 
 
 $app->post('/trait_inscription', function (Request $request, Response $response, $args) {
 
-    $fich = '/home/Pages/traitement/trait_inscription.php';
+        $fich = '/home/Pages/traitement/trait_inscription.php';
 
-    ob_start();
-    include($fich);
-    $output = ob_get_clean();
-    $response->getBody()->write($output);
- 
-    return $response;
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+
+        return $response;
 
 });
 
 $app->post('/trait_comparaison', function (Request $request, Response $response, $args) {
 
-    $fich = '/home/Pages/traitement/trait_comparaison.php';
+        $fich = '/home/Pages/traitement/trait_comparaison.php';
 
-    ob_start();
-    include($fich);
-    $output = ob_get_clean();
-    $response->getBody()->write($output);
- 
-    return $response;
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+
+        return $response;
 
 });
 
 
 $app->post('/trait_connexion', function (Request $request, Response $response, $args) {
 
-    $fich = '/home/Pages/traitement/trait_connexion.php';
+        $fich = '/home/Pages/traitement/trait_connexion.php';
 
-    ob_start();
-    include($fich);
-    $output = ob_get_clean();
-    $response->getBody()->write($output);
- 
-    return $response;
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+
+        return $response;
 
 });
 
 $app->post('/trait_favoris', function (Request $request, Response $response, $args) {
 
-    $fich = '/home/Pages/traitement/trait_favoris.php';
+        $fich = '/home/Pages/traitement/trait_favoris.php';
 
-    ob_start();
-    include($fich);
-    $output = ob_get_clean();
-    $response->getBody()->write($output);
- 
-    return $response;
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+
+        return $response;
 
 });
 
 $app->get('/Paramètres', function (Request $request, Response $response, $args) {
-    $fich = '/home/Pages/Paramètres.php';
+        $fich = '/home/Pages/Paramètres.php';
 
-    ob_start();
-    include($fich);
-    $output = ob_get_clean();
-    $response->getBody()->write($output);
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
 
-    return $response;
+        return $response;
 });
 
 $app->post('/trait_changement_mdp', function (Request $request, Response $response, $args) {
 
-    $fich = '/home/Pages/traitement/trait_changement_mdp.php';
+        $fich = '/home/Pages/traitement/trait_changement_mdp.php';
 
-    ob_start();
-    include($fich);
-    $output = ob_get_clean();
-    $response->getBody()->write($output);
- 
-    return $response;
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+
+        return $response;
 
 });
 
 $app->get('/trait_profil', function (Request $request, Response $response, $args) {
 
-    $fich = '/home/Pages/traitement/trait_profil.php';
+        $fich = '/home/Pages/traitement/trait_profil.php';
 
-    ob_start();
-    include($fich);
-    $output = ob_get_clean();
-    $response->getBody()->write($output);
- 
-    return $response;
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+
+        return $response;
 
 });
 
 $app->get('/trait_mdp_appli', function (Request $request, Response $response, $args) {
 
-    $fich = '/home/Pages/traitement/trait_mdp_appli.php';
+        $fich = '/home/Pages/traitement/trait_mdp_appli.php';
 
-    ob_start();
-    include($fich);
-    $output = ob_get_clean();
-    $response->getBody()->write($output);
- 
-    return $response;
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+
+        return $response;
 
 });
 
 $app->post('/trait_info_profil', function (Request $request, Response $response, $args) {
 
-    $fich = '/home/Pages/traitement/trait_info_profil.php';
+        $fich = '/home/Pages/traitement/trait_info_profil.php';
 
-    ob_start();
-    include($fich);
-    $output = ob_get_clean();
-    $response->getBody()->write($output);
- 
-    return $response;
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+
+        return $response;
 
 });
 
 $app->get('/trait_support', function (Request $request, Response $response, $args) {
 
-    $fich = '/home/Pages/traitement/trait_support.php';
+        $fich = '/home/Pages/traitement/trait_support.php';
 
-    ob_start();
-    include($fich);
-    $output = ob_get_clean();
-    $response->getBody()->write($output);
- 
-    return $response;
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+
+        return $response;
 
 });
 
 $app->post('/trait_envoi_mail', function (Request $request, Response $response, $args) {
 
-    $fich = '/home/Pages/traitement/trait_envoi_mail.php';
+        $fich = '/home/Pages/traitement/trait_envoi_mail.php';
 
-    ob_start();
-    include($fich);
-    $output = ob_get_clean();
-    $response->getBody()->write($output);
- 
-    return $response;
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+
+        return $response;
 
 });
 
 $app->get('/trait_faq', function (Request $request, Response $response, $args) {
 
-	$fich = '/home/Pages/traitement/trait_faq.php';
-	ob_start();
-	include($fich);
-	$output = ob_get_clean();
-	$response->getBody()->write($output);
+        $fich = '/home/Pages/traitement/trait_faq.php';
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
 
 });
 
 
 $app->get('/admin', function (Request $request, Response $response, $args) {
 
-    $fich = '/home/Pages/Admin.php';
+        $fich = '/home/Pages/Admin.php';
 
-    ob_start();
-    include($fich);
-    $output = ob_get_clean();
-    $response->getBody()->write($output);
- 
-    return $response;
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+
+        return $response;
 
 });
 
 $app->post('/trait_suppression', function (Request $request, Response $response, $args) {
 
-    $fich = '/home/Pages/traitement/trait_suppression.php';
+        $fich = '/home/Pages/traitement/trait_suppression.php';
 
-    ob_start();
-    include($fich);
-    $output = ob_get_clean();
-    $response->getBody()->write($output);
- 
-    return $response;
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+
+        return $response;
 
 });
 
 $app->get('/trait_changement_mdp_formulaire', function (Request $request, Response $response, $args) {
 
-    $fich = '/home/Pages/traitement/trait_changement_mdp_formulaire.php';
+        $fich = '/home/Pages/traitement/trait_changement_mdp_formulaire.php';
 
-    ob_start();
-    include($fich);
-    $output = ob_get_clean();
-    $response->getBody()->write($output);
- 
-    return $response;
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+
+        return $response;
 
 });
 
 
 $app->get('/trait_suppression_formulaire', function (Request $request, Response $response, $args) {
 
-    $fich = '/home/Pages/traitement/trait_suppression_formulaire.php';
+        $fich = '/home/Pages/traitement/trait_suppression_formulaire.php';
 
-    ob_start();
-    include($fich);
-    $output = ob_get_clean();
-    $response->getBody()->write($output);
- 
-    return $response;
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+
+        return $response;
 
 });
 
 $app->get('/trait_mdp_oublie_formulaire', function (Request $request, Response $response, $args) {
 
-	$fich = '/home/Pages/traitement/trait_mdp_oublie_formulaire.php';
+        $fich = '/home/Pages/traitement/trait_mdp_oublie_formulaire.php';
 
-	ob_start();
-	include($fich);
-	$output = ob_get_clean();
-	$response->getBody()->write($output);
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
 
-	return $response;
+        return $response;
 
 });
 
@@ -366,11 +367,10 @@ $app->post('/trait_telechargement', function (Request $request, Response $respon
 });
 
 
-	
 $app->get('/phpinfo', function (Request $request, Response $response) {
         phpinfo();
         return $response;
-        });
+});
 
 #Run app
 $app->run();

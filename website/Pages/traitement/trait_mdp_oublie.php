@@ -11,7 +11,7 @@ include('/home/Pages/configBDD/config.php');
 # Pour récupérer les données du formulaire
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
+
         $utilisateur = $_POST["utilisateur"];
         $email = $_POST["email"];
         $age = $_POST["age"];
@@ -20,13 +20,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         #On vérif les données du formulaire en fonction de celles dans la base de données. On se sert des données du formulaire et son fait une requête avec pour voir s'il y a des lignes qui ressortent dans la base de données
 
         $req = "SELECT * FROM Utilisateur WHERE nom_utilisateur = ? AND adresse_email = ? AND age = ? AND mot_de_passe_application = ?";
-    
+
         $stmt = $connexion->prepare($req);
         $stmt->bind_param("ssis", $utilisateur, $email, $age, $motdepasse); #String, String, entier (integer), String
         $stmt->execute();
         $result = $stmt->get_result();
 
-        if ($result->num_rows > 0){
+        if ($result->num_rows > 0) {
 
                 $nouv_mdp = mdp_aleatoire();
 
@@ -49,48 +49,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $modif_Stmt->close();
 
 
-
-
-
                 $mail = new PHPMailer\PHPMailer\PHPMailer();
 
                 #Compte gmail sae501502gmail.com créé pour l'envoi de mail à l'utilisateur qui a oublié son mot de passe
 
                 $mail->isSMTP();
-                $mail->Host = 'smtp.gmail.com'; 
+                $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
                 $mail->Username = 'sae501502@gmail.com'; #Adresse e-mail gmail pour l'envoi
                 $mail->Password = 'xqifxpjrieknuntn'; #Mot de passe d'application
                 $mail->SMTPSecure = 'tls';
-                $mail->Port = 587; 
+                $mail->Port = 587;
 
                 $mail->setFrom('sae501502@gmail.com', 'SAE501-502 - mot de passe');
                 $mail->addAddress($vrai_adresse_email); #adresse e-mail récupérée depuis la base de données. Le destinataire
 
-                $mail->isHTML(false); 
+                $mail->isHTML(false);
                 $mail->Subject = 'Oublie du mot de passe';
                 $mail->Body = "Bonjour $utilisateur,\n\nVous avez oublié votre mot de passe, en voici un nouveau pour votre compte : $nouv_mdp\nNous vous encouragons par la suite, après vous êtes authentifié, à modifier votre mot de passe sur la page /trait_changement_mdp_formulaire pour des raisons de sécurité.\n\nCordialement,";
 
                 #Pour envoyer l'e-mail
 
                 if (!$mail->send()) {
-                    session_start();
-                    $_SESSION['status'] = "danger";
-                    $_SESSION['message'] = "Erreur lors de l'envoi de l'e-mail";
-                    header("Location: /trait_mdp_oublie_formulaire");
+                        session_start();
+                        $_SESSION['status'] = "danger";
+                        $_SESSION['message'] = "Erreur lors de l'envoi de l'e-mail";
+                        header("Location: /trait_mdp_oublie_formulaire");
                 } else {
-                    session_start();
-                    $_SESSION['status'] = "success";
-                    $_SESSION['message'] = "E-mail envoyé avec succès, consulez vos e-mails";
-                    header("Location: /Connexion");
+                        session_start();
+                        $_SESSION['status'] = "success";
+                        $_SESSION['message'] = "E-mail envoyé avec succès, consulez vos e-mails";
+                        header("Location: /Connexion");
                 }
 
         } else {
-            #echo "Les données ne correspondent pas. Veuillez vérifier vos informations.";
-            session_start();
-            $_SESSION['status'] = "success";
-            $_SESSION['message'] = "Les données ne correspondent pas. Veuillez vérifier vos informations.";
-            header("Location: /trait_mdp_oublie_formulaire");
+                #echo "Les données ne correspondent pas. Veuillez vérifier vos informations.";
+                session_start();
+                $_SESSION['status'] = "success";
+                $_SESSION['message'] = "Les données ne correspondent pas. Veuillez vérifier vos informations.";
+                header("Location: /trait_mdp_oublie_formulaire");
         }
 
         $stmt->close();
@@ -98,7 +95,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $connexion->close();
 
-function mdp_aleatoire($long = 12){
+function mdp_aleatoire($long = 12)
+{
 
         $carac = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!?,#&@*';
         $mdp = '';

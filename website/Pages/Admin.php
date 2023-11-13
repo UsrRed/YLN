@@ -2,11 +2,11 @@
 session_start();
 
 if (!isset($_SESSION['utilisateur_id'])) {
-    session_start();
-    $_SESSION['status'] = "primary";
-    $_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
-	header("Location: /Connexion");
-	exit();
+        session_start();
+        $_SESSION['status'] = "primary";
+        $_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
+        header("Location: /Connexion");
+        exit();
 }
 
 include('/home/Pages/configBDD/config.php');
@@ -15,7 +15,7 @@ $utilisateur_id = $_SESSION['utilisateur_id'];
 $nom_utilisateur = $_SESSION['utilisateur'];
 
 if ($nom_utilisateur !== 'admin') {
-	header("Location : /");
+        header("Location : /");
 }
 
 $req_faq = "SELECT FAQ.*, Utilisateur.adresse_email, Utilisateur.nom_utilisateur FROM FAQ, Utilisateur WHERE FAQ.utilisateur_id = Utilisateur.id";
@@ -32,9 +32,9 @@ $divis = $total_resultats / $resultats_par_page;
 #On arrondit au nombre suivant
 #$nbpage = ceil($total_resultats / resultats_par_page); --> fonctionne pas, inconnu
 if (is_int($divis)) {
-	$nombre_pages = $divis;
+        $nombre_pages = $divis;
 } else {
-	$nombre_pages = intval($divis) +1;
+        $nombre_pages = intval($divis) + 1;
 
 }
 
@@ -51,41 +51,41 @@ $resultat_faq = $connexion->query($req_faq);
 
 <?php include('/home/includes/header.php'); ?>
 <body class="bg-light">
-	<div class="container mt-5">
-		<h2>Liste des Questions Fréquemment Posées (FAQ)</h2><br/>
+<div class="container mt-5">
+    <h2>Liste des Questions Fréquemment Posées (FAQ)</h2><br/>
         <?php afficher_etat(); ?>
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th>Utilisateur</th>
-					<th>Adresse mail</th>
-					<th>Objet</th>
-					<th>Corps</th>
-					<th>Date de Soumission</th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php
-				while ($ligne = $resultat_faq->fetch_assoc()) {
-					echo '<tr>';
-					echo '<td>' . $ligne['nom_utilisateur'] . '</td>';
-					echo '<td>' . $ligne['adresse_email'] . '</td>';
-					echo '<td>' . $ligne['objet'] . '</td>';
-					echo '<td>' . $ligne['corps'] . '</td>';
-					echo '<td>' . $ligne['date_submission'] . '</td>';
-					echo '</tr>';
-				}
-				?>
-			</tbody>
-		</table>
-		<div class="pagination">
-			<?php
-			for ($page = 1; $page <= $nombre_pages; $page++) {
-				echo '<a href="?page=' . $page . '" class="btn btn-outline-primary">' . $page . '</a>';
-				echo "&ensp;";
-			}
-			?>
-		</div>
-	</div>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Utilisateur</th>
+            <th>Adresse mail</th>
+            <th>Objet</th>
+            <th>Corps</th>
+            <th>Date de Soumission</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        while ($ligne = $resultat_faq->fetch_assoc()) {
+                echo '<tr>';
+                echo '<td>' . $ligne['nom_utilisateur'] . '</td>';
+                echo '<td>' . $ligne['adresse_email'] . '</td>';
+                echo '<td>' . $ligne['objet'] . '</td>';
+                echo '<td>' . $ligne['corps'] . '</td>';
+                echo '<td>' . $ligne['date_submission'] . '</td>';
+                echo '</tr>';
+        }
+        ?>
+        </tbody>
+    </table>
+    <div class="pagination">
+            <?php
+            for ($page = 1; $page <= $nombre_pages; $page++) {
+                    echo '<a href="?page=' . $page . '" class="btn btn-outline-primary">' . $page . '</a>';
+                    echo "&ensp;";
+            }
+            ?>
+    </div>
+</div>
 </body>
 

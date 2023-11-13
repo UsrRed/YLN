@@ -1,32 +1,32 @@
 <?php
 session_start();
 if (!isset($_SESSION['utilisateur_id'])) {
-	session_start();
-	$_SESSION['status'] = "primary";
-	$_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
-	header("Location: /Connexion");
-	exit();
+        session_start();
+        $_SESSION['status'] = "primary";
+        $_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
+        header("Location: /Connexion");
+        exit();
 }
 
 include('/home/Pages/configBDD/config.php');
 
 if (isset($_POST['ajouter_favoris'])) {
-	$id_utilisateur = $_SESSION['utilisateur_id'];
-	$comparaison_id = $_POST['comparaison_id'];
+        $id_utilisateur = $_SESSION['utilisateur_id'];
+        $comparaison_id = $_POST['comparaison_id'];
 
-	#echo $id_utilisateur; 
-	#echo "";
-	#echo $comparaison_id;
-	#Pour avoir la comparaison dans la table des favris
+        #echo $id_utilisateur;
+        #echo "";
+        #echo $comparaison_id;
+        #Pour avoir la comparaison dans la table des favris
 
-	$req_favo = "INSERT INTO Favoris (utilisateur_id, historique_id, date_favoris) VALUES ('$id_utilisateur', '$comparaison_id', NOW())";
-	mysqli_query($connexion, $req_favo);
+        $req_favo = "INSERT INTO Favoris (utilisateur_id, historique_id, date_favoris) VALUES ('$id_utilisateur', '$comparaison_id', NOW())";
+        mysqli_query($connexion, $req_favo);
 
-	#Et on redirige vers une page favoris
-	session_start();
-	$_SESSION['status'] = "success";
-	$_SESSION['message'] = "Ajout du favoris avec succès";
-	header("Location: /Favoris");
-	exit();
+        #Et on redirige vers une page favoris
+        session_start();
+        $_SESSION['status'] = "success";
+        $_SESSION['message'] = "Ajout du favoris avec succès";
+        header("Location: /Favoris");
+        exit();
 }
 ?>

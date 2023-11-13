@@ -1,11 +1,11 @@
 <?php
 session_start();
 if (!isset($_SESSION['utilisateur_id'])) {
-    session_start();
-    $_SESSION['status'] = "primary";
-    $_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
-	header("Location: /Connexion");
-	exit();
+        session_start();
+        $_SESSION['status'] = "primary";
+        $_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
+        header("Location: /Connexion");
+        exit();
 }
 
 include('/home/Pages/configBDD/config.php');
@@ -20,15 +20,15 @@ $req_favoris = "SELECT Favoris.*, Historique.comparaison1, Historique.comparaiso
 $resultat_favoris = mysqli_query($connexion, $req_favoris);
 
 #Utilise la même technique de pagination que pour la page historique, commentaires pour explication sur le fichier Historique.php 
-$total_fav = mysqli_num_rows($resultat_favoris); 
+$total_fav = mysqli_num_rows($resultat_favoris);
 $fav_par_page = 10;
 $divis = $total_fav / $fav_par_page;
 #echo "test";
 #echo $divis;
 if (is_int($divis)) {
-	$nombre_page = $divis;
+        $nombre_page = $divis;
 } else {
-	$nombre_page = intval($divis) +1;
+        $nombre_page = intval($divis) + 1;
 }
 
 #echo "$nombre_page";
@@ -47,45 +47,50 @@ $resultat_favoris_pagination = mysqli_query($connexion, $req_favoris_pagination)
 <body class="bg-light">
 
 <div class="container mt-5">
-	<h2>Favoris des comparaisons pour <?php echo $_SESSION['utilisateur']; ?> :</h2>
-	<br/><br/>
-    <?php afficher_etat(); ?>
-	<table class="table table-bordered">
-		<thead>
-			<tr><th>Comparaison 1</th><th>Comparaison 2</th><th>Afficher</th><th>Date</th></tr>
-		</thead>
-		<tbody>
-		<?php
-	while ($ligne_favori = mysqli_fetch_assoc($resultat_favoris_pagination)) {
-		echo "<tr>";
-		echo "<td>" . $ligne_favori["comparaison1"] . "</td>";
-		echo "<td>" . $ligne_favori["comparaison2"] . "</td>";
-		echo "<td>";
-		echo '<div class="text-center mt-3">';
-	        echo '<form method="post" action="/trait_comparaison">';
-		echo "<input type='hidden' name='comparaison1' id='comparaison1' value='" . $ligne_favori["comparaison1"] . "' />";
-        	echo "<input type='hidden' name='comparaison2' id='comparaison2' value='" . $ligne_favori["comparaison2"] . "' />";
-		echo '<button type="submit" class="btn btn-info" name="Voir">Voir</button>';
-        	echo '</form>';
-        	echo '</div>';
-		echo "</td>";
-		echo "<td>" . $ligne_favori["date_favoris"] . "</td>";
-		echo "</tr>";
-		}
-		?>
-		</tbody>
-	</table>
+    <h2>Favoris des comparaisons pour <?php echo $_SESSION['utilisateur']; ?> :</h2>
+    <br/><br/>
+        <?php afficher_etat(); ?>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Comparaison 1</th>
+            <th>Comparaison 2</th>
+            <th>Afficher</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        while ($ligne_favori = mysqli_fetch_assoc($resultat_favoris_pagination)) {
+                echo "<tr>";
+                echo "<td>" . $ligne_favori["comparaison1"] . "</td>";
+                echo "<td>" . $ligne_favori["comparaison2"] . "</td>";
+                echo "<td>";
+                echo '<div class="text-center mt-3">';
+                echo '<form method="post" action="/trait_comparaison">';
+                echo "<input type='hidden' name='comparaison1' id='comparaison1' value='" . $ligne_favori["comparaison1"] . "' />";
+                echo "<input type='hidden' name='comparaison2' id='comparaison2' value='" . $ligne_favori["comparaison2"] . "' />";
+                echo '<button type="submit" class="btn btn-info" name="Voir">Voir</button>';
+                echo '</form>';
+                echo '</div>';
+                echo "</td>";
+                echo "<td>" . $ligne_favori["date_favoris"] . "</td>";
+                echo "</tr>";
+        }
+        ?>
+        </tbody>
+    </table>
 
-	<div class="pagination">
-	<?php
-	#echo "$nombre_page";
-	for ($page = 1; $page <= $nombre_page; $page++) {
-		#echo "$page";
-		echo '<a href="?page=' . $page . '" class="btn btn-outline-primary">' . $page . '</a>';
-		echo "&ensp;";
-		#echo "test espace";
-		}
-	?>
-	</div>
+    <div class="pagination">
+            <?php
+            #echo "$nombre_page";
+            for ($page = 1; $page <= $nombre_page; $page++) {
+                    #echo "$page";
+                    echo '<a href="?page=' . $page . '" class="btn btn-outline-primary">' . $page . '</a>';
+                    echo "&ensp;";
+                    #echo "test espace";
+            }
+            ?>
+    </div>
 </div>
 </body>

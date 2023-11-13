@@ -6,11 +6,11 @@
 session_start();
 
 if (!isset($_SESSION['utilisateur_id'])) {
-	session_start();
-	$_SESSION['status'] = "primary";
-	$_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
-	header("Location: /Connexion");
-	exit();
+        session_start();
+        $_SESSION['status'] = "primary";
+        $_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
+        header("Location: /Connexion");
+        exit();
 }
 
 include('/home/Pages/configBDD/config.php');

@@ -2,11 +2,11 @@
 session_start();
 
 if (!isset($_SESSION['utilisateur'])) {
-    session_start();
-    $_SESSION['status'] = "primary";
-    $_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
-	header("Location: /Connexion");
-    exit();
+        session_start();
+        $_SESSION['status'] = "primary";
+        $_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
+        header("Location: /Connexion");
+        exit();
 }
 
 include('/home/Pages/configBDD/config.php');
@@ -21,7 +21,7 @@ $id_utilisateur = $ligne_utilisateur['id'];
 #echo id_utilisateur;
 
 #Nombre de résultats par page
-$resultats_par_page = 10; 
+$resultats_par_page = 10;
 
 $req_historique = "SELECT * FROM Historique WHERE utilisateur_id = '$id_utilisateur'";
 $resultat_historique = mysqli_query($connexion, $req_historique);
@@ -35,9 +35,9 @@ $divis = $total_resultats / $resultats_par_page;
 #On arrondit au nombre suivant
 #$nbpage = ceil($total_resultats / resultats_par_page); --> fonctionne pas, inconnu
 if (is_int($divis)) {
-	$nombre_pages = $divis;
+        $nombre_pages = $divis;
 } else {
-	$nombre_pages = intval($divis) +1;
+        $nombre_pages = intval($divis) + 1;
 
 }
 #Page actuelle (par défaut, la première page) --> https://stackoverflow.com/questions/47579258/isset-get-page-with-php-correct-usage + deux autres sources présente dans le fichier Favoris
@@ -56,46 +56,51 @@ $resultat_historique = mysqli_query($connexion, $req_historique);
 <?php include('/home/includes/header.php'); ?>
 
 <body class="bg-light">
-	<div class="container mt-5">
-	<h2>Historique des comparaisons pour <?php echo $_SESSION['utilisateur']; ?> :</h2>
-	<br/><br/>
-    <?php afficher_etat(); ?>
-	<table class="table table-bordered">
-		<thead>
-			<tr><th>Comparaison 1</th><th>Comparaison 2</th><th>Afficher</th><th>Date</th> </tr>
-		</thead>
-		<tbody>
-		<?php
-		while ($ligne_histo = mysqli_fetch_assoc($resultat_historique)) { #Pour n'avoir qu'une seule ligne qu'on affiche après et tout ça dans une boucle pour parcourir toute la table
-			echo "<tr>";
-                	echo "<td>" . $ligne_histo["comparaison1"] . "</td>";
-                	echo "<td>" . $ligne_histo["comparaison2"] . "</td>";
-                	echo "<td>";
-                	echo '<div class="text-center mt-3">';
-                	echo '<form method="post" action="/trait_comparaison">';
-                	echo "<input type='hidden' name='comparaison1' id='comparaison1' value='" . $ligne_histo["comparaison1"] . "' />";
-                	echo "<input type='hidden' name='comparaison2' id='comparaison2' value='" . $ligne_histo["comparaison2"] . "' />";
-                	echo '<button type="submit" class="btn btn-info" name="Voir">Voir</button>';
-                	echo '</form>';
-                	echo '</div>';
-                	echo "</td>";
-                	echo "<td>" . $ligne_histo["date"] . "</td>";
-               		echo "</tr>";
-	
-		}
-		?>
-		</tbody>
-	</table>
+<div class="container mt-5">
+    <h2>Historique des comparaisons pour <?php echo $_SESSION['utilisateur']; ?> :</h2>
+    <br/><br/>
+        <?php afficher_etat(); ?>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Comparaison 1</th>
+            <th>Comparaison 2</th>
+            <th>Afficher</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        while ($ligne_histo = mysqli_fetch_assoc($resultat_historique)) { #Pour n'avoir qu'une seule ligne qu'on affiche après et tout ça dans une boucle pour parcourir toute la table
+                echo "<tr>";
+                echo "<td>" . $ligne_histo["comparaison1"] . "</td>";
+                echo "<td>" . $ligne_histo["comparaison2"] . "</td>";
+                echo "<td>";
+                echo '<div class="text-center mt-3">';
+                echo '<form method="post" action="/trait_comparaison">';
+                echo "<input type='hidden' name='comparaison1' id='comparaison1' value='" . $ligne_histo["comparaison1"] . "' />";
+                echo "<input type='hidden' name='comparaison2' id='comparaison2' value='" . $ligne_histo["comparaison2"] . "' />";
+                echo '<button type="submit" class="btn btn-info" name="Voir">Voir</button>';
+                echo '</form>';
+                echo '</div>';
+                echo "</td>";
+                echo "<td>" . $ligne_histo["date"] . "</td>";
+                echo "</tr>";
 
-	<div class="pagination">
-		<?php
-		for ($page = 1; $page <= $nombre_pages; $page++) { #Pour toutes les pages (automatiques en fonction de nb num row du coup normalement)
-			#echo $page;
-			echo '<a href="?page=' . $page . '" class="btn btn-outline-primary">' . $page . '</a>'; #Il fait le ? car let's go j'ai trouvé, il faut spécifier le param de la page sinon ca fonctionne pas !
-			echo "&ensp;";
-			#echo "testtttt";
-			}
-		?>
-	</div>
-	</div>
+        }
+        ?>
+        </tbody>
+    </table>
+
+    <div class="pagination">
+            <?php
+            for ($page = 1; $page <= $nombre_pages; $page++) { #Pour toutes les pages (automatiques en fonction de nb num row du coup normalement)
+                    #echo $page;
+                    echo '<a href="?page=' . $page . '" class="btn btn-outline-primary">' . $page . '</a>'; #Il fait le ? car let's go j'ai trouvé, il faut spécifier le param de la page sinon ca fonctionne pas !
+                    echo "&ensp;";
+                    #echo "testtttt";
+            }
+            ?>
+    </div>
+</div>
 </body>

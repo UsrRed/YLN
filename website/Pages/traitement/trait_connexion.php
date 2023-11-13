@@ -15,36 +15,36 @@ $req = "SELECT * FROM Utilisateur WHERE nom_utilisateur='$utilisateur' AND mot_d
 $resul = mysqli_query($connexion, $req);
 
 if ($resul) {
-	# Vérification si une ligne dans la BDD a été trouvée
-	if (mysqli_num_rows($resul) == 1) {
-		#echo "connecté, c'est good";
-		# Si 1, l'utilisateur est connecté, c'est ok
-		$par_ligne = mysqli_fetch_assoc($resul);
-		$id_utilisateur = $par_ligne['id']; # Récupère l'identifiant de l'utilisateu
-		#echo "id_utilisateur";
-		session_start(); # On démarre sa session
-		$_SESSION['utilisateur_id'] = $id_utilisateur; # Stocke l'ID de l'utilisateur dans la session
-		$_SESSION['utilisateur'] = $utilisateur;
+        # Vérification si une ligne dans la BDD a été trouvée
+        if (mysqli_num_rows($resul) == 1) {
+                #echo "connecté, c'est good";
+                # Si 1, l'utilisateur est connecté, c'est ok
+                $par_ligne = mysqli_fetch_assoc($resul);
+                $id_utilisateur = $par_ligne['id']; # Récupère l'identifiant de l'utilisateu
+                #echo "id_utilisateur";
+                session_start(); # On démarre sa session
+                $_SESSION['utilisateur_id'] = $id_utilisateur; # Stocke l'ID de l'utilisateur dans la session
+                $_SESSION['utilisateur'] = $utilisateur;
 
-        session_start();
-        $_SESSION['status'] = "success";
-        $_SESSION['message'] = "Vous êtes désormais connecté !";
-        header("Location: /trait_profil");
-		#header("Location: /");
-		exit();
-	} else {
-		# Si la variable resul n'est pas de 1, l'utilisateur n'existe pas et n'est donc pas connecté
-		
-		#echo "Erreur de connexion à la base de données : " . mysqli_connect_error();
-        session_start();
-        $_SESSION['status'] = "danger";
-        $_SESSION['message'] = "Mauvais nom d'utilisateur ou mot de passe !";
-        header("Location: /Connexion");
-		#$message = "Vous n'êtes pas connecté, les informations de connexion sont incorrectes";
-		}
+                session_start();
+                $_SESSION['status'] = "success";
+                $_SESSION['message'] = "Vous êtes désormais connecté !";
+                header("Location: /trait_profil");
+                #header("Location: /");
+                exit();
+        } else {
+                # Si la variable resul n'est pas de 1, l'utilisateur n'existe pas et n'est donc pas connecté
+
+                #echo "Erreur de connexion à la base de données : " . mysqli_connect_error();
+                session_start();
+                $_SESSION['status'] = "danger";
+                $_SESSION['message'] = "Mauvais nom d'utilisateur ou mot de passe !";
+                header("Location: /Connexion");
+                #$message = "Vous n'êtes pas connecté, les informations de connexion sont incorrectes";
+        }
 } else {
-	# Erreur de requête
-	$message = "Erreur de requête : " . mysqli_error($connexion);
+        # Erreur de requête
+        $message = "Erreur de requête : " . mysqli_error($connexion);
 }
 
 #echo $message;
