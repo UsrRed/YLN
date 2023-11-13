@@ -1,7 +1,7 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) session_start();
 if (!isset($_SESSION['utilisateur_id'])) {
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) session_start();
         $_SESSION['status'] = "primary";
         $_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
         header("Location: /Connexion");
@@ -23,7 +23,7 @@ if (isset($_POST['ajouter_favoris'])) {
         mysqli_query($connexion, $req_favo);
 
         #Et on redirige vers une page favoris
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) session_start();
         $_SESSION['status'] = "success";
         $_SESSION['message'] = "Ajout du favoris avec succès";
         header("Location: /Favoris");

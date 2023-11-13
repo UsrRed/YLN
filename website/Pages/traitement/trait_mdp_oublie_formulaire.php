@@ -32,7 +32,7 @@
 
         <div class="form-group">
             <label for="age">Âge :</label>
-            <input type="text" class="form-control" id="age" name="age" placeholder="Entrez votre âge" required>
+            <input type="number" class="form-control" id="age" name="age" placeholder="Entrez votre âge" required>
         </div>
 
         <div class="form-group">

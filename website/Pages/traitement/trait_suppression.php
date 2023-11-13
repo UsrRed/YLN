@@ -3,10 +3,10 @@
 #Plusieurs problème : Cannot delete or update a parent row: a foreign key constraint fails (`nathiotime`.`Favoris`, CONSTRAINT `Favoris_ibfk_1` FOREIGN KEY (`utilisateur_id`) REFERENCES `Utilisateur` (`id`))
 #Cannot delete or update a parent row: a foreign key constraint fails (`nathiotime`.`Historique`, CONSTRAINT `Historique_ibfk_1` FOREIGN KEY (`utilisateur_id`) REFERENCES `Utilisateur` (`id`))
 
-session_start();
+if (session_status() == PHP_SESSION_NONE) session_start();
 
 if (!isset($_SESSION['utilisateur_id'])) {
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) session_start();
         $_SESSION['status'] = "primary";
         $_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
         header("Location: /Connexion");
@@ -33,7 +33,7 @@ $suppression_req = "DELETE FROM Utilisateur WHERE nom_utilisateur = '$utilisateu
 $suppression_res = mysqli_query($connexion, $suppression_req);
 
 session_destroy();
-session_start();
+if (session_status() == PHP_SESSION_NONE) session_start();
 $_SESSION['status'] = "success";
 $_SESSION['message'] = "Le compte " . $utilisateur . " a bien été supprimé";
 header("Location: /Inscription");

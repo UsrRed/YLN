@@ -1,8 +1,8 @@
 <?php
-session_start(); # Pour démarrer la session
+if (session_status() == PHP_SESSION_NONE) session_start(); # Pour démarrer la session
 
 if (!isset($_SESSION['utilisateur'])) {
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) session_start();
         $_SESSION['status'] = "primary";
         $_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
         header("Location: /Connexion");
@@ -29,7 +29,7 @@ if (!isset($_SESSION['utilisateur'])) {
     <form action="/trait_info_profil" method="post">
         <div class="form-group">
             <label for="age">Âge :</label>
-            <input type="text" class="form-control" id="age" name="age" placeholder="Entrez votre âge" required>
+            <input type="number" class="form-control" id="age" name="age" placeholder="Entrez votre âge" required>
         </div>
 
         <div class="form-group">
@@ -45,7 +45,7 @@ if (!isset($_SESSION['utilisateur'])) {
             <small class="form-text text-muted"><a href="/trait_mdp_appli">Besoin d'aide ?</a></small>
         </div>
 
-        <button type="submit" class="btn btn-danger">Soumettre</button>
+        <button type="submit" class="btn btn-primary">Soumettre</button>
     </form>
 </div>
 </body>

@@ -1,8 +1,8 @@
 <?php
-session_start(); # Pour démarrer la session
+if (session_status() == PHP_SESSION_NONE) session_start(); # Pour démarrer la session
 
 if (!isset($_SESSION['utilisateur'])) {
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) session_start();
         $_SESSION['status'] = "primary";
         $_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
         header("Location: /Connexion");
