@@ -9,8 +9,8 @@ The SAE501-502 project aimed to create a comparator between two identities based
 The authors of this projcet are : 
 
 * THÉOTIME Lukas
+* DENOYELLE Yohann
 * MARTEL Nathan
-
 
 ### Key features
 
@@ -24,7 +24,8 @@ The main features of the project are as follows:
 * Automatically create tables in the database (functional).
 * Log in and save data in the database (functional).
 * User-based comparison history (functional).
-* Compare two entiites using Wikipedia statistics (almost functionnal).
+* Compare two entiites using Wikipedia statistics (functionnal).
+* The application provides the user with the option to choose whether or not to download the result of both comparisons. (functional)
 * Use the SlimV4 framework with its routes (functional)
 * The website is responsive design (functional)
 * Pagination of History and Favorites pages (functional)
@@ -35,7 +36,8 @@ The main features of the project are as follows:
 * Website security: Security and redondancy mechanism (Load Balancing) to ensure continuous availability (functional).
 * Fault tolerance, one maximum fault (functional)
 * Adding a superuser with privileged access. This superuser can access all the site's features, including viewing the whole history, all favorites, all users, etc. (non-functional)
-* Settings page where the user can add information to their profile, change/update their password, delete their account, and submit a question to the user support: an email is sent to the site administrators. (functiona)
+* Settings page where the user can add information to their profile, change/update their password, delete their account, and submit a question to the user support: an email is sent to the site administrators. (functional)
+* If the user has forgotten his password (and has previously completed their profile by adding their Gmail address, age, etc.), the application provides a "forgot password" system. After identity verification, the user receives an email with a random generated new password. This new password then becomes the user's updated password, stored in the database. (functional)
 * The application administrator can access a private page containing all user questions (support inquiries), and he is the only one who have access to this page. (functional)
 
 ### What script to execute to create tables in the database?
@@ -52,22 +54,28 @@ First, clne the project from the Git repository and navigate to the project dire
 Depending on your machine, you may need to pull the original image for the three containers (`podman pull docker.io/library/mysql:latest` & `podman pull docker.io/library/php:8.2-fpm` & `podman pull docker.io/library/nginx:alpine` & `podman pull docker.io/library/haproxy:alpine`). To do this, run the "ScriptImage" script, and the images should be imported or you can do it manually.
 
 Afterward, launch the "docker-compose.yaml" file, which contains and specifies the configuration of our containers using the following command : `podman-compose -f docker-compose.yaml up -d`
-<!--
-Once the "docker-compose" file is running, execute the "IpMonSite.sh" script (`bash IpMonSite.sh|./IpMonSite.sh`). This will provide you with the IP address of the application, with or without load balancing, according to your preferrence.-->
+
+Once the "docker-compose" file is running, execute the "IpMonSite.sh" script (`bash IpMonSite.sh|./IpMonSite.sh`). This will provide you with the IP address of the application, with or without load balancing, according to your preferrence.
 
 ### How to use the application ?
 
-Once the .yaml file is started, open a web browser and enter `https://[IP_Address_Provided_By_The_IpMonSite.sh_script]:8443` (the PHP and Nginx container provides the user interface). You can also connect using HTTP: `http://[IP_Address_Provided_By_The_IpMonSite.sh_script]:8083`. The IP address is the Haproxy container (very rarely different from 172.18.0.4) which will distribute the load between two nginx WEB containers. Make sure to add the port.
+Once the .yaml file is started, open a web browser and enter `https://[IP_Address_Provided_By_The_IpMonSite.sh_script]:8443` (the PHP and Nginx container provides the user interface). You can also connect using HTTP: `http://[IP_Address_Provided_By_The_IpMonSite.sh_script]:8083`. The IP address is the Haproxy container which will distribute the load between two nginx WEB containers. Make sure to add the port.
+
+
+**Caution** : You may encounter the following error when attempting to register for the first time on the site: 2002 Error. This means that the MySQL server did not start correctly or is not running. If this error occurs, you need to stop the docker-compose (`podman-compose down`), delete the mysql:latest image (`podman rmi mysql:latest`), pull the image again (`podman pull docker.io/library/mysql:latest`), and finally restart the docker-compose. The mysql:latest image occasionally experiences some difficulties with our application.
 
 From this page, it is possible to register/login with an account by clicking on the "Login" page in the top right-hand corner of the page. If you register, you will need to log in with the same login credentials.
 
-Once logged in, it is possible to compare two entities by clicking on the "Comparison" page and entering the title of a Wikipedia page, such as "Paris_Saint-Germain_Football_Club" and "Olympique_de_Marseille". You can also add your favorite comparisons by clicking the "Add to Favorites" button and view your favorites on the Favorites page.
+Once logged in, it is possible to compare two entities by clicking on the "Comparison" page and entering the title of a Wikipedia page, such as "Paris_Saint-Germain_Football_Club" and "Olympique_de_Marseille". You can also add your favorite comparisons by clicking the "Ajouter aux favoris" button and view your favorites on the Favorites page or download it by clicking on the "Telecharger" button.
 
 Additionally, a timestamped comparison history is available on the "History" page. Once all operations are completed, you can log out by clicking the "Logout" button. It is not possible to compare two identities or view the history and favorites without logging in.
+
+You don't have access to the FAQ page; only the administrator does. This page compiles all user requests.
 
 ### Improvement notes ?
 
 There is a small issue in the website design. To access the Admin FAQ page (which is only accessible by the application administrator), there needs to be an administrator's entry in the FAQ table first. In other words, if the administrator has not posted questions on the FAQ page (/trait_faq), no one can access on this page.
+
 
 <!--
 ## Getting started
