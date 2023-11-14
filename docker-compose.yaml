@@ -83,6 +83,22 @@ services:
       sae:
         #ipv4_address: 172.18.0.6  
 
+  syslog-ng:
+    image: lscr.io/linuxserver/syslog-ng:latest
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    #volumes:
+      #- 
+    ports: 
+      - 514:5514/udp
+      - 601:6601/tcp
+      - 6514:6514/tcp
+    container_name: syslog-ng
+    networks:
+      sae:
+
 volumes: 
   db_data:
 
