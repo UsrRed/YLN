@@ -199,7 +199,7 @@ $app->get('/Paramètres', function (Request $request, Response $response, $args)
 
 $app->post('/trait_changement_mdp', function (Request $request, Response $response, $args) {
 
-        $fich = '/home/Pages/traitement/trait_changement_mdp.php';
+        $fich = '/home/Pages/traitement/trait_mdp_changement.php';
 
         ob_start();
         include($fich);
@@ -238,7 +238,7 @@ $app->get('/trait_mdp_appli', function (Request $request, Response $response, $a
 
 $app->post('/trait_info_profil', function (Request $request, Response $response, $args) {
 
-        $fich = '/home/Pages/traitement/trait_info_profil.php';
+        $fich = '/home/Pages/traitement/trait_profil_info.php';
 
         ob_start();
         include($fich);
@@ -288,7 +288,20 @@ $app->get('/trait_faq', function (Request $request, Response $response, $args) {
 
 $app->get('/admin', function (Request $request, Response $response, $args) {
 
-        $fich = '/home/Pages/Admin.php';
+        $fich = '/home/Pages/FAQ_admin.php';
+
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+
+        return $response;
+
+});
+
+$app->get('/FAQ', function (Request $request, Response $response, $args) {
+
+        $fich = '/home/Pages/FAQ_utilisateur.php';
 
         ob_start();
         include($fich);
@@ -314,7 +327,7 @@ $app->post('/trait_suppression', function (Request $request, Response $response,
 
 $app->get('/trait_changement_mdp_formulaire', function (Request $request, Response $response, $args) {
 
-        $fich = '/home/Pages/traitement/trait_changement_mdp_formulaire.php';
+        $fich = '/home/Pages/traitement/trait_mdp_changement_formulaire.php';
 
         ob_start();
         include($fich);
