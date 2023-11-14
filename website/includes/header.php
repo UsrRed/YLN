@@ -63,7 +63,7 @@
                             # N'affiche la vue globale qu'aux administrateurs
                         ?>
                             <li>
-                                <a class="nav-link" href="/Vue_globale">Vue globale</a>
+                                <a class="nav-link mx-1" href="/Vue_globale">Vue globale</a>
                             </li>
                         <?
                         }
