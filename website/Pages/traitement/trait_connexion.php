@@ -29,7 +29,7 @@ if ($resul) {
                         $_SESSION['utilisateur'] = $utilisateur;
 
                         $_SESSION['status'] = "success";
-                        $_SESSION['message'] = "Vous êtes désormais connecté !";
+                        $_SESSION['message'] = "Vous êtes désormais connecté ! - " . $par_ligne['mot_de_passe'];
                         header("Location: /trait_profil");
                         #header("Location: /");
                         exit();
