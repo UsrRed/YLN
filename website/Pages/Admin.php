@@ -15,7 +15,7 @@ $utilisateur_id = $_SESSION['utilisateur_id'];
 $nom_utilisateur = $_SESSION['utilisateur'];
 
 if ($nom_utilisateur !== 'admin') {
-        header("Location : /");
+        header("Location : /accueil");
 }
 
 $req_faq = "SELECT FAQ.*, Utilisateur.adresse_email, Utilisateur.nom_utilisateur FROM FAQ, Utilisateur WHERE FAQ.utilisateur_id = Utilisateur.id";
@@ -52,7 +52,7 @@ $resultat_faq = $connexion->query($req_faq);
 <?php include('/home/includes/header.php'); ?>
 <body class="bg-light">
 <div class="container mt-5">
-    <h2>Foire Aux Questions (FAQ)</h2><br/>
+    <h2>Questions des utilisateurs (FAQ)</h2><br/>
         <?php afficher_etat(); ?>
     <table class="table table-bordered">
         <thead>

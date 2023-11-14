@@ -31,7 +31,7 @@ if ($nom_utilisateur != 'admin') {
         if (session_status() == PHP_SESSION_NONE) session_start();
         $_SESSION['status'] = "warning";
         $_SESSION['message'] = "Vous n'êtes pas autorisé à accéder à cette page. Seul l'admin peut y accéder.";
-        header("Location: /");
+        header("Location: /accueil");
         exit();
 } else {
         #Là, on redirige l'utilisateur qui est donc "admin" vers la page "admin.php" qui est un fichier où lui seul à accès
