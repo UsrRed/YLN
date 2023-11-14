@@ -49,11 +49,11 @@ Therefore, as soon as a connection is made to the database, by using an .sql scr
 
 * Where to start ?
 
-First, clne the project from the Git repository (`git clone https://scm.univ-tours.fr/22107454t/sae501-502-theotime-martel.git`) and navigate to the project directory (`cd sae501-502-theotime-martel`). 
+First, clone the project from the Git repository (`git clone https://scm.univ-tours.fr/22107454t/sae501-502-theotime-martel.git`) and navigate to the project directory (`cd sae501-502-theotime-martel`). 
 
 **Optionally :**
 
-Next, download the Podman software and the Podman-compose script using the appropriate package manager (`dnf|apt-get|yum install podman podman-compose`). If you want, you don't have to do this, a script can take care of it.
+Next, download the podman software and the podman-compose script using the appropriate package manager (`dnf|apt-get|yum install podman podman-compose`). If you want, you don't have to do this, a script can take care of it.
 
 Depending on your machine, you may need to pull the original image for the three containers (`podman pull docker.io/library/mysql:latest` & `podman pull docker.io/library/php:8.2-fpm` & `podman pull docker.io/library/nginx:alpine` & `podman pull docker.io/library/haproxy:alpine`). This part is still optional.
 
@@ -63,7 +63,7 @@ Once the "docker-compose" file is running, execute the "IpMonSite.sh" script (`b
 
 **Mandatory :** 
 
-Run the requirement.sh script (`bash requirement.sh` | `./requirement.sh`), this will install podman, podman-compose, the necessary images for the application, and launch it. You'll also receive the IP address to access the application
+Run the requirement.sh script (`bash setup.sh` | `./setup.sh`), this will install podman, podman-compose, the necessary images for the application, and launch it. You'll also receive the IP address to access the application
 
 ### How to use the application ?
 
