@@ -23,7 +23,7 @@ USE nathiotime;
 CREATE TABLE IF NOT EXISTS Utilisateur (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	nom_utilisateur VARCHAR(25) NOT NULL,
-	mot_de_passe CHAR(60) NOT NULL,
+	mot_de_passe VARCHAR(255) NOT NULL,
 	age INT,
 	adresse_email VARCHAR(100),
 	mot_de_passe_application VARCHAR(100)
