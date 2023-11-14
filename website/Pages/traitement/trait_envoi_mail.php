@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if (session_status() == PHP_SESSION_NONE) session_start();
                 $_SESSION['status'] = "success";
                 $_SESSION['message'] = "Mail envoyé avec succès ! On vous répondra dans les plus brefs délais";
-                header("Location: /");
+                header("Location: /accueil");
         } else {
                 if (session_status() == PHP_SESSION_NONE) session_start();
                 $_SESSION['status'] = "danger";

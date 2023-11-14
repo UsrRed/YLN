@@ -7,7 +7,7 @@ session_destroy();
 session_start();
 $_SESSION['status'] = "success";
 $_SESSION['message'] = "Vous êtes déconnecté !";
-header("Location: /");
+header("Location: /accueil");
 #Et ensuite on redirige vers la page d'accueil
 
 exit();

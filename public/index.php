@@ -58,6 +58,18 @@ $app->get('/Inscription', function (Request $request, Response $response, $args)
 
 $app->get('/', function (Request $request, Response $response, $args) {
 
+        $fich = '/home/Pages/PopUp.php';
+
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+        return $response;
+
+});
+
+$app->get('/accueil', function (Request $request, Response $response, $args) {
+
         $fich = '/home/index.php';
 
         ob_start();

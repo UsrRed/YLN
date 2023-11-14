@@ -30,8 +30,8 @@ The main features of the project are as follows:
 * The website is responsive design (functional)
 * Pagination of History and Favorites pages (functional)
 * The website is available in two languages: French and English (non-functional).
-* Website security: Prevention of SQL injections (non-functional)
-* Encryption of database information (non-functional).
+* Website security: Prevention of SQL injections --> Sanitizing PHP (functional)
+* Encryption of database information (functional).
 * Website security: Implementation of HTTPS to encrypt exchanged data (functional).
 * Website security: Security and redondancy mechanism (Load Balancing) to ensure continuous availability (functional).
 * Fault tolerance, one maximum fault (functional)
@@ -45,22 +45,29 @@ The main features of the project are as follows:
 * What script to run to create tables ?
 
 The creation of the tables in the database is automatic. To do it, we use `mysqli_multi_query`.
-Therefore, as soon as a connection is made to the database, by using an .sql script, a $tables variable (which contains the commands for creating tables with an `IF NOT EXISTS`) is launched automatically to create the tables.
+Therefore, as soon as a connection is made to the database, by using an .sql script, a $tables variable (which contains the commands for creating tables with an `IF NOT EXISTS`) is launched automatically to create the tables. The sensitive data in the database are hashed and salted.
 
 * Where to start ?
 
-First, clne the project from the Git repository and navigate to the project directory (`cd sae501-502-theotime-martel`). Next, download the Podman software and the Podman-compose script using the appropriate package manager (`dnf|apt-get|yum install podman podman-compose`).
+First, clne the project from the Git repository (`git clone https://scm.univ-tours.fr/22107454t/sae501-502-theotime-martel.git`) and navigate to the project directory (`cd sae501-502-theotime-martel`). 
 
-Depending on your machine, you may need to pull the original image for the three containers (`podman pull docker.io/library/mysql:latest` & `podman pull docker.io/library/php:8.2-fpm` & `podman pull docker.io/library/nginx:alpine` & `podman pull docker.io/library/haproxy:alpine`). To do this, run the "ScriptImage" script, and the images should be imported or you can do it manually.
+**Optionally :**
 
-Afterward, launch the "docker-compose.yaml" file, which contains and specifies the configuration of our containers using the following command : `podman-compose -f docker-compose.yaml up -d`
+Next, download the Podman software and the Podman-compose script using the appropriate package manager (`dnf|apt-get|yum install podman podman-compose`). If you want, you don't have to do this, a script can take care of it.
 
-Once the "docker-compose" file is running, execute the "IpMonSite.sh" script (`bash IpMonSite.sh|./IpMonSite.sh`). This will provide you with the IP address of the application, with or without load balancing, according to your preferrence.
+Depending on your machine, you may need to pull the original image for the three containers (`podman pull docker.io/library/mysql:latest` & `podman pull docker.io/library/php:8.2-fpm` & `podman pull docker.io/library/nginx:alpine` & `podman pull docker.io/library/haproxy:alpine`). This part is still optional.
+
+Afterward, launch the "docker-compose.yaml" file, which contains and specifies the configuration of our containers using the following command : `podman-compose -f docker-compose.yaml up -d` (optional)
+
+Once the "docker-compose" file is running, execute the "IpMonSite.sh" script (`bash IpMonSite.sh | ./IpMonSite.sh`). This will provide you with the IP address of the application, with or without load balancing, according to your preferrence.
+
+**Mandatory :** 
+
+Run the requirement.sh script (`bash requirement.sh` | `./requirement.sh`), this will install podman, podman-compose, the necessary images for the application, and launch it. You'll also receive the IP address to access the application
 
 ### How to use the application ?
 
-Once the .yaml file is started, open a web browser and enter `https://[IP_Address_Provided_By_The_IpMonSite.sh_script]:8443` (the PHP and Nginx container provides the user interface). You can also connect using HTTP: `http://[IP_Address_Provided_By_The_IpMonSite.sh_script]:8083`. The IP address is the Haproxy container which will distribute the load between two nginx WEB containers. Make sure to add the port.
-
+Once the .yaml file is started, open a web browser and enter `https://[IP_Address_Provided_By_The_Script]:8443` (the PHP and Nginx container provides the user interface). You can also connect using HTTP: `http://[IP_Address_Provided_By_The_IpMonSite.sh_script]:8083`. The IP address is the Haproxy container which will distribute the load between two nginx WEB containers. Make sure to add the port. 
 
 **Caution** : You may encounter the following error when attempting to register for the first time on the site: 2002 Error. This means that the MySQL server did not start correctly or is not running. If this error occurs, you need to stop the docker-compose (`podman-compose down`), delete the mysql:latest image (`podman rmi mysql:latest`), pull the image again (`podman pull docker.io/library/mysql:latest`), and finally restart the docker-compose. The mysql:latest image occasionally experiences some difficulties with our application.
 
@@ -74,6 +81,10 @@ You don't have access to the FAQ page; only the administrator does. This page co
 
 ### Improvement notes ?
 
+* Syslog type stack ELK ? Syslog-ng ?
+* Fail2ban 
+* Chat entre différents utilisateurs
+* Date expiration mot de passe dans la base de données
 
 <!--
 ## Getting started
