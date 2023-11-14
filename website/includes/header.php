@@ -44,22 +44,16 @@
                 <!--Page de notre application sous forme de menu déroulant -->
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
+                        <li class="nav-item mx-1">
                             <a class="nav-link" href="/accueil">Comparaison</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item mx-1">
                             <a class="nav-link" href="/Historique">Historique</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Inscription">Inscription</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Connexion">Connexion</a>
-                        </li>
-                        <li class="nav-item">
+                        <li class="nav-item mx-1">
                             <a class="nav-link" href="/Favoris">Favoris</a>
                         </li>
-                        <li>
+                        <li class="nav-item mx-1">
                             <a class="nav-link" href="/Paramètres">Paramètres</a>
                         </li>
                         <?php
@@ -77,6 +71,18 @@
                         <li>
                             <a class="nav-link" href="/trait_faq">FAQ</a>
                         </li>
+                        <?php if (!isset($_SESSION['utilisateur_id'])) { # Si l'utilisateur n'est pas connecté ?>
+                            <li class="nav-item mx-1">
+                                <a class="nav-link btn btn-success" style="color: white;" href="/Inscription">Inscription</a>
+                            </li>
+                            <li class="nav-item mx-1">
+                                <a class="nav-link btn btn-success" style="color: white;" href="/Connexion">Connexion</a>
+                            </li>
+                        <?php } else { ?>
+                            <li class="nav-item mx-1">
+                                <a class="nav-link btn btn-outline-danger" style="border: unset;" href="/trait_deconnexion">Déconnexion</a>
+                            </li>
+                        <?php } ?>
                     </ul>
                 </div>
                 <!--On regarde si l'utilisateur est connecté ou non pour l'afficher dans la navbar -->
@@ -86,7 +92,7 @@
             if (session_status() == PHP_SESSION_NONE) session_start();
 
             if (isset($_SESSION['utilisateur_id'])) {
-                    echo '<span class="text-success"><b> &ensp;&ensp; Connecté</b></span>';
+                    echo '<span class="text-success"><b> &ensp;&ensp; ' . $_SESSION['utilisateur'] . '</b></span>';
             } else {
                     echo '<span class="text-danger"><b> &ensp;&ensp; Déconnecté</b></span>';
             }
