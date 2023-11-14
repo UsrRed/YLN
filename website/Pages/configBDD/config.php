@@ -26,7 +26,9 @@ CREATE TABLE IF NOT EXISTS Utilisateur (
 	mot_de_passe VARCHAR(255) NOT NULL,
 	age INT,
 	adresse_email VARCHAR(100),
-	mot_de_passe_application VARCHAR(100)
+	mot_de_passe_application VARCHAR(100),
+	tentatives_echouees INT DEFAULT 0,
+	temps_blocage INT DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS Historique (

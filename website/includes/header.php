@@ -94,7 +94,7 @@
             if (session_status() == PHP_SESSION_NONE) session_start();
 
             if (isset($_SESSION['utilisateur_id'])) {
-                    echo '<span class="text-success"><b> &ensp;&ensp; ' . $_SESSION['utilisateur'] . '</b></span>';
+                    echo '<span class="text-success"><b> &ensp;&ensp; ' . $_SESSION['utilisateur'] . ' est connecté(e)</b></span>';
             } else {
                     echo '<span class="text-danger"><b> &ensp;&ensp; Déconnecté</b></span>';
             }

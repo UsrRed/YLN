@@ -1,5 +1,5 @@
 <?php
-#Connexion à la base de données :
+# Connexion à la base de données :
 
 $error_message = "Mauvais nom d'utilisateur ou mot de passe !";
 
@@ -16,41 +16,97 @@ $req = "SELECT * FROM Utilisateur WHERE nom_utilisateur='$utilisateur'";
 $resul = mysqli_query($connexion, $req);
 
 if ($resul) {
-        # Vérification si une ligne dans la BDD a été trouvée
-        if (mysqli_num_rows($resul) == 1) {
-                $par_ligne = mysqli_fetch_assoc($resul);
-                if (password_verify($motdepasse, $par_ligne['mot_de_passe'])) {
-                        #echo "connecté, c'est good";
-                        # Si 1, l'utilisateur est connecté, c'est ok
-                        $id_utilisateur = $par_ligne['id']; # Récupère l'identifiant de l'utilisateu
-                        #echo "id_utilisateur";
-                        if (session_status() == PHP_SESSION_NONE) session_start(); # On démarre sa session
-                        $_SESSION['utilisateur_id'] = $id_utilisateur; # Stocke l'ID de l'utilisateur dans la session
-                        $_SESSION['utilisateur'] = $utilisateur;
+	# Vérification si une ligne dans la BDD a été trouvée
+	if (mysqli_num_rows($resul) == 1) {
+		$par_ligne = mysqli_fetch_assoc($resul);
+		if (password_verify($motdepasse, $par_ligne['mot_de_passe'])) {
+			#echo "connecté, c'est good";
+			# Si 1, l'utilisateur est connecté, c'est ok
+			$id_utilisateur = $par_ligne['id']; # Récupère l'identifiant de l'utilisateu
+			#echo "id_utilisateur";
+			if (session_status() == PHP_SESSION_NONE) session_start(); # On démarre sa session
+			$_SESSION['utilisateur_id'] = $id_utilisateur; # Stocke l'ID de l'utilisateur dans la session
+			$_SESSION['utilisateur'] = $utilisateur;
+			$_SESSION['status'] = "success";
+			$_SESSION['message'] = "Vous êtes désormais connecté !";
 
-                        $_SESSION['status'] = "success";
-                        $_SESSION['message'] = "Vous êtes désormais connecté !";
-                        header("Location: /trait_profil");
-                        #header("Location: /");
-                        exit();
-                } else {
-                        # Mauvais mot de passe
-                        if (session_status() == PHP_SESSION_NONE) session_start();
-                        $_SESSION['status'] = "danger";
-                        $_SESSION['message'] = $error_message;
-                        #header("Location: /Connexion");
-                }
-        } else {
-                # Si la variable resul n'est pas de 1, l'utilisateur n'existe pas
-                if (session_status() == PHP_SESSION_NONE) session_start();
-                $_SESSION['status'] = "danger";
-                $_SESSION['message'] = $error_message;
-                header("Location: /Connexion");
-                #$message = "Vous n'êtes pas connecté, les informations de connexion sont incorrectes";
-        }
+			# On refixe à 0 s'il s'est connecté
+			$majten = "UPDATE Utilisateur SET tentatives_echouees=0, temps_blocage=0 WHERE nom_utilisateur='$utilisateur'";
+			mysqli_query($connexion, $majten);
+
+			header("Location: /trait_profil");
+			#header("Location: /");
+			exit();
+		} else {
+			#Mauvais mot de passe
+			if ($par_ligne['tentatives_echouees'] < 3) {
+				# On incrémente le compteur de tentatives de connexion échouées
+				$tentatives_echouees = $par_ligne['tentatives_echouees'] + 1;
+				$tentatives_restantes = 3 - $tentatives_echouees;
+
+				$temps_blocage = time() + (5 * 60); # Blocage pendant 5 minutes
+    				$req_update = "UPDATE Utilisateur SET tentatives_echouees=$tentatives_echouees, temps_blocage=$temps_blocage WHERE nom_utilisateur='$utilisateur'";
+				mysqli_query($connexion, $req_update);
+
+				#Là, on vérifie le temps de blocage
+				if ($par_ligne['temps_blocage'] > 0) {
+					$temps_restant = $par_ligne['temps_blocage'] - time();
+					if ($temps_restant <= 0) {
+						#A cet instant, le temps de blocage est écoulé donc on réinitialise le compteur et le temps de blocage pour de nouveau avoir accès au compte
+						$majten = "UPDATE Utilisateur SET tentatives_echouees=0, temps_blocage=0 WHERE nom_utilisateur='$utilisateur'"; ###########ESSAYER DE VOIR COMMENT LE FAIRE DEPUIS LA TABLE COMPTEUR
+						mysqli_query($connexion, $majten);
+					} else {
+						#Go afficher un message avec le nombre de tentatives restantes
+						if (session_status() == PHP_SESSION_NONE) session_start();
+						$_SESSION['status'] = "danger";
+						$_SESSION['message'] = "Mauvais nom d'utilisateur ou mot de passe ! Il vous reste $tentatives_restantes tentatives avant de vous faire bannir."; #Réessayez dans $temps_restant secondes.";
+						header("Location: /Connexion");
+						exit();
+					}
+ 				}
+
+				#Message d'erreur avec le nombre de tentatives restantes
+				if (session_status() == PHP_SESSION_NONE) session_start();
+				$_SESSION['status'] = "danger";
+				$_SESSION['message'] = "Mauvais nom d'utilisateur ou mot de passe ! Il vous reste $tentatives_restantes tentatives avant de vous faire bannir.";
+				header("Location: /Connexion");
+			} else {
+				#On vérifie si le temps de blocage a expiré après 5 minutes
+				if ($par_ligne['temps_blocage'] > 0) {
+					$temps_restant = $par_ligne['temps_blocage'] - time();
+					if ($temps_restant <= 0) {
+						#Là, le temps de blocage est écoulé, donc on réinitialise
+						$majten = "UPDATE Utilisateur SET tentatives_echouees=0, temps_blocage=0 WHERE nom_utilisateur='$utilisateur'";
+						mysqli_query($connexion, $majten);
+					} else {
+						#Message de blocage temporaire avec le temps restant
+						if (session_status() == PHP_SESSION_NONE) session_start();
+						$_SESSION['status'] = "danger";
+						$_SESSION['message'] = "Compte temporairement bloqué. Réessayez dans $temps_restant secondes.";
+						#header("Location: /Connexion");
+						header("Location: /trait_blocage");
+						exit();
+					}
+ 				} else {
+					#Message de blocage temporaire avec le temps restant
+ 					if (session_status() == PHP_SESSION_NONE) session_start();
+					$_SESSION['status'] = "danger";
+					$_SESSION['message'] = "Compte temporairement bloqué. Réessayez dans $temps_restant secondes.";
+					#header("Location: /Connexion");
+					header("Location: /trait_blocage");
+					exit();
+ 				}
+			}
+		}
+	} else {
+		#L'utilisateur n'existe pas
+		if (session_status() == PHP_SESSION_NONE) session_start();
+		$_SESSION['status'] = "danger";
+		$_SESSION['message'] = $error_message;
+		header("Location: /Connexion");
+	}
 } else {
-        # Erreur de requête
-        $message = "Erreur de requête : " . mysqli_error($connexion);
+		$message = "Erreur de requête : " . mysqli_error($connexion);
 }
 
 #echo $message;

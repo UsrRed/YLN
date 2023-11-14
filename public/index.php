@@ -403,6 +403,19 @@ $app->post('/trait_telechargement', function (Request $request, Response $respon
 
 });
 
+$app->get('/trait_blocage', function (Request $request, Response $response, $args) {
+
+        $fich = '/home/Pages/traitement/trait_blocage.php';
+
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+
+        return $response;
+
+});
+
 
 $app->get('/phpinfo', function (Request $request, Response $response) {
         phpinfo();
