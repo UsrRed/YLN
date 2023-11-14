@@ -10,11 +10,11 @@
         <div class="row">
             <div class="col-md-6">
                 <input type="text" class="form-control" placeholder="Comparaison 1" name="comparaison1"
-                       id="comparaison1">
+                       id="comparaison1" required>
             </div>
             <div class="col-md-6">
                 <input type="text" class="form-control" placeholder="Comparaison 2" name="comparaison2"
-                       id="comparaison2">
+                       id="comparaison2" required>
             </div>
         </div>
 
