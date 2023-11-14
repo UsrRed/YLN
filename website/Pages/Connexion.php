@@ -16,12 +16,14 @@
             <input type="password" class="form-control" id="motdepasse" name="motdepasse"
                    placeholder="Entrez votre mot de passe" required>
         </div>
-
         <div class="d-flex justify-content-between">
             <!--Pour que ce soit aligné avec le formulaire, a droite, source : https://getbootstrap.com/docs/4.0/utilities/flex/ -->
             <button type="submit" class="btn btn-success">Se connecter</button>
+            <?php if (isset($_SESSION['utilisateur_id'])) { # Si l'utilisateur est connécté, il peux se déconnecter. ?>
             <a href="/trait_deconnexion" class="btn btn-danger">Déconnexion</a>
+            <?php } ?>
         </div>
+
 
         <small class="form-text text-muted">
             <a href="/trait_mdp_oublie_formulaire">Mot de passe oublié ?</a>
