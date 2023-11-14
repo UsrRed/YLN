@@ -175,8 +175,12 @@ if (isset($datainfo2['query']['pages'])) { #Pareil
         <thead>
         <tr>
             <th>Attributs</th>
-            <th><?php echo $comparaison1; ?></th>
-            <th><?php echo $comparaison2; ?></th>
+            <th><?php echo $comparaison1;
+            if ($infobox1=="") echo " (page vide)"; ?>
+            </th>
+            <th><?php echo $comparaison2;
+            if ($infobox2=="") echo " (page vide)"; ?>
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -326,11 +330,10 @@ if (isset($datainfo2['query']['pages'])) { #Pareil
             <form method="post" action="/trait_telechargement" class="d-flex justify-content-between">
                 <button type="submit" class="btn btn-dark" name="telecharger_csv">Télécharger le CSV</button>
             </form>
-            <br/>
+            <a class="btn btn-dark" href="/accueil">Faire une autre comparaison</a>
             <form method="post" action="/trait_favoris">
                 <input type="hidden" name="comparaison_id" value="<?php echo $id_comparaison; ?>">
                 <button type="submit" class="btn btn-success" name="ajouter_favoris">Ajouter aux favoris</button>
-
             </form>
         </div>
 
