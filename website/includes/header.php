@@ -62,6 +62,18 @@
                         <li>
                             <a class="nav-link" href="/Paramètres">Paramètres</a>
                         </li>
+                        <?php
+                        if (session_status() == PHP_SESSION_NONE) session_start();
+                        $nom_utilisateur = $_SESSION['utilisateur'];
+                        if ($nom_utilisateur == 'admin') {
+                            # N'affiche la vue globale qu'aux administrateurs
+                        ?>
+                            <li>
+                                <a class="nav-link" href="/Vue_globale">Vue globale</a>
+                            </li>
+                        <?
+                        }
+                        ?>
                         <li>
                             <a class="nav-link" href="/trait_faq">FAQ</a>
                         </li>
