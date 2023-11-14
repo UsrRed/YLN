@@ -97,16 +97,18 @@ if (isset($data1['query']['pages'])) { #On vérifie d'abord que la requête à a
         #sont toujours là mais elles sont juste vides. On a vu ça avec : https://www.mediawiki.org/wiki/API:Main_page/fr et surtout : https://www.mediawiki.org/wiki/API:Query#Response, voir Example 1 : Specifying pages dans Response.
         $temp = reset($data1['query']['pages']); #On met la variable "temp" en index 1 (premier élément) du tableau, une seule page Wikipédia en gros, simplicité
         #echo "$temp";
-        $infobox1 = $temp['revisions'][0]['*']; #Contient donc les informations entières de l'infobox pour la première comparaison
+        #Contient donc les informations entières de l'infobox pour la première comparaison
+        if (isset($temp['revisions'][0]['*'])) $infobox1 = $temp['revisions'][0]['*'];
+        else $infobox1 = "";
         #echo "$infobox1";
-
 } else {
         echo "Aucune infobox trouvée pour la page $comparaison1";
 }
 # On fait pareil pour la deuxième comparaison/entité
 if (isset($data2['query']['pages'])) {
         $temp = reset($data2['query']['pages']);
-        $infobox2 = $temp['revisions'][0]['*'];
+        if (isset($temp['revisions'][0]['*'])) $infobox2 = $temp['revisions'][0]['*'];
+        else $infobox2 = "";
         #echo "testtt";
 } else {
 
@@ -119,22 +121,32 @@ if (isset($data2['query']['pages'])) {
 if (isset($datainfo1['query']['pages'])) {
         $page_info1 = reset($datainfo1['query']['pages']); #Comme d'hab, on prend la première page (il n'y en a qu'une normalement)
 
-        $page_long1 = $page_info1['length'];
-        #$page_protection1 = $page_info1['protection'];
-        $page_modif1 = $page_info1['touched'];
-        $page_watchers1 = $page_info1['watchers'];
-        $page_url1 = $page_info1['fullurl'];
+        if (isset($page_info1['length'])) $page_long1 = $page_info1['length'];
+        else $page_long1 = "";
+        if (isset($page_info1['protection'])) $page_protection1 = $page_info1['protection'];
+        else $page_protection1 = "";
+        if (isset($page_info1['touched'])) $page_modif1 = $page_info1['touched'];
+        else $page_modif1 = "";
+        if (isset($page_info1['watchers'])) $page_watchers1 = $page_info1['watchers'];
+        else $page_watchers1 = "";
+        if (isset($page_info1['fullurl'])) $page_url1 = $page_info1['fullurl'];
+        else $page_url1 = "";
 }
 
 
 if (isset($datainfo2['query']['pages'])) { #Pareil
         $page_info2 = reset($datainfo2['query']['pages']);
 
-        $page_long2 = $page_info2['length'];
-        #$page_protection2 = $page_info2['protection'];
-        $page_modif2 = $page_info2['touched'];
-        $page_watchers2 = $page_info2['watchers'];
-        $page_url2 = $page_info2['fullurl'];
+        if (isset($page_info2['length'])) $page_long2 = $page_info2['length'];
+        else $page_long2 = "";
+        if (isset($page_info2['protection'])) $page_protection2 = $page_info2['protection'];
+        else $page_protection2 = "";
+        if (isset($page_info2['touched'])) $page_modif2 = $page_info2['touched'];
+        else $page_modif2 = "";
+        if (isset($page_info2['watchers'])) $page_watchers2 = $page_info2['watchers'];
+        else $page_watchers2 = "";
+        if (isset($page_info2['fullurl'])) $page_url2 = $page_info2['fullurl'];
+        else $page_url2 = "";
 }
 
 #echo "Watchers : $page_watchers1";
@@ -173,30 +185,56 @@ if (isset($datainfo2['query']['pages'])) { #Pareil
             <td><a href='<?php echo $page_url1; ?>'><?php echo $page_url1; ?> </a></td>
             <td><a href='<?php echo $page_url2; ?>'><?php echo $page_url2; ?></a></td>
         </tr>
+        <?php
+        if ($page_long1!="" || $page_long2!="") {
+        ?>
         <tr>
             <td>Longueur de la page</td>
-            <td><?php echo $page_long1; ?> octets</td>
-            <td><?php echo $page_long2; ?> octets</td>
+            <td>
+            <?php echo $page_long1;
+            if ($page_long1!=""){echo " octets";} ?>
+            </td>
+            <td>
+            <?php echo $page_long2;
+            if ($page_long2!=""){echo " octets";} ?>
+            </td>
         </tr>
+        <?php
+        }
+        if ($page_modif1!="" || $page_modif2!="") {
+        ?>
         <tr>
             <td>Dernière modification</td>
             <td><?php echo $page_modif1; ?></td>
             <td><?php echo $page_modif2; ?> </td>
         </tr>
+        <?php
+        }
+        if ($page_watchers1!="" || $page_watchers2!="") {
+        ?>
         <tr>
             <td>Nombre de favoris</td>
             <td><?php echo $page_watchers1; ?></td>
             <td><?php echo $page_watchers2; ?></td>
         </tr>
         <?php
+        }
 
         $filtre_infobox = '/\{\{Infobox ([\s\S]*?)(?:\s\|\s)([\s\S]+?\\n\}\})/m';
         $filtre_attr_value = '/([^=]+) =([\s\S]*?)(?:\s\|\s|\\n\}\})/m';
-        preg_match_all($filtre_infobox, $infobox1, $matchinfobox1, PREG_SET_ORDER, 0);
-        preg_match_all($filtre_attr_value, $matchinfobox1[0][2], $liste_infos1, PREG_SET_ORDER, 0);
-        preg_match_all($filtre_infobox, $infobox2, $matchinfobox2, PREG_SET_ORDER, 0);
-        preg_match_all($filtre_attr_value, $matchinfobox2[0][2], $liste_infos2, PREG_SET_ORDER, 0);
 
+        preg_match_all($filtre_infobox, $infobox1, $matchinfobox1, PREG_SET_ORDER, 0);
+        if (isset($matchinfobox1[0][2])) {
+                preg_match_all($filtre_attr_value, $matchinfobox1[0][2], $liste_infos1, PREG_SET_ORDER, 0);
+        } else {
+                $liste_infos1 = array();
+        }
+        preg_match_all($filtre_infobox, $infobox2, $matchinfobox2, PREG_SET_ORDER, 0);
+        if (isset($matchinfobox2[0][2])) {
+        preg_match_all($filtre_attr_value, $matchinfobox2[0][2], $liste_infos2, PREG_SET_ORDER, 0);
+        } else {
+                $liste_infos2 = array();
+        }
         # Le groupe 0 est le texte avant filtrage
         # Le groupe 1 constitue les attributs, le groupe 2 les valeurs
         /*
