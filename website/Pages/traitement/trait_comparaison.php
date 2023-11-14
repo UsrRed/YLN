@@ -171,7 +171,7 @@ if (isset($datainfo2['query']['pages'])) { #Pareil
 
         ?>
     <br/><br/>
-    <table class="table table-bordered table-responsive">
+    <table class="table table-bordered">
         <thead>
         <tr>
             <th>Attributs</th>
