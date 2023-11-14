@@ -285,6 +285,18 @@ $app->get('/trait_faq', function (Request $request, Response $response, $args) {
 
 });
 
+$app->get('/Vue_globale', function (Request $request, Response $response, $args) {
+
+        $fich = '/home/Pages/Vue_globale.php';
+
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+
+        return $response;
+
+});
 
 $app->get('/admin', function (Request $request, Response $response, $args) {
 
