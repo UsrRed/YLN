@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 3.X 
+## Version 3.X (**Future version**)
 
 
 ### New Features and Enhancements
@@ -9,7 +9,7 @@
 - Set up an IDS/IPS (Intrusion Detection System/Intrusion Prevention System) for improved security.
 - Added user banning functionality to enhance security measures.
 
-## Version 2.2 (**latest**)
+## Version 2.2 (**Latest version**)
 
 ### Bug Fixes
 
