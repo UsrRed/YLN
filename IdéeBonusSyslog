@@ -1,6 +1,0 @@
-1) Mettre en place un conteneur ubuntu ou debian ou suse, ... (soit ELK mais difficile je pense soit syslog-ng et je me sers de la config de mon stage)
-2) Puis on peut récup l'adresse IP du conteneur (car elle bouge tout le temps) en faisant un podman exec depuis le pc houte
-3) On config syslog ng comme ca je récup la config de mon stage
-4) On regarde comment envoyer des logs a chaque fois que quelqu'un se connecte, se créé un compte qu'on envoie sur l'adresse IP du conteneur syslog
-5) Regarder si c'est une fonctionnalité REST
-6) Utilité ? Savoir qui a fait quoi et quand
