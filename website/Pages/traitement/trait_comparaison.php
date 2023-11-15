@@ -356,6 +356,31 @@ if (isset($datainfo2['query']['pages'])) { #Pareil
                 return $attribut;
         }
 
+        function replaceUrlsWithLinks($text) {
+            // Expression régulière pour trouver les URLs dans le texte
+            $pattern = '/\bhttps?:\/\/\S+\b/';
+
+            // Fonction de remplacement
+            $replacement = function($match) {
+                $url = $match[0];
+
+                // Utilise parse_url pour extraire le domaine de l'URL
+                $parsedUrl = parse_url($url);
+                $domain = isset($parsedUrl['host']) ? $parsedUrl['host'] : '';
+
+                // Construit le lien <span> avec le texte du lien comme domaine
+                $linkText = $domain;
+                $link = "<span href=\"$url\">$linkText</span>";
+
+                return $link;
+            };
+
+            // Applique la substitution dans le texte
+            $result = preg_replace_callback($pattern, $replacement, $text);
+
+            return $result;
+        }
+
         function traitement($attribut, $valeur)
         {
                 # fonction pour filtrer l'affichage et le rendre plus propre
@@ -368,6 +393,7 @@ if (isset($datainfo2['query']['pages'])) { #Pareil
                                 return "";
                         }
                 }
+                $valeur = replaceUrlsWithLinks($valeur);
 
                 if (preg_replace('/\s+/', '', $valeur) == "") {
                         $valeur = '';
@@ -384,7 +410,7 @@ if (isset($datainfo2['query']['pages'])) { #Pareil
                 $URL1 = "https://fr.wikipedia.org/w/api.php?action=query&format=json&titles=" . urlencode($Titre) . "&prop=info&inprop=protection|talkid|watched|watchers|visitingwatchers|notificationtimestamp|subjectid|url|readable|preload|displaytitle|normalizedtitle|prefixedtitle|delegated&origin=*";
                 $response = file_get_contents($URL1);
                 return json_decode($response, true);
-
+    
         }
 
         #On sauvegarde des variables dans la session de l'utilisateur pour faire le téléchargement
