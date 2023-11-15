@@ -159,6 +159,19 @@ $app->post('/trait_comparaison', function (Request $request, Response $response,
 
 });
 
+$app->get('/comparaisons', function (Request $request, Response $response, $args) {
+
+        $fich = '/home/Pages/traitement/API_REST.php';
+
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+
+        return $response
+            ->withHeader('Content-Type', 'application/json');
+
+});
 
 $app->post('/trait_connexion', function (Request $request, Response $response, $args) {
 
