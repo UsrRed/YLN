@@ -11,8 +11,9 @@
 
 ## Version 2.2 (**Latest version**)
 
-### Bug Fixes
+### Bug Fixes - API REST 
 
+- Transformation of the comparison result into json format with value input using GET method.
 - Addressed various bugs identified in previous versions.
 - Enhanced the rendering of comparisons for a more polished and user-friendly experience.
 
