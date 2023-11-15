@@ -39,7 +39,7 @@ if ($resul) {
 			exit();
 		} else {
 			#Mauvais mot de passe
-			if ($par_ligne['tentatives_echouees'] < 3) {
+			if ($par_ligne['tentatives_echouees'] < 2) {
 				# On incrémente le compteur de tentatives de connexion échouées
 				$tentatives_echouees = $par_ligne['tentatives_echouees'] + 1;
 				$tentatives_restantes = 3 - $tentatives_echouees;
