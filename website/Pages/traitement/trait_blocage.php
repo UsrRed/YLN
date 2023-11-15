@@ -27,24 +27,41 @@
 
     <script>
        
-        var seconds = 301; 
-        function countdown() {
-            var minutes = Math.floor(seconds / 60);
-            var remainingSeconds = seconds % 60;
+        var seconds;
 
-            
-            remainingSeconds = remainingSeconds < 10 ? "0" + remainingSeconds : remainingSeconds;
-
-            document.getElementById("countdown").textContent = minutes + ":" + remainingSeconds;
-
-	    if (seconds <= 0) {
-		window.location.replace("/Connexion");
+        function startCountdown() {
+            // Vérifier si le compte à rebours a déjà été démarré
+            if (localStorage.getItem("countdownSeconds")) {
+                // Si oui, récupérer le nombre de secondes restantes depuis le stockage local
+                seconds = parseInt(localStorage.getItem("countdownSeconds"), 10);
             } else {
-                seconds--;
-                setTimeout(countdown, 1000);
+                // Sinon, initialiser le compte à rebours à 301 secondes
+                seconds = 301;
             }
+
+            function updateCountdown() {
+                var minutes = Math.floor(seconds / 60);
+                var remainingSeconds = seconds % 60;
+
+                remainingSeconds = remainingSeconds < 10 ? "0" + remainingSeconds : remainingSeconds;
+
+                document.getElementById("countdown").textContent = minutes + ":" + remainingSeconds;
+
+                if (seconds <= 0) {
+                    window.location.replace("/Connexion");
+                } else {
+                    seconds--;
+                    // Enregistrer le nombre de secondes restantes dans le stockage local
+                    localStorage.setItem("countdownSeconds", seconds.toString());
+                    setTimeout(updateCountdown, 1000);
+                }
+            }
+
+            updateCountdown();
         }
-        countdown();
+
+        // Appeler la fonction pour démarrer le compte à rebours
+        startCountdown();
     </script>
 </div>
 </body>
