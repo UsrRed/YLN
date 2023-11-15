@@ -127,6 +127,7 @@ if (isset($datainfo1['query']['pages'])) {
         else $page_protection1 = "";
         if (isset($page_info1['touched'])) $page_modif1 = $page_info1['touched'];
         else $page_modif1 = "";
+        $page_modif1 = preg_replace('/T([0-9]{2}:[0-9]{2}:[0-9]{2})Z/', ' à ${1}', $page_modif1);
         if (isset($page_info1['watchers'])) $page_watchers1 = $page_info1['watchers'];
         else $page_watchers1 = "";
         if (isset($page_info1['fullurl'])) $page_url1 = $page_info1['fullurl'];
@@ -143,6 +144,7 @@ if (isset($datainfo2['query']['pages'])) { #Pareil
         else $page_protection2 = "";
         if (isset($page_info2['touched'])) $page_modif2 = $page_info2['touched'];
         else $page_modif2 = "";
+        $page_modif2 = preg_replace('/T([0-9]{2}:[0-9]{2}:[0-9]{2})Z/', ' à ${1}', $page_modif2);
         if (isset($page_info2['watchers'])) $page_watchers2 = $page_info2['watchers'];
         else $page_watchers2 = "";
         if (isset($page_info2['fullurl'])) $page_url2 = $page_info2['fullurl'];
@@ -356,12 +358,12 @@ if (isset($datainfo2['query']['pages'])) { #Pareil
                 return $attribut;
         }
 
-        function replaceUrlsWithLinks($text) {
-            // Expression régulière pour trouver les URLs dans le texte
-            $pattern = '/\bhttps?:\/\/\S+\b/';
+        function replaceUrlsWithSpans($text) {
+            // Expression régulière pour extraire les URLs dans le texte
+            $pattern = '/\b(?:https?:\/\/\S+)\b/';
 
-            // Fonction de remplacement
-            $replacement = function($match) {
+            // Fonction de traitement des correspondances
+            $processMatch = function($match) {
                 $url = $match[0];
 
                 // Utilise parse_url pour extraire le domaine de l'URL
@@ -370,13 +372,13 @@ if (isset($datainfo2['query']['pages'])) { #Pareil
 
                 // Construit le lien <span> avec le texte du lien comme domaine
                 $linkText = $domain;
-                $link = "<span href=\"$url\">$linkText</span>";
+                $span = "<a href=\"https://$linkText\">$linkText</a>";
 
-                return $link;
+                return $span;
             };
 
-            // Applique la substitution dans le texte
-            $result = preg_replace_callback($pattern, $replacement, $text);
+            // Applique la fonction de traitement des correspondances dans le texte
+            $result = preg_replace_callback($pattern, $processMatch, $text);
 
             return $result;
         }
@@ -385,15 +387,28 @@ if (isset($datainfo2['query']['pages'])) { #Pareil
         {
                 # fonction pour filtrer l'affichage et le rendre plus propre
                 $banned_attributs = array(
-                        'couleurboîte', 'titreblanc', 'logo', 'taillelogo', 'nometlogo', 'nomidentifiant', 'taille', 'espace', 'tailledrapeau');
-                $banned_caracters = array('Langue|en|texte=', '[', ']', '{', '}', '|');
+                        'couleurboîte', 'couleurécriture' , 'couleurcadre', 'titreblanc', 'logo', 'taillelogo', 'nometlogo', 'nomidentifiant', 'taille', 'espace', 'tailledrapeau');
+                $banned_attributs_regex = array(
+                        '/(pattern_...)/', '/(pattern_..)/', '/(socks.)/'
+                );
+                $banned_caracters = array('Langue|en|texte=', '[', ']', '{', '}', '|', 'url=', 'URL');
+                $banned_caracters_regex = array(
+                        '/(...-d)/', '/(\(.+\))/'
+                );
 
                 foreach ($banned_attributs as $test) {
                         if ($test == $attribut) {
                                 return "";
                         }
                 }
-                $valeur = replaceUrlsWithLinks($valeur);
+                $valeur = replaceUrlsWithSpans($valeur);
+
+                foreach ($banned_attributs_regex as $regex){
+                    if (preg_replace($regex, '', $attribut) == "") {
+                            return "";
+                    }
+                }
+
 
                 if (preg_replace('/\s+/', '', $valeur) == "") {
                         $valeur = '';
@@ -402,6 +417,12 @@ if (isset($datainfo2['query']['pages'])) { #Pareil
                 foreach ($banned_caracters as $modification) {
                         $valeur = str_replace($modification, '', $valeur);
                 }
+
+                foreach ($banned_caracters_regex as $regex){
+                        $valeur = preg_replace($regex, '', $valeur);
+                }
+                $valeur = preg_replace('/T([0-9]{2}:[0-9]{2}:[0-9]{2})Z/', ' à ${1}', $valeur);
+
                 return $valeur;
         }
 
