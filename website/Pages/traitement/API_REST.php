@@ -146,7 +146,9 @@ if (isset($_GET["entity1"]) && isset($_GET["entity2"])) {
                     if ($val1 == '' || $val2 == '') {
                             # données éléminées
                     } else {
-                            $final_table[$attribut]=array($val1, $val2);
+                            $final_table[$attribut]=array();
+                            $final_table[$attribut][$comparaison1] = $val1;
+                            $final_table[$attribut][$comparaison2] = $val2;
                     }
             } else {
                     # erreur
