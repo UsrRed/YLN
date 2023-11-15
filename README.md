@@ -51,7 +51,11 @@ Therefore, as soon as a connection is made to the database, by using an .sql scr
 
 First, clone the project from the Git repository (`git clone https://scm.univ-tours.fr/22107454t/sae501-502-theotime-martel.git`) and navigate to the project directory (`cd sae501-502-theotime-martel`). 
 
-**Optionally :**
+**Automatic installation :** 
+
+Run the requirement.sh script (`bash setup.sh` | `./setup.sh`), this will install podman, podman-compose, the necessary images for the application, and launch it. You'll also receive the IP address to access the application.
+
+**Manual installation :**
 
 Next, download the podman software and the podman-compose script using the appropriate package manager (`dnf|apt-get|yum install podman podman-compose`). If you want, you don't have to do this, a script can take care of it.
 
@@ -60,10 +64,6 @@ Depending on your machine, you may need to pull the original image for the three
 Afterward, launch the "docker-compose.yaml" file, which contains and specifies the configuration of our containers using the following command : `podman-compose -f docker-compose.yaml up -d` (optional)
 
 Once the "docker-compose" file is running, execute the "IpMonSite.sh" script (`bash IpMonSite.sh | ./IpMonSite.sh`). This will provide you with the IP address of the application, with or without load balancing, according to your preferrence.
-
-**Mandatory :** 
-
-Run the requirement.sh script (`bash setup.sh` | `./setup.sh`), this will install podman, podman-compose, the necessary images for the application, and launch it. You'll also receive the IP address to access the application
 
 ### How to use the application ?
 
