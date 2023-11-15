@@ -44,16 +44,16 @@
                 <!--Page de notre application sous forme de menu déroulant -->
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item mx-1">
+                        <li class="nav-item m-1">
                             <a class="nav-link" href="/accueil">Comparaison</a>
                         </li>
-                        <li class="nav-item mx-1">
+                        <li class="nav-item m-1">
                             <a class="nav-link" href="/Historique">Historique</a>
                         </li>
-                        <li class="nav-item mx-1">
+                        <li class="nav-item m-1">
                             <a class="nav-link" href="/Favoris">Favoris</a>
                         </li>
-                        <li class="nav-item mx-1">
+                        <li class="nav-item m-1">
                             <a class="nav-link" href="/Paramètres">Paramètres</a>
                         </li>
                         <?php
@@ -64,25 +64,25 @@
                                 # N'affiche la vue globale qu'aux administrateurs
                             ?>
                                 <li>
-                                    <a class="nav-link mx-1" href="/Vue_globale">Vue globale</a>
+                                    <a class="nav-link m-1" href="/Vue_globale">Vue globale</a>
                                 </li>
                             <?
                             }
                         }
                         ?>
                         <li>
-                            <a class="nav-link" href="/trait_faq">FAQ</a>
+                            <a class="nav-link m-1" href="/trait_faq">FAQ</a>
                         </li>
                         <?php if (!isset($_SESSION['utilisateur_id'])) { # Si l'utilisateur n'est pas connecté ?>
-                            <li class="nav-item mx-1">
-                                <a class="nav-link btn btn-success" style="color: white;" href="/Inscription">Inscription</a>
+                            <li class="nav-item m-1">
+                                <a class="nav-link btn btn-outline-success text-left" style="border: unset;" href="/Inscription">Inscription</a>
                             </li>
-                            <li class="nav-item mx-1">
-                                <a class="nav-link btn btn-success" style="color: white;" href="/Connexion">Connexion</a>
+                            <li class="nav-item m-1">
+                                <a class="nav-link btn btn-outline-success text-left" style="border: unset;" href="/Connexion">Connexion</a>
                             </li>
                         <?php } else { ?>
-                            <li class="nav-item mx-1">
-                                <a class="nav-link btn btn-outline-danger" style="border: unset;" href="/trait_deconnexion">Déconnexion</a>
+                            <li class="nav-item m-1">
+                                <a class="nav-link btn btn-outline-danger text-left" style="border: unset;" href="/trait_deconnexion">Déconnexion</a>
                             </li>
                         <?php } ?>
                     </ul>
@@ -94,9 +94,9 @@
             if (session_status() == PHP_SESSION_NONE) session_start();
 
             if (isset($_SESSION['utilisateur_id'])) {
-                    echo '<span class="text-success"><b> &ensp;&ensp; ' . $_SESSION['utilisateur'] . ' est connecté(e)</b></span>';
+                    echo '<span class="text-success m-1"><b>' . $_SESSION['utilisateur'] . ' est connecté(e)</b></span>';
             } else {
-                    echo '<span class="text-danger"><b> &ensp;&ensp; Déconnecté</b></span>';
+                    echo '<span class="text-danger m-1"><b>Déconnecté</b></span>';
             }
             function afficher_etat()
             {
