@@ -1,4 +1,4 @@
-# Changelog
+# Changelog for the SAE501-502 Application
 
 ## Version 3.X (**Future version**)
 
