@@ -47,7 +47,7 @@ The main features of the project are as follows:
 The creation of the tables in the database is automatic. To do it, we use `mysqli_multi_query`.
 Therefore, as soon as a connection is made to the database, by using an .sql script, a $tables variable (which contains the commands for creating tables with an `IF NOT EXISTS`) is launched automatically to create the tables. The sensitive data in the database are hashed and salted.
 
-* Where to start ?
+### Where to start ?
 
 First, clone the project from the Git repository (`git clone https://scm.univ-tours.fr/22107454t/sae501-502-theotime-martel.git`) and navigate to the project directory (`cd sae501-502-theotime-martel`). 
 
