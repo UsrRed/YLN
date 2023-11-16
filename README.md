@@ -86,12 +86,13 @@ You don't have access to the FAQ page; only the administrator does. This page co
 **0)** You should have these images : 
 
 └─# `podman images`
-REPOSITORY                                    TAG         IMAGE ID      CREATED       SIZE
-docker.io/library/php                         8.2-fpm     be4fe29b0ade  2 weeks ago   502 MB
-docker.io/library/nginx                       alpine      b135667c9898  3 weeks ago   49.5 MB
-docker.io/library/mysql                       latest      a3b6608898d6  3 weeks ago   612 MB
-docker.io/library/haproxy                     alpine      fc4cb010afcf  3 weeks ago   25.2 MB
-docker.io/balabit/syslog-ng                   latest      4a0b6eddb572  7 weeks ago   531 MB
+REPOSITORY   
+                                                 TAG         IMAGE ID      CREATED       SIZE
+- docker.io/library/php                         8.2-fpm     be4fe29b0ade  2 weeks ago   502 MB
+- docker.io/library/nginx                       alpine      b135667c9898  3 weeks ago   49.5 MB
+- docker.io/library/mysql                       latest      a3b6608898d6  3 weeks ago   612 MB
+- docker.io/library/haproxy                     alpine      fc4cb010afcf  3 weeks ago   25.2 MB
+- docker.io/balabit/syslog-ng                   latest      4a0b6eddb572  7 weeks ago   531 MB
 
 **1)** After retrieving the images of the containers, launch the containers with sudo : ``
 
@@ -102,23 +103,27 @@ using podman version: 4.5.1
 ** excluding:  set()
 
 ...
+
 ...
+
 ...
 
 During the launch, there should be an exit code of 0 each time
 
-**3)** Execute the script IpMonSite.sh
+**2)** Execute the script IpMonSite.sh
 
 └─# `bash IpMonSite.sh` 
 
 ...
+
 ...
+
 ...
 
 --> L'adresse IP de l'application sur laquelle se rendre est https://172.18.0.7:8443
 --> Vous pouvez faire un CTRL + [clique gauche] sur l'URL ci-dessus.
 
-**4)** Finally, enter the URL returned by the script to connect on the application
+**3)** Finally, enter the URL returned by the script to connect on the application
 
 ### Improvement notes ?
 
