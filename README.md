@@ -59,7 +59,7 @@ Run the requirement.sh script (`bash setup.sh` | `./setup.sh`), this will instal
 
 Next, download the podman software and the podman-compose script using the appropriate package manager (`dnf|apt-get|yum install podman podman-compose`). If you want, you don't have to do this, a script can take care of it.
 
-Depending on your machine, you may need to pull the original image for the three containers (`podman pull docker.io/library/mysql:latest` & `podman pull docker.io/library/php:8.2-fpm` & `podman pull docker.io/library/nginx:alpine` & `podman pull docker.io/library/haproxy:alpine`). This part is still optional.
+Depending on your machine, you may need to pull the original image for the three containers (`podman pull docker.io/library/mysql:latest` & `podman pull docker.io/library/php:8.2-fpm` & `podman pull docker.io/library/nginx:alpine` & `podman pull docker.io/library/haproxy:alpine`& `podman pull docker.io/balabit/syslog-ng:latest`). This part is still optional.
 
 Afterward, launch the "docker-compose.yaml" file, which contains and specifies the configuration of our containers using the following command : `podman-compose -f docker-compose.yaml up -d` (optional)
 
