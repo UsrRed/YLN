@@ -125,12 +125,10 @@ During the launch, there should be an exit code of 0 each time
 
 ### Improvement notes ?
 
-* Répartition de charge de conteneur PHP
-* Syslog type stack ELK ? Syslog-ng ?
-* Chat entre différents utilisateurs
-* Date expiration mot de passe dans la base de données
-
-
+* Container PHP load balancing
+* ELK stack or Syslog-ng for syslog
+* Chat with different users
+* Password expiration date in the database
 
 <!--
 ## Getting started
