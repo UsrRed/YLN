@@ -14,6 +14,7 @@ if (!isset($_SESSION['utilisateur_id'])) {
 }
 
 function replaceElementsInText($text) {
+        // pris sur internet
         // Utiliser une expression régulière pour détecter les éléments dans le format ::element1||element2::
         $pattern = '/::(.*?)\|\|(.*?)::/';
         $replacedText = preg_replace_callback($pattern, function($matches) {
@@ -28,8 +29,6 @@ function replaceElementsInText($text) {
         return $replacedText;
 }
 
-
-include('/home/Pages/configBDD/config.php');
 
 // Récupérer les informations de l'utilisateur connecté
 $nom_utilisateur = $_SESSION['utilisateur'];
