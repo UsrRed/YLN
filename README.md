@@ -81,8 +81,8 @@ You don't have access to the FAQ page; only the administrator does. This page co
 
 ### Improvement notes ?
 
+* Répartition de charge de conteneur PHP
 * Syslog type stack ELK ? Syslog-ng ?
-* Fail2ban 
 * Chat entre différents utilisateurs
 * Date expiration mot de passe dans la base de données
 

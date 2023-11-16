@@ -4,6 +4,7 @@
 $error_message = "Mauvais nom d'utilisateur ou mot de passe !";
 
 include('/home/Pages/configBDD/config.php');
+require '/usr/share/nginx/composer/vendor/autoload.php';
 
 # Pour récupérer les données du formulaire
 $utilisateur = filter_var($_POST['utilisateur'], FILTER_UNSAFE_RAW);
@@ -82,7 +83,25 @@ if ($resul) {
 						#Message de blocage temporaire avec le temps restant
 						if (session_status() == PHP_SESSION_NONE) session_start();
 						$_SESSION['status'] = "danger";
-						$_SESSION['message'] = "Compte temporairement bloqué. Réessayez dans $temps_restant secondes.";
+						$_SESSION['message'] = "Compte temporairement bloqué. Réessayez dans $temps_restant secondes. Un mail a été envoyé !";
+
+						$mail = new PHPMailer\PHPMailer\PHPMailer();
+						$mail->isSMTP();
+				                $mail->Host = 'smtp.gmail.com';
+             	   				$mail->SMTPAuth = true;
+              	  				$mail->Username = 'sae501502@gmail.com'; #Adresse e-mail gmail pour l'envoi
+           	     				$mail->Password = 'xqifxpjrieknuntn'; #Mot de passe d'application
+               	 				$mail->SMTPSecure = 'tls';
+             					$mail->Port = 587;
+						$mail->setFrom('sae501502@gmail.com', 'SAE501-502 - bannissement');
+						$mail->addAddress('nathan.martel@etu.univ-tours.fr');
+						$mail->addAddress('lukas.theotime@etu.univ-tours.fr');
+						$mail->addAddress('yohann.denoyelle@etu.univ-tours.fr');
+						$mail->isHTML(false);
+   	        				$mail->Subject = "[WARNING] - SAE501-502";
+       	         				$mail->Body = "L'utilisateur $utilisateur vient de se faire bannir 5 minutes sur l'application suite à trois tentatives de connexions infructueuses.";
+						$mail->send();
+
 						#header("Location: /Connexion");
 						header("Location: /trait_blocage");
 						exit();
@@ -92,6 +111,7 @@ if ($resul) {
  					if (session_status() == PHP_SESSION_NONE) session_start();
 					$_SESSION['status'] = "danger";
 					$_SESSION['message'] = "Compte temporairement bloqué. Réessayez dans $temps_restant secondes.";
+						
 					#header("Location: /Connexion");
 					header("Location: /trait_blocage");
 					exit();

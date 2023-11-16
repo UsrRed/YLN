@@ -84,20 +84,14 @@ services:
         #ipv4_address: 172.18.0.6  
 
   syslog-ng:
-    image: lscr.io/linuxserver/syslog-ng:latest
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
-    #volumes:
-      #- 
-    ports: 
-      - 514:5514/udp
-      - 601:6601/tcp
-      - 6514:6514/tcp
+    image: balabit/syslog-ng:latest
+    volumes:
+      - ../sae501-502-theotime-martel/syslog/syslog-ng.conf:/etc/syslog-ng/syslog-ng.conf:z
+      - ../sae501-502-theotime-martel/syslog/syslog-ng:/etc/default/syslog-ng:z
+    ports:
+      - "5514:5514/udp"
+    restart: always
     container_name: syslog-ng
-    networks:
-      sae:
 
 volumes: 
   db_data:

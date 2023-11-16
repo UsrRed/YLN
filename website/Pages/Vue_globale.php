@@ -94,4 +94,3 @@ $num_resultat_utilisateur = mysqli_num_rows($resultat_utilisateur);
     ?>
 </div>
 </body>
-
