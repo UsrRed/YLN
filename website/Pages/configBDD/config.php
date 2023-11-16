@@ -49,6 +49,16 @@ CREATE TABLE IF NOT EXISTS Favoris (
 	FOREIGN KEY (historique_id) REFERENCES Historique(id)
 );
 
+CREATE TABLE IF NOT EXISTS Messages (
+    message_id INT AUTO_INCREMENT PRIMARY KEY,
+    utilisateur_id INT,
+    texte TEXT,
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    like_count INT DEFAULT 0,
+    dislike_count INT DEFAULT 0,
+    FOREIGN KEY (utilisateur_id) REFERENCES Utilisateur(id)
+);
+
 CREATE TABLE IF NOT EXISTS FAQ (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	utilisateur_id INT NOT NULL,

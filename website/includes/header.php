@@ -26,7 +26,6 @@
         }
 
         /*Pour mettre à jour toutes les secondes*/
-
         setInterval(updateClock, 1000);
 
     </script>
@@ -35,7 +34,7 @@
 <body class="bg-light">
 <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
     <div class="container">
-        <a class="navbar-brand" href="#"><img src="logo.jpg" width="20" height="20"/>&ensp;SAÉ 501-502 - <span id="current-time"></span><a>
+        <a class="navbar-brand" href="#"><img src="logo.jpg" width="20" height="20"/>&ensp;SAÉ 501-502 - <span id="current-time">00:00:00</span><a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <!--Pour avoir le menu avec les trois bars lorsque l'écran devient petit, permet d'avoir du responsive avec le menu déroulant -->
@@ -45,16 +44,19 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item m-1">
-                            <a class="nav-link" href="/accueil">Comparaison</a>
+                            <a class="nav-link" style="white-space: nowrap" href="/accueil">Comparaison</a>
                         </li>
                         <li class="nav-item m-1">
-                            <a class="nav-link" href="/Historique">Historique</a>
+                            <a class="nav-link" style="white-space: nowrap" href="/chat">Chat</a>
                         </li>
                         <li class="nav-item m-1">
-                            <a class="nav-link" href="/Favoris">Favoris</a>
+                            <a class="nav-link" style="white-space: nowrap" href="/Historique">Historique</a>
                         </li>
                         <li class="nav-item m-1">
-                            <a class="nav-link" href="/Paramètres">Paramètres</a>
+                            <a class="nav-link" style="white-space: nowrap" href="/Favoris">Favoris</a>
+                        </li>
+                        <li class="nav-item m-1">
+                            <a class="nav-link" style="white-space: nowrap" href="/Paramètres">Paramètres</a>
                         </li>
                         <?php
                         if (session_status() == PHP_SESSION_NONE) session_start();
@@ -64,25 +66,25 @@
                                 # N'affiche la vue globale qu'aux administrateurs
                             ?>
                                 <li>
-                                    <a class="nav-link m-1" href="/Vue_globale">Vue globale</a>
+                                    <a class="nav-link m-1" style="white-space: nowrap" href="/Vue_globale">Vue globale</a>
                                 </li>
-                            <?
+                            <?php
                             }
                         }
                         ?>
                         <li>
-                            <a class="nav-link m-1" href="/trait_faq">FAQ</a>
+                            <a class="nav-link m-1" style="white-space: nowrap;" href="/trait_faq">FAQ</a>
                         </li>
                         <?php if (!isset($_SESSION['utilisateur_id'])) { # Si l'utilisateur n'est pas connecté ?>
                             <li class="nav-item m-1">
-                                <a class="nav-link btn btn-outline-success text-left" style="border: unset;" href="/Inscription">Inscription</a>
+                                <a class="nav-link btn btn-outline-success text-left" style="border: unset; white-space: nowrap;" href="/Inscription">Inscription</a>
                             </li>
                             <li class="nav-item m-1">
-                                <a class="nav-link btn btn-outline-success text-left" style="border: unset;" href="/Connexion">Connexion</a>
+                                <a class="nav-link btn btn-outline-success text-left" style="border: unset; white-space: nowrap;" href="/Connexion">Connexion</a>
                             </li>
                         <?php } else { ?>
                             <li class="nav-item m-1">
-                                <a class="nav-link btn btn-outline-danger text-left" style="border: unset;" href="/trait_deconnexion">Déconnexion</a>
+                                <a class="nav-link btn btn-outline-danger text-left" style="border: unset; white-space: nowrap;" href="/trait_deconnexion">Déconnexion</a>
                             </li>
                         <?php } ?>
                     </ul>
@@ -94,9 +96,9 @@
             if (session_status() == PHP_SESSION_NONE) session_start();
 
             if (isset($_SESSION['utilisateur_id'])) {
-                    echo '<span class="text-success m-1"><b>' . $_SESSION['utilisateur'] . ' est connecté(e)</b></span>';
+                    echo '<span class="text-success m-1" style="white-space: nowrap" ><b>' . $_SESSION['utilisateur'] . ' est connecté(e)</b></span>';
             } else {
-                    echo '<span class="text-danger m-1"><b>Déconnecté</b></span>';
+                    echo '<span class="text-danger m-1" style="white-space: nowrap" ><b>Déconnecté</b></span>';
             }
             function afficher_etat()
             {
