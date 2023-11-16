@@ -61,7 +61,7 @@ Next, download the podman software and the podman-compose script using the appro
 
 Depending on your machine, you may need to pull the original image for the three containers (`podman pull docker.io/library/mysql:latest` & `podman pull docker.io/library/php:8.2-fpm` & `podman pull docker.io/library/nginx:alpine` & `podman pull docker.io/library/haproxy:alpine`). This part is still optional.
 
---> **mandatory** : You must edit on your host PC, the following file (to retrieve the syslog-ng image): `vim /etc/containers/registries.conf`  and add the following line: `unqualified-search-registries = ['docker.io']`. Afterward, you can retrieve the syslog image using the following command : `podman pull balabit/syslog-ng:latest`.
+**Mandatory :** You must edit on your host PC, the following file (to retrieve the syslog-ng image): `vim /etc/containers/registries.conf`  and add the following line : `unqualified-search-registries = ['docker.io']`. Afterward, you can retrieve the syslog image using the following command : `podman pull balabit/syslog-ng:latest`.
 
 Afterward, launch the "docker-compose.yaml" file, which contains and specifies the configuration of our containers using the following command : `podman-compose -f docker-compose.yaml up -d` (optional)
 
@@ -95,35 +95,26 @@ docker.io/balabit/syslog-ng                   latest      4a0b6eddb572  7 weeks 
 
 **1)** After retrieving the images of the containers, launch the containers with sudo : ``
 
-─# `podman-compose -f docker-compose.yaml up -d`
+└─# `podman-compose -f docker-compose.yaml up -d`
 podman-compose version: 1.0.6
 ['podman', '--version', '']
 using podman version: 4.5.1
 ** excluding:  set()
+
 ...
 ...
 ...
+
 During the launch, there should be an exit code of 0 each time
-
-**2)** Check the started containers
-
-─# `podman ps`                                
-CONTAINER ID  IMAGE                                                COMMAND               CREATED      STATUS                        PORTS                                        NAMES
-631a12b5eef3  docker.io/library/mysql:latest                       mysqld                2 hours ago  Up About a minute             0.0.0.0:3306->3306/tcp                       mysql
-369b26353814  localhost/sae501-502-theotime-martel_php:latest      php-fpm               2 hours ago  Up About a minute             0.0.0.0:9000->9000/tcp                       php
-e373d4c9ea6f  docker.io/balabit/syslog-ng:latest                                         2 hours ago  Up About a minute (starting)  0.0.0.0:5514->5514/udp                       syslog-ng
-b5e7e44ccbd2  docker.io/library/nginx:alpine                       nginx -g daemon o...  2 hours ago  Up About a minute             0.0.0.0:8080->80/tcp                         nginx1
-a6d710ace588  docker.io/library/nginx:alpine                       nginx -g daemon o...  2 hours ago  Up 58 seconds                 0.0.0.0:8081->80/tcp                         nginx2
-c083d442de3c  localhost/sae501-502-theotime-martel_haproxy:latest  haproxy -f /usr/l...  2 hours ago  Up 56 seconds                 0.0.0.0:8083->80/tcp, 0.0.0.0:8443->443/tcp  haproxy
 
 **3)** Execute the script IpMonSite.sh
 
 └─# `bash IpMonSite.sh` 
-b5e7e44ccbd2  docker.io/library/nginx:alpine                       nginx -g daemon o...  2 hours ago  Up About a minute             0.0.0.0:8080->80/tcp                         nginx1
-a6d710ace588  docker.io/library/nginx:alpine                       nginx -g daemon o...  2 hours ago  Up About a minute             0.0.0.0:8081->80/tcp                         nginx2
-369b26353814  localhost/sae501-502-theotime-martel_php:latest      php-fpm               2 hours ago  Up About a minute             0.0.0.0:9000->9000/tcp                       php
-631a12b5eef3  docker.io/library/mysql:latest                       mysqld                2 hours ago  Up About a minute             0.0.0.0:3306->3306/tcp                       mysql
-c083d442de3c  localhost/sae501-502-theotime-martel_haproxy:latest  haproxy -f /usr/l...  2 hours ago  Up About a minute             0.0.0.0:8083->80/tcp, 0.0.0.0:8443->443/tcp  haproxy
+
+...
+...
+...
+
 --> L'adresse IP de l'application sur laquelle se rendre est https://172.18.0.7:8443
 --> Vous pouvez faire un CTRL + [clique gauche] sur l'URL ci-dessus.
 
