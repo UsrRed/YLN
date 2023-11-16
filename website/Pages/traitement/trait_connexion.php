@@ -3,6 +3,8 @@
 
 $error_message = "Mauvais nom d'utilisateur ou mot de passe !";
 
+#Pour envoi de mail et connexion vers la base de données
+
 include('/home/Pages/configBDD/config.php');
 require '/usr/share/nginx/composer/vendor/autoload.php';
 
