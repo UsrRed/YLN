@@ -103,6 +103,9 @@ if (isset($_SESSION['utilisateur_id'])) {
                                                 <input type="hidden" name="message_id" value="<?php echo filter_var($row['message_id'], FILTER_UNSAFE_RAW); ?>">
                                                 <button type="submit" class="btn btn-danger btn-sm">&#8681; <?php echo filter_var($row['dislike_count'], FILTER_UNSAFE_RAW); ?></button>
                                             </form>
+                                            <?php } else { ?>
+                                            <span class="font-weight-bold text-success">&#8679; <?php echo filter_var($row['like_count'], FILTER_UNSAFE_RAW); ?></span>
+                                            <span class="font-weight-bold text-danger">&#8681; <?php echo filter_var($row['dislike_count'], FILTER_UNSAFE_RAW); ?></span>
                                             <?php } ?>
                                         </div>
                                     </div>

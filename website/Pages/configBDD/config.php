@@ -59,6 +59,16 @@ CREATE TABLE IF NOT EXISTS Messages (
     FOREIGN KEY (utilisateur_id) REFERENCES Utilisateur(id)
 );
 
+CREATE TABLE IF NOT EXISTS LikesDislikes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_utilisateur INT,
+    id_message INT,
+    like_bool BOOLEAN,
+    dislike_bool BOOLEAN,
+    FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur(id),
+    FOREIGN KEY (id_message) REFERENCES Messages(message_id)
+);
+
 CREATE TABLE IF NOT EXISTS FAQ (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	utilisateur_id INT NOT NULL,
