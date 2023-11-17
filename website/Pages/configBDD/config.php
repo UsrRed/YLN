@@ -28,7 +28,8 @@ CREATE TABLE IF NOT EXISTS Utilisateur (
 	adresse_email VARCHAR(100),
 	mot_de_passe_application VARCHAR(100),
 	tentatives_echouees INT DEFAULT 0,
-	temps_blocage INT DEFAULT 0
+	temps_blocage INT DEFAULT 0,
+	date_creation_motdepasse TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS Historique (

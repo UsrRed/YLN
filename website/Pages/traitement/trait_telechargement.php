@@ -48,19 +48,42 @@ exit();
 
 function traitement($attribut, $valeur)
 {
-        $banned_attributs = array('couleurboîte', 'titreblanc', 'logo', 'taillelogo', 'nometlogo', 'nomidentifiant', 'taille', 'espace', 'tailledrapeau');
-        $banned_caracters = array('Langue|en|texte=', '[', ']', '{', '}', '|');
+        # fonction pour filtrer l'affichage et le rendre plus propre
+        $banned_attributs = array(
+                'couleurboîte', 'couleurécriture' , 'couleurcadre', 'titreblanc', 'logo', 'taillelogo', 'nometlogo', 'nomidentifiant', 'taille', 'espace', 'tailledrapeau');
+        $banned_attributs_regex = array(
+                '/(pattern_...)/', '/(pattern_..)/', '/(socks.)/'
+        );
+        $banned_caracters = array('Langue|en|texte=', '[', ']', '{', '}', '|', 'url=', 'URL');
+        $banned_caracters_regex = array(
+                '/(...-d)/', '/(\(.+\))/'
+        );
+
         foreach ($banned_attributs as $test) {
                 if ($test == $attribut) {
                         return "";
                 }
         }
+
+        foreach ($banned_attributs_regex as $regex){
+                if (preg_replace($regex, '', $attribut) == "") {
+                        return "";
+                }
+        }
+
+
         if (preg_replace('/\s+/', '', $valeur) == "") {
                 $valeur = '';
         }
+
         foreach ($banned_caracters as $modification) {
                 $valeur = str_replace($modification, '', $valeur);
         }
+
+        foreach ($banned_caracters_regex as $regex){
+                $valeur = preg_replace($regex, '', $valeur);
+        }
+
         return $valeur;
 }
 

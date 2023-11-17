@@ -3,7 +3,10 @@
 
 $error_message = "Mauvais nom d'utilisateur ou mot de passe !";
 
+#Pour envoi de mail et connexion vers la base de données
+
 include('/home/Pages/configBDD/config.php');
+require '/usr/share/nginx/composer/vendor/autoload.php';
 
 # Pour récupérer les données du formulaire
 $utilisateur = filter_var($_POST['utilisateur'], FILTER_UNSAFE_RAW);
@@ -19,6 +22,21 @@ if ($resul) {
 	# Vérification si une ligne dans la BDD a été trouvée
 	if (mysqli_num_rows($resul) == 1) {
 		$par_ligne = mysqli_fetch_assoc($resul);
+
+		$date_creation_motdepasse = strtotime($par_ligne['date_creation_motdepasse']);
+		$expiration_motdepasse = $date_creation_motdepasse + (2 * 24 * 60 * 60); # 2jours (en secondes) pour le temps d'expiration de mot de passe.
+		#$expiration_motdepasse = $date_creation_motdepasse + (60);
+
+		if (password_verify($motdepasse, $par_ligne['mot_de_passe']) && time() > $expiration_motdepasse) {
+			if (session_status() == PHP_SESSION_NONE) session_start();
+			$_SESSION['status'] = "danger";
+			$_SESSION['message'] = "Mot de passe expiré. Veuillez réinitialiser votre mot de passe.";
+			$_SESSION['utilisateur_id'] = $par_ligne['id'];
+			$_SESSION['utilisateur'] = $par_ligne['nom_utilisateur'];
+			header("Location: /trait_reinitialisation_mdp_formulaire");
+			exit();
+			}
+		
 		if (password_verify($motdepasse, $par_ligne['mot_de_passe'])) {
 			#echo "connecté, c'est good";
 			# Si 1, l'utilisateur est connecté, c'est ok
@@ -82,7 +100,25 @@ if ($resul) {
 						#Message de blocage temporaire avec le temps restant
 						if (session_status() == PHP_SESSION_NONE) session_start();
 						$_SESSION['status'] = "danger";
-						$_SESSION['message'] = "Compte temporairement bloqué. Réessayez dans $temps_restant secondes.";
+						$_SESSION['message'] = "Compte temporairement bloqué. Réessayez dans $temps_restant secondes. Un mail a été envoyé !";
+
+						$mail = new PHPMailer\PHPMailer\PHPMailer();
+						$mail->isSMTP();
+				                $mail->Host = 'smtp.gmail.com';
+             	   				$mail->SMTPAuth = true;
+              	  				$mail->Username = 'sae501502@gmail.com'; #Adresse e-mail gmail pour l'envoi
+           	     				$mail->Password = 'xqifxpjrieknuntn'; #Mot de passe d'application
+               	 				$mail->SMTPSecure = 'tls';
+             					$mail->Port = 587;
+						$mail->setFrom('sae501502@gmail.com', 'SAE501-502 - bannissement');
+						$mail->addAddress('nathan.martel@etu.univ-tours.fr');
+						$mail->addAddress('lukas.theotime@etu.univ-tours.fr');
+						$mail->addAddress('yohann.denoyelle@etu.univ-tours.fr');
+						$mail->isHTML(false);
+   	        				$mail->Subject = "[WARNING] - SAE501-502";
+       	         				$mail->Body = "L'utilisateur $utilisateur vient de se faire bannir 5 minutes sur l'application suite à trois tentatives de connexions infructueuses.";
+						$mail->send();
+
 						#header("Location: /Connexion");
 						header("Location: /trait_blocage");
 						exit();
@@ -92,6 +128,7 @@ if ($resul) {
  					if (session_status() == PHP_SESSION_NONE) session_start();
 					$_SESSION['status'] = "danger";
 					$_SESSION['message'] = "Compte temporairement bloqué. Réessayez dans $temps_restant secondes.";
+						
 					#header("Location: /Connexion");
 					header("Location: /trait_blocage");
 					exit();

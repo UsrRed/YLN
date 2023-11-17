@@ -61,6 +61,8 @@ Next, download the podman software and the podman-compose script using the appro
 
 Depending on your machine, you may need to pull the original image for the three containers (`podman pull docker.io/library/mysql:latest` & `podman pull docker.io/library/php:8.2-fpm` & `podman pull docker.io/library/nginx:alpine` & `podman pull docker.io/library/haproxy:alpine`). This part is still optional.
 
+**Mandatory :** You must edit on your host PC, the following file (to retrieve the syslog-ng image): `vim /etc/containers/registries.conf`  and add the following line : `unqualified-search-registries = ['docker.io']`. Afterward, you can retrieve the syslog image using the following command : `podman pull balabit/syslog-ng:latest`.
+
 Afterward, launch the "docker-compose.yaml" file, which contains and specifies the configuration of our containers using the following command : `podman-compose -f docker-compose.yaml up -d` (optional)
 
 Once the "docker-compose" file is running, execute the "IpMonSite.sh" script (`bash IpMonSite.sh | ./IpMonSite.sh`). This will provide you with the IP address of the application, with or without load balancing, according to your preferrence.
@@ -79,12 +81,54 @@ Additionally, a timestamped comparison history is available on the "History" pag
 
 You don't have access to the FAQ page; only the administrator does. This page compiles all user requests.
 
+### Example of launching the application
+
+**0)** You should have these images : 
+
+└─# `podman images`
+
+- docker.io/library/php                         8.2-fpm     
+- docker.io/library/nginx                       alpine      
+- docker.io/library/mysql                       latest      
+- docker.io/library/haproxy                     alpine      
+- docker.io/balabit/syslog-ng                   latest      
+
+**1)** After retrieving the images of the containers, launch the containers : 
+
+└─# `sudo podman-compose -f docker-compose.yaml up -d`
+podman-compose version: 1.0.6
+['podman', '--version', '']
+using podman version: 4.5.1
+** excluding:  set()
+
+...
+
+...
+
+...
+
+During the launch, there should be an exit code of 0 each time
+
+**2)** Execute the script IpMonSite.sh
+
+└─# `sudo bash IpMonSite.sh` 
+
+...
+
+...
+
+...
+
+--> L'adresse IP de l'application sur laquelle se rendre est https://172.18.0.7:8443
+
+**3)** Finally, enter the URL returned by the script to connect on the application
+
 ### Improvement notes ?
 
-* Syslog type stack ELK ? Syslog-ng ?
-* Fail2ban 
-* Chat entre différents utilisateurs
-* Date expiration mot de passe dans la base de données
+* Container PHP load balancing
+* ELK stack or Syslog-ng for syslog
+* Chat with different users
+* Password expiration date in the database
 
 <!--
 ## Getting started

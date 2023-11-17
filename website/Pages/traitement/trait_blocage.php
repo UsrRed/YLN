@@ -23,46 +23,42 @@
 <div class="container mt-5 text-center"> <!-- Ajout de la classe text-center pour centrer le contenu -->
     
 <br><br><br><h2>Votre compte est temporairement <b>bloqué</b>. Vous serez redirigé vers la page de connexion à la fin du compte a rebours</h2><br/><br/><br/><br/><br/><br/><br/>
-    <h1><span id="countdown" class="display-1">300</span></h1> <!-- Ajout de la classe display-1 pour le texte en très gros -->
+	<h1><span id="countdown" class="display-1">300</span></h1> <!-- Ajout de la classe display-1 pour le texte en très gros -->
 
-    <script>
-       
-        var seconds;
+	<script>
 
-        function startCountdown() {
-            // Vérifier si le compte à rebours a déjà été démarré
-            if (localStorage.getItem("countdownSeconds")) {
-                // Si oui, récupérer le nombre de secondes restantes depuis le stockage local
-                seconds = parseInt(localStorage.getItem("countdownSeconds"), 10);
-            } else {
-                // Sinon, initialiser le compte à rebours à 301 secondes
-                seconds = 301;
-            }
+	/* Fonctions dont nous ne sommes pas l'auteur*/
 
-            function updateCountdown() {
-                var minutes = Math.floor(seconds / 60);
-                var remainingSeconds = seconds % 60;
+	var seconds;
+	function startCountdown() {
+		if (localStorage.getItem("countdownSeconds")) {
+			seconds = parseInt(localStorage.getItem("countdownSeconds"), 10);
+		} else {
+			seconds = 300; // Changer la valeur initiale à 300
+			localStorage.setItem("countdownSeconds", seconds.toString()); // Ajoutez cette ligne pour stocker la valeur initiale
+		}
 
-                remainingSeconds = remainingSeconds < 10 ? "0" + remainingSeconds : remainingSeconds;
+ 	function updateCountdown() {
+		var minutes = Math.floor(seconds / 60);
+		var remainingSeconds = seconds % 60;
 
-                document.getElementById("countdown").textContent = minutes + ":" + remainingSeconds;
+		remainingSeconds = remainingSeconds < 10 ? "0" + remainingSeconds : remainingSeconds;
 
-                if (seconds <= 0) {
-                    window.location.replace("/Connexion");
-                } else {
-                    seconds--;
-                    // Enregistrer le nombre de secondes restantes dans le stockage local
-                    localStorage.setItem("countdownSeconds", seconds.toString());
-                    setTimeout(updateCountdown, 1000);
-                }
-            }
+		document.getElementById("countdown").textContent = minutes + ":" + remainingSeconds;
 
-            updateCountdown();
-        }
+		if (seconds <= 0) {
+			window.location.replace("/Connexion");
+		} else {
+			seconds--;
+			localStorage.setItem("countdownSeconds", seconds.toString());
+			setTimeout(updateCountdown, 1000);
+			}
+		}
+		updateCountdown();
+	}
+	startCountdown();
 
-        // Appeler la fonction pour démarrer le compte à rebours
-        startCountdown();
-    </script>
+	</script>
 </div>
 </body>
 </html>

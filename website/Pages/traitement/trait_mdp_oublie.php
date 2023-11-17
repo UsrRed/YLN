@@ -38,7 +38,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($result->num_rows > 0) {
 
-                $nouv_mdp = mdp_aleatoire();
+		$nouv_mdp = mdp_aleatoire();
+		$nouv_mdp_hash = password_hash($nouv_mdp, PASSWORD_DEFAULT);
 
                 #Si les données correspondent, on lance un processus de mail
                 require '/usr/share/nginx/composer/vendor/autoload.php';
@@ -52,9 +53,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 #On met a jour le mot de passe aléatoire dans la base de données : 
 
-                $modif_Req = "UPDATE Utilisateur SET mot_de_passe = ? WHERE nom_utilisateur = ?";
-                $modif_Stmt = $connexion->prepare($modif_Req);
-                $modif_Stmt->bind_param("ss", $nouv_mdp, $utilisateur);
+		$modif_Req = "UPDATE Utilisateur SET mot_de_passe = ?, date_creation_motdepasse = DATE_SUB(NOW(), INTERVAL 2 DAY) WHERE nom_utilisateur = ?"; #Pour qu'il soit déjà expiré
+		$modif_Stmt = $connexion->prepare($modif_Req);
+                $modif_Stmt->bind_param("ss", $nouv_mdp_hash, $utilisateur);
                 $modif_Stmt->execute();
                 $modif_Stmt->close();
 
@@ -76,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 $mail->isHTML(false);
                 $mail->Subject = 'Oublie du mot de passe';
-                $mail->Body = "Bonjour $utilisateur,\n\nVous avez oublié votre mot de passe, en voici un nouveau pour votre compte : $nouv_mdp\nNous vous encouragons par la suite, après vous êtes authentifié, à modifier votre mot de passe sur la page /trait_changement_mdp_formulaire pour des raisons de sécurité.\n\nCordialement,";
+                $mail->Body = "Bonjour $utilisateur,\n\nVous avez oublié votre mot de passe, en voici un nouveau pour votre compte : $nouv_mdp\nCe mot de passe est déjà expiré. Rendez-vous sur la page de connexion et vous serez invité à modifier votre mot de passe.\n\nCordialement,";
 
                 #Pour envoyer l'e-mail
 
@@ -105,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $connexion->close();
 
-function mdp_aleatoire($long = 12)
+function mdp_aleatoire($long = 24)
 {
 
         $carac = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!?,#&@*';
