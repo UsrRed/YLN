@@ -12,6 +12,10 @@ $nouv_motdepasse = $_POST['nouv_motdepasse'];
 # hashage et sallage du mot de passe
 $nouv_motdepasse = password_hash($nouv_motdepasse, PASSWORD_DEFAULT);
 
+#Date création du mot de passe
+$date_creation_motdepasse = date("Y-m-d H:i:s");
+#echo date_creation_motdepasse;
+
 #On vérifie d'abord que l'utilisateur n'existe pas
 
 $verif = "SELECT * FROM Utilisateur WHERE nom_utilisateur = '$nouv_utilisateur'";
@@ -26,7 +30,7 @@ if (mysqli_num_rows($res) > 0) {
 
 #Insertion des données dans la base de données
 
-        $sql = "INSERT INTO Utilisateur (nom_utilisateur, mot_de_passe) VALUES ('$nouv_utilisateur', '$nouv_motdepasse')";
+        $sql = "INSERT INTO Utilisateur (nom_utilisateur, mot_de_passe, date_creation_motdepasse) VALUES ('$nouv_utilisateur', '$nouv_motdepasse', '$date_creation_motdepasse')";
 
         if (mysqli_query($connexion, $sql)) {
                 if (session_status() == PHP_SESSION_NONE) session_start();
