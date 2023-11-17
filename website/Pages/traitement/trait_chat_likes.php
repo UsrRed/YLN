@@ -1,30 +1,22 @@
 <?php
-// Démarrer la session si elle n'est pas déjà démarrée
 if (session_status() == PHP_SESSION_NONE) session_start();
-
-// Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
 if (!isset($_SESSION['utilisateur_id'])) {
-        // Définir un message et une couleur de statut pour la redirection
         $_SESSION['status'] = "primary";
         $_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
-
-        // Rediriger vers la page de connexion
         header("Location: /Connexion");
         exit();
 }
 
-// Inclure le fichier de configuration de la base de données
 include('/home/Pages/configBDD/config.php');
 
-// Vérifier si l'action et l'ID du message sont définis dans la requête
 if (isset($_POST['action']) && isset($_POST['message_id'])) {
-        // Sanitiser les données
+        # Sanitiser les données
         $action = filter_var($_POST['action'], FILTER_UNSAFE_RAW);
         $message_id = filter_var($_POST['message_id'], FILTER_SANITIZE_NUMBER_INT);
 
-        // Vérifier si l'action est valide (like ou dislike)
+        # Vérifier si l'action est valide (like ou dislike)
         if ($action == 'like' || $action == 'dislike') {
-                // Vérifier si l'utilisateur a déjà liké
+                # Vérifier si l'utilisateur a déjà liké
                 $sqlChecklike = "SELECT * FROM LikesDislikes WHERE id_utilisateur = " . $_SESSION['utilisateur_id'] . " AND id_message = $message_id AND like_bool=1";
                 $resultChecklike = $connexion->query($sqlChecklike);
                 if ($resultChecklike->num_rows > 0) {
@@ -43,7 +35,7 @@ if (isset($_POST['action']) && isset($_POST['message_id'])) {
                 $sqlRemove = "DELETE FROM LikesDislikes WHERE id_utilisateur = " . $_SESSION['utilisateur_id'] . " AND id_message = $message_id";
                 $connexion->query($sqlRemove);
                 if ($action == 'like') {
-                        // veux liker/enlever le like
+                        # veux liker/enlever le like
                         if ($liked) {
                                 # si il a déjà un like
                                 $sqlUpdate = "UPDATE Messages SET like_count = like_count - 1 WHERE message_id = $message_id";
@@ -59,7 +51,7 @@ if (isset($_POST['action']) && isset($_POST['message_id'])) {
                                 }
                         }
                 } else {
-                        // veux disliker/enlever le dislike
+                        # veux disliker/enlever le dislike
                         if ($disliked) {
                                 # Si il a déjà dislike
                                 $sqlUpdate = "UPDATE Messages SET dislike_count = dislike_count - 1 WHERE message_id = $message_id";
@@ -80,7 +72,7 @@ if (isset($_POST['action']) && isset($_POST['message_id'])) {
         }
 }
 
-// Fermer la connexion à la base de données
+# Fermer la connexion à la base de données
 $connexion->close();
 header("Location: /chat");
 ?>
