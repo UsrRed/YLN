@@ -105,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $connexion->close();
 
-function mdp_aleatoire($long = 12)
+function mdp_aleatoire($long = 24)
 {
 
         $carac = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!?,#&@*';
