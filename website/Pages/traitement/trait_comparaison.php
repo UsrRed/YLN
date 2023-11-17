@@ -333,6 +333,7 @@ if (isset($datainfo2['query']['pages'])) { #Pareil
                 <button type="submit" class="btn btn-dark" name="telecharger_csv">Télécharger le CSV</button>
             </form>
             <a class="btn btn-dark" href="/accueil">Faire une autre comparaison</a>
+            <a class="btn btn-primary" href="/chat?partage=<?php echo "::" . $comparaison1 . "||" . $comparaison2 . "::"; ?>">Partager</a>
             <form method="post" action="/trait_favoris">
                 <input type="hidden" name="comparaison_id" value="<?php echo $id_comparaison; ?>">
                 <button type="submit" class="btn btn-success" name="ajouter_favoris">Ajouter aux favoris</button>

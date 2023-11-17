@@ -1,0 +1,20 @@
+/* fond de couleur pour les messages du chat */
+.chat-green {
+    background-color: rgba(0, 255, 0, 0.1);
+}
+.chat-red {
+    background-color: rgba(255, 0, 0, 0.1);
+}
+.chat-gray {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* taille des messages du chat */
+.chat-right {
+    margin-left: 30% !important;
+    margin-right: 1% !important;
+}
+.chat-left {
+    margin-right: 30% !important;
+    margin-left: 1% !important;
+}
