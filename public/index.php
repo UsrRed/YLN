@@ -429,6 +429,31 @@ $app->get('/trait_blocage', function (Request $request, Response $response, $arg
 
 });
 
+$app->get('/trait_reinitialisation_mdp_formulaire', function (Request $request, Response $response, $args) {
+
+        $fich = '/home/Pages/traitement/trait_reinitialisation_mdp_formulaire.php';
+
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+
+        return $response;
+
+});
+
+$app->post('/trait_reinitialisation_mdp', function (Request $request, Response $response, $args) {
+
+        $fich = '/home/Pages/traitement/trait_reinitialisation_mdp.php';
+
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+
+        return $response;
+
+});
 
 $app->get('/phpinfo', function (Request $request, Response $response) {
         phpinfo();

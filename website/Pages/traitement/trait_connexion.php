@@ -22,6 +22,21 @@ if ($resul) {
 	# Vérification si une ligne dans la BDD a été trouvée
 	if (mysqli_num_rows($resul) == 1) {
 		$par_ligne = mysqli_fetch_assoc($resul);
+
+		$date_creation_motdepasse = strtotime($par_ligne['date_creation_motdepasse']);
+		$expiration_motdepasse = $date_creation_motdepasse + (2 * 24 * 60 * 60); # 2jours (en secondes) pour le temps d'expiration de mot de passe.
+		#$expiration_motdepasse = $date_creation_motdepasse + (60);
+
+		if (password_verify($motdepasse, $par_ligne['mot_de_passe']) && time() > $expiration_motdepasse) {
+			if (session_status() == PHP_SESSION_NONE) session_start();
+			$_SESSION['status'] = "danger";
+			$_SESSION['message'] = "Mot de passe expiré. Veuillez réinitialiser votre mot de passe.";
+			$_SESSION['utilisateur_id'] = $par_ligne['id'];
+			$_SESSION['utilisateur'] = $par_ligne['nom_utilisateur'];
+			header("Location: /trait_reinitialisation_mdp_formulaire");
+			exit();
+			}
+		
 		if (password_verify($motdepasse, $par_ligne['mot_de_passe'])) {
 			#echo "connecté, c'est good";
 			# Si 1, l'utilisateur est connecté, c'est ok
