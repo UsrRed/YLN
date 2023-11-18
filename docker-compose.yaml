@@ -3,7 +3,8 @@ services:
   nginx1:
     image: docker.io/library/nginx:alpine
     ports:
-      - "8080:80"
+      #- "8080:80"
+       - "8080:443"
     volumes:
       - ../sae501-502-theotime-martel/public:/usr/share/nginx/html:z
       - ../sae501-502-theotime-martel/website/Pages/configNGINX:/etc/nginx/conf.d:z
@@ -19,7 +20,8 @@ services:
   nginx2:
     image: docker.io/library/nginx:alpine
     ports:
-      - "8081:80"
+      #- "8081:80"
+      - "8081:443"
     volumes:
       - ../sae501-502-theotime-martel/public:/usr/share/nginx/html:z
       - ../sae501-502-theotime-martel/website/Pages/configNGINX:/etc/nginx/conf.d:z
@@ -39,8 +41,9 @@ services:
     #image: haproxy:alpine
     container_name: haproxy
     ports:
-      - "8083:80"
+      #- "8083:80"
       - "8443:443"
+       
     volumes:
       - ../sae501-502-theotime-martel/opensslkeys/myserver.pem:/etc/ssl/certs/myserver.pem:z
       - ../sae501-502-theotime-martel/loadbalancing/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:z
