@@ -11,6 +11,7 @@ if (!isset($_SESSION['utilisateur_id'])) {
 include('/home/Pages/configBDD/config.php');
 
 $age = filter_var($_POST['age'], FILTER_SANITIZE_NUMBER_INT);
+$age = htmlspecialchars($age);
 $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
 $app_password = $_POST['app_password'];
 $utilisateur_id = $_SESSION['utilisateur_id']; #ID de l'utilisateur connecté

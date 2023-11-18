@@ -7,6 +7,7 @@ include('/home/Pages/configBDD/config.php');
 #Récupération des donnés du formulaire
 
 $nouv_utilisateur = filter_var($_POST['nouv_utilisateur'], FILTER_SANITIZE_STRING);
+$nouv_utilisateur = htmlspecialchars($nouv_utilisateur);
 $nouv_motdepasse = $_POST['nouv_motdepasse'];
 
 

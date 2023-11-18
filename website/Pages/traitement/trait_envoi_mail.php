@@ -16,9 +16,11 @@ require '/usr/share/nginx/composer/vendor/autoload.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $utilisateur_id = $_SESSION['utilisateur_id'];
         $objet = $_POST['objet'];
-        $objet = filter_var($objet, FILTER_UNSAFE_RAW);
+	$objet = filter_var($objet, FILTER_UNSAFE_RAW);
+	$objet = htmlspecialchars($objet);
         $body = $_POST['body'];
         $body = filter_var($body, FILTER_UNSAFE_RAW);
+	$body = htmlspecialchars($body);
 
         #J'utilise mysqli_real_escape_string car quand je mettais un ' ca changeait de colonne, bizarre, a creuser
 

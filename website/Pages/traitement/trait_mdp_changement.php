@@ -26,13 +26,13 @@ $res = mysqli_query($connexion, $req);
 
 if (mysqli_num_rows($res) === 1) { # On vérifie que l'utilisateur existe
         $par_ligne = mysqli_fetch_assoc($res);
-        if ($ancienMotDePasse === $par_ligne['mot_de_passe']) {
+        if (password_verify($ancienMotDePasse, $par_ligne['mot_de_passe'])) {
                 # Si le mot de passe actuel est correct, on vérifie que le nouveau mot de passe correspond à la confirmation
                 if ($nouveauMotDePasse === $confirmationMotDePasse) {
                         # hashage et sallage du mot de passe
                         $nouveauMotDePasse = password_hash($nouveauMotDePasse, PASSWORD_DEFAULT);
                         # Si le nouveau mot de passe correspond à la confirmation, on le met à jour dans la base de données
-                        $modif_req = "UPDATE Utilisateur SET mot_de_passe = '$nouveauMotDePasse' WHERE nom_utilisateur = '$utilisateur'";
+                        $modif_req = "UPDATE Utilisateur SET mot_de_passe = '$nouveauMotDePasse', date_creation_motdepasse = NOW() WHERE nom_utilisateur = '$utilisateur'";
                         $modif_res = mysqli_query($connexion, $modif_req);
                         session_destroy(); # On le déconnecte
                         session_start();

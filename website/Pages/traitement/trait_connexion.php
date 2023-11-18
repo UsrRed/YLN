@@ -10,6 +10,7 @@ require '/usr/share/nginx/composer/vendor/autoload.php';
 
 # Pour récupérer les données du formulaire
 $utilisateur = filter_var($_POST['utilisateur'], FILTER_UNSAFE_RAW);
+$utilisateur = htmlspecialchars($utilisateur);
 $motdepasse = $_POST['motdepasse'];
 #$message = "";
 

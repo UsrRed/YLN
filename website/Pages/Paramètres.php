@@ -49,9 +49,9 @@ $nom_utilisateur = $_SESSION['utilisateur'];
             </div>
             <div class="card mb-4">
                 <div class="card-body">
-                    <h5><b>Support</b></h5>
-                    <p>Accédez à notre support, posez votre question.</p>
-                    <a href="/trait_support" class="btn btn-danger">Support et questions</a>
+                    <h5><b>Informations</b></h5>
+                    <p>Page d'information sur l'application :</p>
+                    <a href="/trait_info_application" class="btn btn-danger">Informations sur l'application</a>
                 </div>
             </div>
         </div>

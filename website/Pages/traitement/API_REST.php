@@ -2,9 +2,9 @@
 
 
 if (isset($_GET["entity1"]) && isset($_GET["entity2"])) {
-    $comparaison1 = $_GET["entity1"];
+    $comparaison1 = htmlspecialchars($_GET["entity1"]);
     $comparaison1 = filter_var($comparaison1, FILTER_UNSAFE_RAW);
-    $comparaison2 = $_GET["entity2"];
+    $comparaison2 = htmlspecialchars($_GET["entity2"]);
     $comparaison2 = filter_var($comparaison2, FILTER_UNSAFE_RAW);
 
     #Requête API MediaWiki pour les deux entités. On récupère les données dans les variables au format json (elle utilise json_decode)

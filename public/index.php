@@ -492,6 +492,39 @@ $app->post('/trait_chat_likes', function (Request $request, Response $response, 
         return $response;
 });
 
+$app->post('/trait_suppression_historique', function (Request $request, Response $response, $args) {
+
+        $fich = '/home/Pages/traitement/trait_suppression_historique.php';
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+
+        return $response;
+});
+
+$app->post('/trait_suppression_favoris', function (Request $request, Response $response, $args) {
+
+        $fich = '/home/Pages/traitement/trait_suppression_favoris.php';
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+
+        return $response;
+});
+
+$app->get('/trait_info_application', function (Request $request, Response $response, $args) {
+
+        $fich = '/home/Pages/traitement/trait_info_application.php';
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+
+        return $response;
+});
+
 $app->get('/phpinfo', function (Request $request, Response $response) {
         phpinfo();
         return $response;
