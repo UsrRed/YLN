@@ -8,6 +8,27 @@ if (!isset($_SESSION['utilisateur'])) {
         header("Location: /Connexion");
         exit();
 }
+
+include('/home/Pages/configBDD/config.php');
+
+$utilisateur_id = $_SESSION['utilisateur_id'];
+$nom_utilisateur = $_SESSION['utilisateur'];
+
+#On vérifie que l'utilisateur a bien saisi son adresse e-mail car elle est indispensable pour l'envoi de mail (même si déjà fait avant, comme ça, on vérif aussi qu'il n'a pas rentré l'URL comme ça
+
+#$req_verif_email = "SELECT adresse_email FROM Utilisateur WHERE id = '$utilisateur_id'";
+$req_verif_email = "SELECT adresse_email FROM Utilisateur WHERE id = '$utilisateur_id' AND adresse_email IS NOT NULL";
+
+$resultat_verif_email = $connexion->query($req_verif_email);
+
+if ($resultat_verif_email->num_rows == 0) {
+    #La, l'utilisateur n'a pas renseigné son adresse e-mail donc on le redirige vers la page de profil
+    $_SESSION['status'] = "warning";
+    $_SESSION['message'] = "Vous devez renseigner votre adresse e-mail avant d'accéder à la FAQ.";
+    header("Location: /trait_profil");
+    exit();
+}
+
 ?>
 
 <!DOCTYPE html>

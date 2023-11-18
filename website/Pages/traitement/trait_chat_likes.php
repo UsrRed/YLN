@@ -11,8 +11,10 @@ include('/home/Pages/configBDD/config.php');
 
 if (isset($_POST['action']) && isset($_POST['message_id'])) {
         # Sanitiser les données
-        $action = filter_var($_POST['action'], FILTER_UNSAFE_RAW);
-        $message_id = filter_var($_POST['message_id'], FILTER_SANITIZE_NUMBER_INT);
+	$action_sans_verif = filter_var($_POST['action'], FILTER_UNSAFE_RAW);
+	$action = htmlspecialchars($action_sans_verif);
+        $message_id_sans_verif = filter_var($_POST['message_id'], FILTER_SANITIZE_NUMBER_INT);
+	$message_id = htmlspecialchars($message_id_sans_verif);
 
         # Vérifier si l'action est valide (like ou dislike)
         if ($action == 'like' || $action == 'dislike') {

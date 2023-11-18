@@ -1,23 +1,19 @@
 <?php
-# Démarrer la session si elle n'est pas déjà démarrée
 if (session_status() == PHP_SESSION_NONE) session_start();
 
-# Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
 if (!isset($_SESSION['utilisateur_id'])) {
-        # Définir un message et une couleur de statut pour la redirection
         $_SESSION['status'] = "primary";
         $_SESSION['message'] = "Vous devez être connecté, redirection sur la page de connexion...";
 
-        # Rediriger vers la page de connexion
         header("Location: /Connexion");
         exit();
 }
 
 function remplacer_texte_vers_lien($texte){
-    # Utiliser une expression régulière pour détecter les éléments dans le format ::element1||element2::
+    #Regex pour détecter les éléments dans le format ::element1||element2::
         $pattern = '/::(.*?)\|\|(.*?)::/';
         $texte_modifie = preg_replace_callback($pattern, function ($matches) {
-                # Créer un bouton cliquable avec l'élément correspondant
+                # Bouton cliquable avec l'élément correspondant
                 return '<form action="/trait_comparaison" method="post" class="d-inline">
                     <input type="hidden" name="comparaison1" value="' . $matches[1] . '">
                     <input type="hidden" name="comparaison2" value="' . $matches[2] . '">
@@ -43,7 +39,7 @@ include('/home/Pages/configBDD/config.php');
 
 <body class="bg-light">
 <?php
-# Vérifier si l'utilisateur est connecté
+# Si l'utilisateur est connecté
 if (isset($_SESSION['utilisateur_id'])) {
         ?>
         <?php afficher_etat(); ?>
@@ -56,11 +52,11 @@ if (isset($_SESSION['utilisateur_id'])) {
             </div>
             <div class="card-body">
                     <?php
-                    # Récupérer les derniers messages
+                    # Récupère les derniers messages
                     $sql = "SELECT Messages.*, Utilisateur.nom_utilisateur as nom_envoyeur FROM Messages, Utilisateur WHERE Messages.utilisateur_id = Utilisateur.id ORDER BY Messages.date DESC LIMIT 10";
                     $resultat = $connexion->query($sql);
 
-                    # Afficher les messages s'il y en a
+                    # Et affiche les messages s'il y en a
                     if ($resultat->num_rows > 0) {
                     while ($ligne = $resultat->fetch_assoc()) {
                     ?>
@@ -132,10 +128,10 @@ if (isset($_SESSION['utilisateur_id'])) {
         <?php
         # Vérifier si le paramètre GET 'partage' est défini
         if (isset($_GET['partage'])) {
-                # Récupérer la valeur de 'partage'
+                # Récupère la valeur de 'partage'
                 $partageValue = filter_var($_GET['partage'], FILTER_UNSAFE_RAW);
         } else {
-                # Si 'partage' n'est pas défini, utiliser une valeur par défaut (par exemple, chaîne vide)
+                # Si 'partage' n'est pas défini, go prendre une valeur par défaut (par exemple, chaîne vide)
                 $partageValue = '';
         }
         ?>

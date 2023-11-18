@@ -13,7 +13,8 @@ include('/home/Pages/configBDD/config.php');
 if (isset($_POST['ajouter_favoris'])) {
         $id_utilisateur = $_SESSION['utilisateur_id'];
         $comparaison_id = $_POST['comparaison_id'];
-
+	$comparaison_id = filter_var($_POST['comparaison_id'], FILTER_SANITIZE_NUMBER_INT);
+	$comparaison_id = htmlspecialchars($comparaison_id);
         #echo $id_utilisateur;
         #echo "";
         #echo $comparaison_id;

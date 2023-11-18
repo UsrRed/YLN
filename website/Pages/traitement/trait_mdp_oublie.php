@@ -13,11 +13,13 @@ include('/home/Pages/configBDD/config.php');
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $utilisateur = $_POST["utilisateur"];
-        $utilisateur = filter_var($utilisateur, FILTER_UNSAFE_RAW);
+	$utilisateur = filter_var($utilisateur, FILTER_UNSAFE_RAW);
+	$utilisateur = htmlspecialchars($utilisateur);
         $email = $_POST["email"];
         $email = filter_var($email, FILTER_SANITIZE_EMAIL);
         $age = $_POST["age"];
-        $age = filter_var($age, FILTER_SANITIZE_NUMBER_INT);
+	$age = filter_var($age, FILTER_SANITIZE_NUMBER_INT);
+	$age = htmlspecialchars($age);
         if ($age<0 || $age>125){
                 if (session_status() == PHP_SESSION_NONE) session_start();
                 $_SESSION['status'] = "warning";

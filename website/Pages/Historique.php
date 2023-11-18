@@ -49,7 +49,9 @@ $page_actuelle = isset($_GET['page']) ? $_GET['page'] : 1;
 $limite = ($page_actuelle - 1) * $resultats_par_page; #point de départ de récup des données
 #$page_actuelle = 4;
 #echo "$limite"; (30 --> ok)
-$req_historique = "SELECT * FROM Historique WHERE utilisateur_id = '$id_utilisateur' ORDER BY date DESC LIMIT $limite, $resultats_par_page"; #Pour ne récupérer seulement $resultats_par_page (ex : 20) éléments à partir du limite (ex : 10ème)  élément
+#$req_historique = "SELECT * FROM Historique WHERE utilisateur_id = '$id_utilisateur' ORDER BY date DESC LIMIT $limite, $resultats_par_page"; #Pour ne récupérer seulement $resultats_par_page (ex : 20) éléments à partir du limite (ex : 10ème)  élément
+#$req_historique = "SELECT DISTINCT comparaison1,comparaison2, date FROM Historique WHERE utilisateur_id = '$id_utilisateur' ORDER BY date DESC LIMIT $limite, $resultats_par_page";
+$req_historique = "SELECT MAX(id) as id, comparaison1, comparaison2, MAX(date) AS date FROM Historique WHERE utilisateur_id = '$id_utilisateur' GROUP BY comparaison1, comparaison2 ORDER BY date DESC LIMIT $limite, $resultats_par_page"; #Pour ne pas avoir de doublure et avoir la date la plus récente
 $resultat_historique = mysqli_query($connexion, $req_historique);
 #echo resultat_historique;
 ?>
@@ -64,20 +66,21 @@ $resultat_historique = mysqli_query($connexion, $req_historique);
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>Comparaison 1</th>
-            <th>Comparaison 2</th>
-            <th>Afficher</th>
-            <th>Date</th>
+            <th><div class="text-center">Comparaison 1</div></th>
+            <th><div class="text-center">Comparaison 2</div></th>
+            <th><div class="text-center">Afficher</div></th>
+	    <th><div class="text-center">Date</div></th>
+	    <th><div class="text-center">Action</div></th>
         </tr>
         </thead>
         <tbody>
         <?php
         while ($ligne_histo = mysqli_fetch_assoc($resultat_historique)) { #Pour n'avoir qu'une seule ligne qu'on affiche après et tout ça dans une boucle pour parcourir toute la table
                 echo "<tr>";
-                echo "<td>" . $ligne_histo["comparaison1"] . "</td>";
-                echo "<td>" . $ligne_histo["comparaison2"] . "</td>";
+                echo "<td><div class='text-center mt-2'>" . $ligne_histo["comparaison1"] . "</div></td>";
+                echo "<td><div class='text-center mt-2'>" . $ligne_histo["comparaison2"] . "</div></td>";
                 echo "<td>";
-                echo '<div class="text-center mt-3">';
+                echo '<div class="text-center mt-2">';
                 echo '<form method="post" action="/trait_comparaison">';
                 echo "<input type='hidden' name='comparaison1' id='comparaison1' value='" . $ligne_histo["comparaison1"] . "' />";
                 echo "<input type='hidden' name='comparaison2' id='comparaison2' value='" . $ligne_histo["comparaison2"] . "' />";
@@ -85,8 +88,18 @@ $resultat_historique = mysqli_query($connexion, $req_historique);
                 echo '</form>';
                 echo '</div>';
                 echo "</td>";
-                echo "<td>" . $ligne_histo["date"] . "</td>";
+		echo "<td><div class='text-center mt-2'>" . $ligne_histo["date"] . "</div></td>";
+		echo "<td>";
+		echo '<div class="text-center mt-2">';
+                echo '<form method="post" action="/trait_suppression_historique">';
+                echo "<input type='hidden' name='comparaison_id' value='" . $ligne_histo["id"] . "' />";
+                echo '<button type="submit" class="btn btn-danger" name="Supprimer"><span aria-hidden="true">&times;</span></button>';
+		echo '</form>';
+		echo '</div>';
+                echo "</td>";
                 echo "</tr>";
+
+
 
         }
         ?>

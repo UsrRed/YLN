@@ -34,8 +34,10 @@ include('/home/Pages/configBDD/config.php');
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $comparaison1 = $_POST["comparaison1"];
 $comparaison1 = filter_var($comparaison1, FILTER_UNSAFE_RAW);
+$comparaison1 = htmlspecialchars($comparaison1);
 $comparaison2 = $_POST["comparaison2"];
 $comparaison2 = filter_var($comparaison2, FILTER_UNSAFE_RAW);
+$comparaison2 = htmlspecialchars($comparaison2);
 #echo "$comparaison1 $comparaison2";
 #echo "test";
 
