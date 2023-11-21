@@ -13,7 +13,7 @@ services:
     container_name: nginx1
     networks:
       sae:
-        #ipv4_address: 172.18.0.2
+        ipv4_address: 172.18.0.2
     links:
       - php
 
@@ -30,7 +30,7 @@ services:
     container_name: nginx2
     networks:
       sae:
-        #ipv4_address: 172.18.0.3
+        ipv4_address: 172.18.0.3
     links:
       - php
 
@@ -52,7 +52,7 @@ services:
       - nginx2
     networks:
       sae:
-        #ipv4_address: 172.18.0.253
+        ipv4_address: 172.18.0.253
 
   mysql:
     image: mysql:latest  
@@ -66,7 +66,7 @@ services:
       - db_data:/var/lib/mysql:z
     networks:
       sae:
-        #ipv4_address: 172.18.0.5
+        ipv4_address: 172.18.0.5
 
   php:
     #image: php:8.2-fpm
@@ -84,7 +84,7 @@ services:
       #- ../sae501-502-theotime-martel/PHPMailer:/usr/share/nginx/PHPMailer:z
     networks:
       sae:
-        #ipv4_address: 172.18.0.6  
+        ipv4_address: 172.18.0.6  
 
   syslog-ng:
     image: balabit/syslog-ng:latest
@@ -92,9 +92,12 @@ services:
       - ../sae501-502-theotime-martel/syslog/syslog-ng.conf:/etc/syslog-ng/syslog-ng.conf:z
       - ../sae501-502-theotime-martel/syslog/syslog-ng:/etc/default/syslog-ng:z
     ports:
-      - "5514:5514/udp"
+      - "514:514/udp"
     restart: always
     container_name: syslog-ng
+    networks:
+      sae:
+        ipv4_address: 172.18.0.7
 
 volumes: 
   db_data:

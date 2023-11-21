@@ -65,11 +65,11 @@ Depending on your machine, you may need to pull the original image for the three
 
 Afterward, launch the "docker-compose.yaml" file, which contains and specifies the configuration of our containers using the following command : `podman-compose -f docker-compose.yaml up -d` (optional)
 
-Once the "docker-compose" file is running, execute the "IpMonSite.sh" script (`bash IpMonSite.sh | ./IpMonSite.sh`). This will provide you with the IP address of the application, with or without load balancing, according to your preferrence.
+Once the "docker-compose" file is running, execute the "IpMonSite.sh" script (`bash IpMonSite.sh | ./IpMonSite.sh`). This will provide you with the IP address of the application (rarely different from 172.18.0.253), with or without load balancing, according to your preferrence.
 
 ### How to use the application ?
 
-Once the .yaml file is started, open a web browser and enter `https://[IP_Address_Provided_By_The_Script]:8443` (the PHP and Nginx container provides the user interface). You can also connect using HTTP: `http://[IP_Address_Provided_By_The_IpMonSite.sh_script]:8083`. The IP address is the Haproxy container which will distribute the load between two nginx WEB containers. Make sure to add the port. 
+Once the .yaml file is started, open a web browser and enter `https://[IP_Address_Provided_By_The_Script]:8443` (the PHP and Nginx container provides the user interface). It's not possible to connect with the HTTP protocol. The IP address is the Haproxy container which will distribute the load between two nginx WEB containers. Make sure to add the port. 
 
 **Caution** : You may encounter the following error when attempting to register for the first time on the site: 2002 Error. This means that the MySQL server did not start correctly or is not running. If this error occurs, you need to stop the docker-compose (`podman-compose down`), delete the mysql:latest image (`podman rmi mysql:latest`), pull the image again (`podman pull docker.io/library/mysql:latest`), and finally restart the docker-compose. The mysql:latest image occasionally experiences some difficulties with our application.
 
