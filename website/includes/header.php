@@ -32,7 +32,7 @@
 
 </head>
 <body class="bg-light">
-<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+<nav class="navbar navbar-expand-xl navbar-dark bg-secondary">
     <div class="container">
         <a class="navbar-brand" href="#"><img src="logo.jpg" width="20" height="20"/>&ensp;SAÉ 501-502 - <span id="current-time">00:00:00</span><a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
