@@ -1,4 +1,0 @@
-1) dnf install de rsyslog
-2) puis on déplace le contenu (très important, le CONTENU) du fichier rsyslogconfig dans /etc/[CONTENU DU FICHIER]/ et ensuite on restart le rsyslog
-3) regarder qur le fichier hote.log se créer bien dans le conteneur dans /var/log
-4) peut etre parser d'avantage par conteneur si nginx1, nginx2, ...
