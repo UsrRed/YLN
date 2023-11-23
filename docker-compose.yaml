@@ -42,7 +42,7 @@ services:
     container_name: haproxy
     ports:
       #- "8083:80"
-      - "8443:443"
+      - "443:443"
        
     volumes:
       - ../sae501-502-theotime-martel/opensslkeys/myserver.pem:/etc/ssl/certs/myserver.pem:z

@@ -29,7 +29,7 @@ then
 #sleep 1
 
 AdresseIP=$(podman inspect haproxy | grep -oP '"IPAddress": "\K[^"]+') #Tout sauf un "" car il y a un attribut IpAddress="" par moment
-echo "--> L'adresse IP de l'application sur laquelle se rendre est https://$AdresseIP:8443";
+echo "--> L'adresse IP de l'application sur laquelle se rendre est https://$AdresseIP:443";
 echo "--> Vous pouvez faire un CTRL + [clique gauche] sur l'URL ci-dessus.";
 else
 	echo "Les conteneurs ne sont pas lancés"
