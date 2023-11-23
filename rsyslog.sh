@@ -44,4 +44,3 @@ else
     echo "Service inconnu, relancez le service rsyslog manuellement"
     exit 1
 fi
-
