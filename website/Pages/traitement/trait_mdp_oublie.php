@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 $mail->isHTML(false);
                 $mail->Subject = 'Oublie du mot de passe';
-                $mail->Body = "Bonjour $utilisateur,\n\nVous avez oublié votre mot de passe, en voici un nouveau pour votre compte : $nouv_mdp\nCe mot de passe est déjà expiré. Rendez-vous sur la page de connexion et vous serez invité à modifier votre mot de passe.\n\nCordialement,";
+                $mail->Body = "Bonjour $utilisateur,\n\nVous avez oublié votre mot de passe, en voici un nouveau pour votre compte : $nouv_mdp\nCe mot de passe est déjà expiré. \nRendez-vous sur https://172.18.0.253/Connexion pour vous connecter mais vous serez invité à modifier votre mot de passe.\n\nCordialement,";
 
                 #Pour envoyer l'e-mail
 
