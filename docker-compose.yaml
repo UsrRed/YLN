@@ -99,8 +99,46 @@ services:
       sae:
         ipv4_address: 172.18.0.7
 
+
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
+    container_name: elasticsearch
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      sae:
+        ipv4_address: 172.18.0.8
+    environment:
+      - discovery.type=single-node  # Configuration pour un nœud unique
+      - cluster.name=my_cluster
+
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.10.0
+    container_name: logstash
+    volumes:
+      - ./logstash:/usr/share/logstash/pipeline
+    ports:
+      - "5000:5000"
+      - "5000:5000/udp"
+    networks:
+      sae:
+        ipv4_address: 172.18.0.9
+    depends_on:
+      - elasticsearch
+
+
+
+
+
+
+
 volumes: 
   db_data:
+  elasticsearch_data:
 
 
 networks:
