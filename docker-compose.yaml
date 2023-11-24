@@ -99,47 +99,42 @@ services:
       sae:
         ipv4_address: 172.18.0.7
 
-
-
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
-    container_name: elasticsearch
-    ports:
-      - "9200:9200"
+  loki:
+    image: grafana/loki:latest
     volumes:
-      - elasticsearch_data:/usr/share/elasticsearch/data
+      - ./loki-config.yaml:/etc/loki/local-config.yaml
+    ports:
+      - "3100:3100"
     networks:
       sae:
         ipv4_address: 172.18.0.8
-    environment:
-      - discovery.type=single-node  # Configuration pour un nœud unique
-      - cluster.name=my_cluster
+    container_name: loki
 
-
-  logstash:
-    image: docker.elastic.co/logstash/logstash:7.10.0
-    container_name: logstash
+  promtail:
+    image: grafana/promtail:latest
     volumes:
-      - ./logstash:/usr/share/logstash/pipeline
-    ports:
-      - "5000:5000"
-      - "5000:5000/udp"
+      - ./promtail-config.yaml:/etc/promtail/docker-config.yaml
+      - /var/log:/var/log
     networks:
       sae:
         ipv4_address: 172.18.0.9
     depends_on:
-      - elasticsearch
+      - loki
+    container_name: promtail
 
-
-
-
-
-
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - loki
+    networks:
+      sae:
+        ipv4_address: 172.18.0.10
+    container_name: grafana
 
 volumes: 
   db_data:
-  elasticsearch_data:
-
 
 networks:
   sae:
