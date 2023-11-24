@@ -1,20 +1,12 @@
 #!/bin/bash
 
-#Regarder si ca fonctionne comme ça ou sinon
-#1) journalctl o json | jq -S (faire un apt-get install jq) (essayer SANS au début)
-#2) vim /etc/systemd/journald.conf et décommenter ForwardToSyslog=yes
-#3) faire un systemctl|service restart systemd-journald
-#4) bien faire en sorte que l'importation de syslog-ng fonctionnement correctement (rajouter : 
-#unqualified-search-registries = ['docker.io']
-#5) refaire un pull de l'image syslog balabit
-
-
 if [ $# -ne 0 ]; then
     echo "Ce script ne prend pas de paramètre, il doit être exécuté sans paramètres"
     exit 1
 fi
 
 #Pour installer rsyslog en fonction du SE de l'utilisateur
+
 if [ -x "$(command -v apt-get)" ]; then
     sudo apt-get update 
     sudo apt-get install -y rsyslog 
@@ -31,16 +23,43 @@ fi
 
 sudo cp -r rsyslogconfig/* /etc/
 
+#Configuration containeurs : 
 
-# On redémarre la config rsyslog : 
+registries=$(find / -name "registries.conf" 2>/dev/null | head -n 1)
 
-serv=$(ps -p 1 -o comm=)
-
-if [ "$serv" == "systemd" ]; then
-    sudo systemctl restart rsyslog
-elif [ "$serv" == "init" ] || [ "$serv" == "upstart" ]; then
-    sudo service rsyslog restart || sudo service restart rsyslog
-else
-    echo "Service inconnu, relancez le service rsyslog manuellement"
-    exit 1
+if ! grep "unqualified-search-registries = \['docker.io'\]" "$registries"; then
+	echo "unqualified-search-registries = ['docker.io']" >> "$registries"
+	echo "Configuration regitries ajoutée"
+else 
+	echo "Configuration registries déjà présente"
 fi
+
+#Configuration journald : 
+
+journald=$(find / -name "journald.conf" 2>/dev/null | head -n 1)
+
+if grep -q "^[[:space:]]*ForwardToSyslog=yes" "$journald"; then
+	echo "La ligne ForwardToSyslog=yes existe déjà dans le fichier de configuration."
+else
+    
+	echo "ForwardToSyslog=yes" >> "$journald"
+	echo "Configuration journald déjà présente"
+fi
+
+#On redémarre les services (journald et rsyslog) : 
+
+if [ -x "$(command -v systemctl)" ]; then
+    systemctl restart systemd-journald
+    systemctl restart rsyslog
+    echo "Services journald et rsyslog redémarrés avec succès"
+
+elif [ -x "$(command -v service)" ]; then
+    service systemd-journald restart
+    service rsyslog restart
+    echo "Services journald et rsyslog redémarrés avec succès"
+fi
+
+#Pull de l'image syslog-ng : 
+
+podman pull balabit/syslog-ng:latest
+podman-compose down && podman-compose up -d

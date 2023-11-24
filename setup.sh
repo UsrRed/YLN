@@ -39,8 +39,17 @@ else
     podman pull docker.io/library/php:8.2-fpm
     podman pull docker.io/library/nginx:alpine
     podman pull docker.io/library/haproxy:alpine
-    podman pull docker.io/balabit/syslog-ng:latest
+    #podman pull docker.io/balabit/syslog-ng:latest
 fi
+
+echo "Voulez-vous rajouter un syslog-ng sur l'application" 
+#
+#
+#
+#
+#RAJOUTERRRRRRR#############################################################################################################################################
+#
+
 
 #On démarre les conteneurs avec podman-compose
 podman-compose -f docker-compose.yaml up -d
@@ -49,3 +58,7 @@ podman-compose -f docker-compose.yaml up -d
 AdresseIP=$(podman inspect haproxy | grep -oP '"IPAddress": "\K[^"]+') 
 echo "--> L'adresse IP de l'application sur laquelle se rendre est https://$AdresseIP:8443"
 echo "--> Vous pouvez faire un CTRL + [clique gauche] sur l'URL ci-dessus."
+
+
+
+
