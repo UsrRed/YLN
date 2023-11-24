@@ -39,17 +39,23 @@ else
     podman pull docker.io/library/php:8.2-fpm
     podman pull docker.io/library/nginx:alpine
     podman pull docker.io/library/haproxy:alpine
+    podman pull grafana/grafana
+    podman pull grafana/loki
+    podman pull grafana/promtail    
     #podman pull docker.io/balabit/syslog-ng:latest
 fi
 
 echo "Voulez-vous rajouter un syslog-ng sur l'application" 
+
 #
 #
 #
 #
 #RAJOUTERRRRRRR#############################################################################################################################################
 #
-
+#
+#
+#
 
 #On démarre les conteneurs avec podman-compose
 podman-compose -f docker-compose.yaml up -d

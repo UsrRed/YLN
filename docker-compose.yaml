@@ -102,7 +102,7 @@ services:
   loki:
     image: grafana/loki:latest
     volumes:
-      - ./loki-config.yaml:/etc/loki/local-config.yaml
+      - ./loki-config.yaml:/etc/loki/local-config.yaml:z
     ports:
       - "3100:3100"
     networks:
@@ -113,8 +113,8 @@ services:
   promtail:
     image: grafana/promtail:latest
     volumes:
-      - ./promtail-config.yaml:/etc/promtail/docker-config.yaml
-      - /var/log:/var/log
+      - ./promtail-config.yaml:/etc/promtail/docker-config.yaml:z
+      - /var/log:/var/log:z
     networks:
       sae:
         ipv4_address: 172.18.0.9
