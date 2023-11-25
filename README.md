@@ -2,18 +2,15 @@
 
 # Summary
 
+<!--Source du sommaire : https://github.com/Relex12/Markdown-Table-of-Contents/blob/main/README.md-->
+
 1. [About this projet](#about-this-project)
 2. [Key features](#key-features)
 3. [What script to execute to create tables in the database](#what-script-to-execute-to-create-tables-in-the-database)
 4. [Where to start](#where-to-start)
 5. [How to use the application](#how-to-use-the-application)
 6. [Installation of syslog](#installation-of-syslog)
-    - [Without syslog](#without-syslog)
-    - [With syslog without GUI](#with-syslog-without-gui)
-    - [With a log management interface (GUI)](#with-a-log-management-interface-gui)
-    - [To use the GUI and configure it](#to-use-the-gui-and-configure-it)
 7. [Improvement notes](#improvement-notes)
-
 
 ## README
 
