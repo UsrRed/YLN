@@ -2,17 +2,17 @@
 
 # Summary
 
-1. [À propos du projet](#about-this-project)
+1. [About this projet](#about-this-project)
 2. [Key features](#key-features)
-3. [What script to execute to create tables in the database ?](#what-script-to-execute-to-create-tables-in-the-database)
-4. [Where to start ?](#where-to-start)
-5. [Comment utiliser l'application ?](#how-to-use-the-application)
-6. [Installation de syslog](#installation-of-syslog)
-    - [Sans syslog](#without-syslog)
-    - [Avec syslog sans GUI](#with-syslog-without-gui)
-    - [Avec une interface de gestion des logs (GUI)](#with-a-log-management-interface-gui)
-        - [Configuration de l'interface GUI](#to-use-the-gui-and-configure-it)
-7. [Améliorations suggérées](#improvement-notes)
+3. [What script to execute to create tables in the database](#what-script-to-execute-to-create-tables-in-the-database)
+4. [Where to start](#where-to-start)
+5. [How to use the application](#how-to-use-the-application)
+6. [Installation of syslog](#installation-of-syslog)
+    - [Without syslog](#without-syslog)
+    - [With syslog without GUI](#with-syslog-without-gui)
+    - [With a log management interface (GUI)](#with-a-log-management-interface-gui)
+    - [To use the GUI and configure it](#to-use-the-gui-and-configure-it)
+7. [Improvement notes](#improvement-notes)
 
 
 ## README
@@ -59,14 +59,14 @@ The main features of the project are as follows:
 * A graphical interface for viewing logs is available via Grafana (functional).
 * Password expiration date in the database (functional).
 
-### What script to execute to create tables in the database ?
+### What script to execute to create tables in the database
 
 * What script to run to create tables ?
 
 The creation of the tables in the database is automatic. To do it, we use `mysqli_multi_query`.
 Therefore, as soon as a connection is made to the database, by using an .sql script, a $tables variable (which contains the commands for creating tables with an `IF NOT EXISTS`) is launched automatically to create the tables. The sensitive data in the database are hashed and salted.
 
-### Where to start ?
+### Where to start
 
 First, clone the project from the Git repository (`git clone https://scm.univ-tours.fr/22107454t/sae501-502-theotime-martel.git`) and navigate to the project directory (`cd sae501-502-theotime-martel`). 
 The installation of the application is simple and automated. You just need to run as a superuser with sudo the setup.sh script (`bash setup.sh` | `./setup.sh`). This will install podman, podman-compose, and the necessary container images for the proper functioning of the application.
@@ -75,7 +75,7 @@ Finally, once your choice regarding the log management part is made and the scri
 
 **Caution** : The entire syslog-ng section, including its operation, is explained in the "Installation of syslog" section.
 
-### How to use the application ?
+### How to use the application
 
 Once the .yaml file is started, open a web browser and enter `https://[IP_Address_Provided_By_The_Script]:8443` (the PHP and Nginx container provides the user interface). It's not possible to connect with the HTTP protocol, it's automatically redirected to HTTPS. The IP address is the Haproxy container which will distribute the load between two nginx WEB containers. Make sure to add the port. 
 
@@ -101,7 +101,7 @@ The installation of a syslog server and a graphical interface to view logs more 
 
 **With a log management interface (GUI)** : With a GUI to exploit the logs, three containers are linked. Promtail will collect the logs, loki will efficiently manage all these logs so that Grafana can visualize the logging data stored in Loki. Therefore, with this configuration, it is possible to visualize logs from a GUI managed by Grafana. The log viewing address is secure (HTTPS) and is as follows: `https://172.18.0.10:3000`. Note that it is not possible to connect to it until logs aren't generated and stored in Loki. The advantage of the GUI, despite logs not being sorted, is that it provides an interface that is clearer.
 
-***To use the GUI and configure it : ***
+**To use the GUI and configure it : **
 
 Once the logs are generated, go to the Grafana GUI (`https://172.18.0.10:3000`). The default username and password are **admin**/**admin**. Grafana will prompt you to change them after the first login.
 
@@ -116,7 +116,7 @@ Finally, execute by clicking on "Run Query". You can have results like the ones 
 
 ##### ENJOYY !!
 
-### Improvement notes ?
+### Improvement notes
 
 * Container PHP load balancing
 * JavaScript graph on a page accessible only by the administrator for the logs of the application
