@@ -1,11 +1,11 @@
 # SAÉ501-502-THEOTIME-MARTEL
 
-# Sommaire
+# Summary
 
-1. [À propos du projet](### About this project)
-2. [Fonctionnalités clés](### Key features)
-3. [Scripts de création de tables](#what-script-to-execute-to-create-tables-in-the-database)
-4. [Par où commencer ?](#where-to-start)
+1. [À propos du projet](#about-this-project)
+2. [Key features](#key-features)
+3. [What script to execute to create tables in the database ?](#what-script-to-execute-to-create-tables-in-the-database)
+4. [Where to start ?](#where-to-start)
 5. [Comment utiliser l'application ?](#how-to-use-the-application)
 6. [Installation de syslog](#installation-of-syslog)
     - [Sans syslog](#without-syslog)
@@ -13,6 +13,7 @@
     - [Avec une interface de gestion des logs (GUI)](#with-a-log-management-interface-gui)
         - [Configuration de l'interface GUI](#to-use-the-gui-and-configure-it)
 7. [Améliorations suggérées](#improvement-notes)
+
 
 ## README
 
@@ -58,7 +59,7 @@ The main features of the project are as follows:
 * A graphical interface for viewing logs is available via Grafana (functional).
 * Password expiration date in the database (functional).
 
-### What script to execute to create tables in the database?
+### What script to execute to create tables in the database ?
 
 * What script to run to create tables ?
 
