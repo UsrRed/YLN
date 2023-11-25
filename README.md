@@ -98,7 +98,7 @@ The installation of a syslog server and a graphical interface to view logs more 
 
 **With a log management interface (GUI)** : With a GUI to exploit the logs, three containers are linked. Promtail will collect the logs, loki will efficiently manage all these logs so that Grafana can visualize the logging data stored in Loki. Therefore, with this configuration, it is possible to visualize logs from a GUI managed by Grafana. The log viewing address is secure (HTTPS) and is as follows: `https://172.18.0.10:3000`. Note that it is not possible to connect to it until logs aren't generated and stored in Loki. The advantage of the GUI, despite logs not being sorted, is that it provides an interface that is clearer.
 
-**To use the GUI and configure it : **
+**To use the GUI and configure it** :
 
 Once the logs are generated, go to the Grafana GUI (`https://172.18.0.10:3000`). The default username and password are **admin**/**admin**. Grafana will prompt you to change them after the first login.
 
