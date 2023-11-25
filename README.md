@@ -80,30 +80,31 @@ The installation of a syslog server and a graphical interface to view logs more 
 
 **Without syslog** : Without syslog, the application works perfectly; it just won't be possible to have centralized logs for the application. It will be composed of 5 containers.
 
-**With syslog without GUI** : With syslog but without a GUI, a syslog-ng container will be added to the application. It will then be composed of 6 containers, and it will be possible to view the application logs by connecting to the syslog-ng container with the command `podman exec -it syslog-ng /bin/bash`, then navigating to `cd /var/log/` floder. A folder named "YLN" should be created with all the logs stored by syslog-ng and by each container inside it. Therefore, there will be log files for all 6 containers (after full use of the application).
+**With syslog without GUI** : With syslog but without a GUI, a syslog-ng container will be added to the application. It will then be composed of 6 containers, and it will be possible to view the application logs by connecting to the syslog-ng container with the command `podman exec -it syslog-ng /bin/bash`, then navigating to `cd /var/log/` floder. A folder named "YLN" should be created with all the logs stored by syslog-ng and by each container inside it. Therefore, there will be log files for all 6 containers (after full use of the application). The advantage of syslog-ng is that logs are sorted by containers.
 
-<img src = "./imageREADME/syslog-ng.png" />
+<p align="center"><img src = "./imageREADME/syslog-ng.png" /></p>
 
-**With syslog and GUI** : With syslog-ng and a GUI to exploit the logs, you will need a lot of resources. These four containers are linked. Syslog-ng will enable log collection in addition to promtail. Then, Loki will efficiently manage all these logs so that Grafana can visualize the logging data stored in Loki. Therefore, with this configuration, it is possible to visualize logs from a GUI managed by Grafana. The log viewing address is secure (HTTPS) and is as follows: `https://172.18.0.10:3000`. Note that it is not possible to connect to it until logs aren't generated and stored in Loki.
+**With a log management interface (GUI)** : With a GUI to exploit the logs, you will need a lot of resources. These three containers are linked. Promtail will collect the logs. Then, Loki will efficiently manage all these logs so that Grafana can visualize the logging data stored in Loki. Therefore, with this configuration, it is possible to visualize logs from a GUI managed by Grafana. The log viewing address is secure (HTTPS) and is as follows: `https://172.18.0.10:3000`. Note that it is not possible to connect to it until logs aren't generated and stored in Loki. The advantage of the GUI, despite logs not being sorted, is that it provides an interface that is clearer.
 
 ***To use the GUI and configure it : ***
 
 Once the logs are generated, go to the Grafana GUI (`https://172.18.0.10:3000`). The default username and password are **admin**/**admin**. Grafana will prompt you to change them after the first login.
 
-After successfully logging in to Grafana, you'll need to configure a data source. In the menu at the top left, go to "**Configuration**" > "**Data Sources**" > "**Add data source**". Scroll down a bit and choose the **Loki** data source. In the Connection URL, put **http://172.18.0.8:3100** and click "**Save & Test**" at the bottom of the page. You should see a message "**Data source successfully connected**".
+After successfully logging in to Grafana, you'll need to configure a data source. In the menu at the top left, go to "**Configuration**" > "**Data Sources**" > "**Add data source**". Scroll down a bit and choose the **Loki** data source. In the Connection URL, put `http://172.18.0.8:3100` and click "**Save & Test**" at the bottom of the page. You should see a message "**Data source successfully connected**".
 
 Then, in the menu, go to "**Explore**". In the "**Label**" section, choose "**job = varlogs**". Set "**Line contains**" to **GET** and customize as desired (add a dashboard, schedule, etc.).
 
 Finally, execute by clicking on "Run Query". You can have results like the ones below :
 
-<img src = "./imageREADME/GUI1.png" />
-<img src = "./imageREADME/GUI2.png" />
+<p align="center"><img src = "./imageREADME/GUI1.png" /></p>
+<p align="center"><img src = "./imageREADME/GUI2.png" /></p>
 
-ENJOYY !!
+##### ENJOYY !!
 
 ### Improvement notes ?
 
 * Container PHP load balancing
+* JavaScript graph on a page accessible only by the administrator for the logs of the application
 
 <!--
 ## Getting started
