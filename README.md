@@ -1,5 +1,7 @@
 # SAÉ501-502-THEOTIME-MARTEL
 
+## README
+
 # Summary
 
 <!--Source du sommaire : https://github.com/Relex12/Markdown-Table-of-Contents/blob/main/README.md-->
@@ -11,8 +13,6 @@
 5. [How to use the application](#how-to-use-the-application)
 6. [Installation of syslog](#installation-of-syslog)
 7. [Improvement notes](#improvement-notes)
-
-## README
 
 ### About this project
 
