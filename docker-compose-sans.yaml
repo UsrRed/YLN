@@ -86,59 +86,6 @@ services:
       sae:
         ipv4_address: 172.18.0.6  
 
-  #syslog-ng:
-    #image: balabit/syslog-ng:latest
-    #volumes:
-      #- ../sae501-502-theotime-martel/syslog/syslog-ng.conf:/etc/syslog-ng/syslog-ng.conf:z
-      #- ../sae501-502-theotime-martel/syslog/syslog-ng:/etc/default/syslog-ng:z
-    #ports:
-      #- "514:514/udp"
-    #restart: always
-    #container_name: syslog-ng
-    #networks:
-      #sae:
-        #ipv4_address: 172.18.0.7
-
-  loki:
-    image: grafana/loki:latest
-    volumes:
-      - ../sae501-502-theotime-martel/grafanaconfig/loki-config.yaml:/etc/loki/local-config.yaml:z
-      - ../sae501-502-theotime-martel/opensslkeys/myserver.crt:/etc/loki/ssl/myserver.crt:z
-      - ../sae501-502-theotime-martel/opensslkeys/myserver.key:/etc/loki/ssl/myserver.key:z
-    ports:
-      - "3100:3100"
-    networks:
-      sae:
-        ipv4_address: 172.18.0.8
-    container_name: loki
-
-  promtail:
-    image: grafana/promtail:latest
-    volumes:
-      - ../sae501-502-theotime-martel/grafanaconfig/promtail-config.yaml:/etc/promtail/docker-config.yaml:z
-      - /var/log:/var/log:z
-    networks:
-      sae:
-        ipv4_address: 172.18.0.9
-    depends_on:
-      - loki
-    container_name: promtail
-
-  grafana:
-    image: grafana/grafana
-    ports:
-      - "3000:3000"
-    depends_on:
-      - loki
-    networks:
-      sae:
-        ipv4_address: 172.18.0.10
-    container_name: grafana
-    volumes:
-      - ../sae501-502-theotime-martel/grafanaconfig/grafana.ini:/etc/grafana/grafana.ini:z
-      - ../sae501-502-theotime-martel/opensslkeys/myserver.crt:/etc/grafana/ssl/myserver.crt:z
-      - ../sae501-502-theotime-martel/opensslkeys/myserver.key:/etc/grafana/ssl/myserver.key:z
-
 volumes: 
   db_data:
 
