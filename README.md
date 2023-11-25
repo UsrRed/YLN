@@ -1,5 +1,19 @@
 # SAÉ501-502-THEOTIME-MARTEL
 
+# Sommaire
+
+1. [À propos du projet](#about-this-project)
+2. [Fonctionnalités clés](#key-features)
+3. [Scripts de création de tables](#what-script-to-execute-to-create-tables-in-the-database)
+4. [Par où commencer ?](#where-to-start)
+5. [Comment utiliser l'application ?](#how-to-use-the-application)
+6. [Installation de syslog](#installation-of-syslog)
+    - [Sans syslog](#without-syslog)
+    - [Avec syslog sans GUI](#with-syslog-without-gui)
+    - [Avec une interface de gestion des logs (GUI)](#with-a-log-management-interface-gui)
+        - [Configuration de l'interface GUI](#to-use-the-gui-and-configure-it)
+7. [Améliorations suggérées](#improvement-notes)
+
 ## README
 
 ### About this project
@@ -76,15 +90,15 @@ Many other features are present in the application, it's up to you to discover t
 
 ### Installation of syslog 
 
-The installation of a syslog server and a graphical interface to view logs more clearly (because it's always possible to view syslog-ng logs in the container but without a graphical interface) is optional. If you decide to run the application, which consists of a syslog container and a GUI that utilizes the data, you will need a lot of resources.
+The installation of a syslog server and a graphical interface to view logs more clearly (because it's always possible to view syslog-ng logs in the container but without a graphical interface) is optional. If you decide to run the application, which consists of a syslog container you will need a lot of resources.
 
 **Without syslog** : Without syslog, the application works perfectly; it just won't be possible to have centralized logs for the application. It will be composed of 5 containers.
 
 **With syslog without GUI** : With syslog but without a GUI, a syslog-ng container will be added to the application. It will then be composed of 6 containers, and it will be possible to view the application logs by connecting to the syslog-ng container with the command `podman exec -it syslog-ng /bin/bash`, then navigating to `cd /var/log/` floder. A folder named "YLN" should be created with all the logs stored by syslog-ng and by each container inside it. Therefore, there will be log files for all 6 containers (after full use of the application). The advantage of syslog-ng is that logs are sorted by containers.
 
-<center><img src = "./imageREADME/syslog-ng.png" /></center>
+<img src = "./imageREADME/syslog-ng.png" />
 
-**With a log management interface (GUI)** : With a GUI to exploit the logs, you will need a lot of resources. These three containers are linked. Promtail will collect the logs. Then, Loki will efficiently manage all these logs so that Grafana can visualize the logging data stored in Loki. Therefore, with this configuration, it is possible to visualize logs from a GUI managed by Grafana. The log viewing address is secure (HTTPS) and is as follows: `https://172.18.0.10:3000`. Note that it is not possible to connect to it until logs aren't generated and stored in Loki. The advantage of the GUI, despite logs not being sorted, is that it provides an interface that is clearer.
+**With a log management interface (GUI)** : With a GUI to exploit the logs, three containers are linked. Promtail will collect the logs, loki will efficiently manage all these logs so that Grafana can visualize the logging data stored in Loki. Therefore, with this configuration, it is possible to visualize logs from a GUI managed by Grafana. The log viewing address is secure (HTTPS) and is as follows: `https://172.18.0.10:3000`. Note that it is not possible to connect to it until logs aren't generated and stored in Loki. The advantage of the GUI, despite logs not being sorted, is that it provides an interface that is clearer.
 
 ***To use the GUI and configure it : ***
 
@@ -96,8 +110,8 @@ Then, in the menu, go to "**Explore**". In the "**Label**" section, choose "**jo
 
 Finally, execute by clicking on "Run Query". You can have results like the ones below :
 
-<center><img src = "./imageREADME/GUI1.png" /></center>
-<p align="center"><img src = "./imageREADME/GUI2.png" /></p>
+<img src = "./imageREADME/GUI1.png" />
+<img src = "./imageREADME/GUI2.png" />
 
 ##### ENJOYY !!
 
