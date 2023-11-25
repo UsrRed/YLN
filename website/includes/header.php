@@ -6,10 +6,15 @@
     <title>SAE501-502-THEOTIME-MARTEL</title>
     <meta charset="utf-8">
     <link rel="icon" type="image/png" href="logo.jpg" />
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Pour avoir bootstrap version 4.5.2 : https://getbootstrap.com/docs/4.5/getting-started/introduction/-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+
+    <style><?php include("/home/includes/CSS/chat.css"); ?></style> 
+    
 
     <!--Script dont nous ne sommes pas l'auteur pour avoir l'heure-->
 
@@ -31,11 +36,17 @@
     </script>
 
 </head>
-<body class="bg-light">
+<body id="theme-body" class="bg-light">
 <nav class="navbar navbar-expand-xl navbar-dark bg-secondary">
+
+<button id="toggle-btn" class="themeLogo">&#9789;</button>
+
     <div class="container">
-        <a class="navbar-brand" href="#"><img src="logo.jpg" width="20" height="20"/>&ensp;SAÉ 501-502 - <span id="current-time">00:00:00</span><a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+
+<a class="navbar-brand" href="#">
+      &nbsp;<img src="logo.jpg" width="20" height="20"/>&ensp;SAÉ 501-502 - <span id="current-time">00:00:00</span>
+</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <!--Pour avoir le menu avec les trois bars lorsque l'écran devient petit, permet d'avoir du responsive avec le menu déroulant -->
                     <span class="navbar-toggler-icon"></span>
@@ -119,3 +130,30 @@
                 </div>
     </div>
 </nav>
+<!--Script dont nous ne sommes pas l'auteur. On utilise les cookies pour stocker l'état du thème-->
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		var themeButton = document.getElementById('toggle-btn');
+		
+		themeButton.addEventListener('click', function () {
+		// Bascule entre les classes 'bg-light' et 'bg-dark' du body
+			document.body.classList.toggle('bg-light');
+			document.body.classList.toggle('bg-dark');
+
+			// Bascule entre les classes 'text-dark' et 'text-light' pour le texte
+			document.body.classList.toggle('text-dark');
+			document.body.classList.toggle('text-light');
+
+			//Stocke l'état du thème dans un cookie
+			var themeState = document.body.classList.contains('bg-dark') ? 'dark' : 'light';
+			document.cookie = 'theme=' + themeState + '; path=/';
+		});
+
+		//Ca récupère l'état du thème depuis le cookie 
+		var themeCookie = document.cookie.replace(/(?:(?:^|.*;\s*)theme\s*=\s*([^;]*).*$)|^.*$/, "$1");
+		if (themeCookie === 'dark') {
+			// Applique la classe 'bg-dark' au body
+			document.body.classList.add('bg-dark', 'text-light');
+		}
+	});
+</script>
