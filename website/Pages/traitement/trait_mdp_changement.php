@@ -28,7 +28,47 @@ if (mysqli_num_rows($res) === 1) { # On vérifie que l'utilisateur existe
         $par_ligne = mysqli_fetch_assoc($res);
         if (password_verify($ancienMotDePasse, $par_ligne['mot_de_passe'])) {
                 # Si le mot de passe actuel est correct, on vérifie que le nouveau mot de passe correspond à la confirmation
-                if ($nouveauMotDePasse === $confirmationMotDePasse) {
+		if ($nouveauMotDePasse === $confirmationMotDePasse) {
+			#Vérif comme pour l'inscription, repris le même pattern 
+			
+			$message = "";
+
+			function message_evolutif(&$message, $texte){
+				if ($message==""){
+					$message .= $texte;
+				} else {
+					$message .= "<br>" . $texte;
+				}
+			}
+
+			# Filtres mot de passe
+			if (8 >= strlen($nouveauMotDePasse) && strlen($nouveauMotDePasse) >= 100){
+				message_evolutif($message, "Le mot de passe doit faire entre 8 et 100 caractères");
+			}
+			# au moins un caractère spécial
+			if (!preg_match('/[!@#$%^&*(),.?":{}|<>]/', $nouveauMotDePasse)){
+				message_evolutif($message, "Le mot de passe doit contenir au minimum un caractère spécial");
+			}
+			# au moins une majuscule
+			if (!preg_match('/[A-Z]/', $nouveauMotDePasse)){
+				message_evolutif($message, "Le mot de passe doit contenir au minimum une majuscule");
+			}
+			# au moins une minuscule
+			if (!preg_match('/[a-z]/', $nouveauMotDePasse)){
+				message_evolutif($message, "Le mot de passe doit contenir au minimum une minuscule");
+			}
+			# au moins un chiffre
+			if (!preg_match('/\d/', $nouveauMotDePasse)){
+				message_evolutif($message, "Le mot de passe doit contenir au minimum un chiffre");
+			}
+			if ($message != ""){
+				if (session_status() == PHP_SESSION_NONE) session_start();
+				$_SESSION['status'] = "warning";
+				$_SESSION['message'] = $message;
+				header("Location: /trait_changement_mdp_formulaire");
+				exit(1);
+			}
+
                         # hashage et sallage du mot de passe
                         $nouveauMotDePasse = password_hash($nouveauMotDePasse, PASSWORD_DEFAULT);
                         # Si le nouveau mot de passe correspond à la confirmation, on le met à jour dans la base de données

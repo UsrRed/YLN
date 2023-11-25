@@ -332,9 +332,9 @@ if (isset($datainfo2['query']['pages'])) { #Pareil
 
         <div class="container mt-3 d-flex justify-content-between">
             <form method="post" action="/trait_telechargement" class="d-flex justify-content-between">
-                <button type="submit" class="btn btn-dark" name="telecharger_csv">Télécharger le CSV</button>
+                <button type="submit" class="btn btn-secondary" name="telecharger_csv">Télécharger le CSV</button>
             </form>
-            <a class="btn btn-dark" href="/accueil">Faire une autre comparaison</a>
+            <a class="btn btn-warning" href="/accueil">Faire une autre comparaison</a>
             <a class="btn btn-primary" href="/chat?partage=<?php echo "::" . $comparaison1 . "||" . $comparaison2 . "::"; ?>">Partager</a>
             <form method="post" action="/trait_favoris">
                 <input type="hidden" name="comparaison_id" value="<?php echo $id_comparaison; ?>">
