@@ -82,7 +82,7 @@ The installation of a syslog server and a graphical interface to view logs more 
 
 **With syslog without GUI** : With syslog but without a GUI, a syslog-ng container will be added to the application. It will then be composed of 6 containers, and it will be possible to view the application logs by connecting to the syslog-ng container with the command `podman exec -it syslog-ng /bin/bash`, then navigating to `cd /var/log/` floder. A folder named "YLN" should be created with all the logs stored by syslog-ng and by each container inside it. Therefore, there will be log files for all 6 containers (after full use of the application). The advantage of syslog-ng is that logs are sorted by containers.
 
-<p align="center"><img src = "./imageREADME/syslog-ng.png" /></p>
+<center><img src = "./imageREADME/syslog-ng.png" /></center>
 
 **With a log management interface (GUI)** : With a GUI to exploit the logs, you will need a lot of resources. These three containers are linked. Promtail will collect the logs. Then, Loki will efficiently manage all these logs so that Grafana can visualize the logging data stored in Loki. Therefore, with this configuration, it is possible to visualize logs from a GUI managed by Grafana. The log viewing address is secure (HTTPS) and is as follows: `https://172.18.0.10:3000`. Note that it is not possible to connect to it until logs aren't generated and stored in Loki. The advantage of the GUI, despite logs not being sorted, is that it provides an interface that is clearer.
 
@@ -96,7 +96,7 @@ Then, in the menu, go to "**Explore**". In the "**Label**" section, choose "**jo
 
 Finally, execute by clicking on "Run Query". You can have results like the ones below :
 
-<p align="center"><img src = "./imageREADME/GUI1.png" /></p>
+<center><img src = "./imageREADME/GUI1.png" /></center>
 <p align="center"><img src = "./imageREADME/GUI2.png" /></p>
 
 ##### ENJOYY !!
