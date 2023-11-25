@@ -39,32 +39,45 @@ else
     podman pull docker.io/library/php:8.2-fpm
     podman pull docker.io/library/nginx:alpine
     podman pull docker.io/library/haproxy:alpine
-    podman pull grafana/grafana
-    podman pull grafana/loki
-    podman pull grafana/promtail    
+    #podman pull grafana/grafana
+    #podman pull grafana/loki
+    #podman pull grafana/promtail    
     #podman pull docker.io/balabit/syslog-ng:latest
 fi
 
-echo "Voulez-vous rajouter un syslog-ng sur l'application" 
+#Partie syslog-ng et grafana : 
 
-#
-#
-#
-#
-#RAJOUTERRRRRRR#############################################################################################################################################
-#
-#
-#
-#
+echo "L'application peut être implémentée avec un syslog-ng. Cette partie est automatique : elle installe et configure rsyslog sur votre PC hôte pour l'envoi des logs et ajoute un conteneur syslog-ng."
+echo "Voulez-vous ajouter syslog-ng lors du déploiement de l'application (taille de l'image : 538 Mo) ? (O/N)"
+read response_syslogng
 
-#On démarre les conteneurs avec podman-compose
-podman-compose -f docker-compose.yaml up -d
+if [ "$response_syslogng" == "O" ] || [ "$response_syslogng" == "o" ]; then
+	bash ./scripts/rsyslog.sh
+	echo "Syslog-ng ajouté avec succès."
+    
+	echo "Voulez-vous également implémenter une interface graphique avec Grafana, Promtail et Loki (taille des images : 683 Mo) ? (O/N)"
+	read response_ihm
+
+	if [ "$response_ihm" == "O" ] || [ "$response_ihm" == "o" ]; then
+		bash ./scripts/grafana.sh
+		echo "Interface graphique pour syslog-ng (Grafana, Promtail, Loki) ajoutée avec succès."
+		echo "Lancement des conteneurs..."
+		podman-compose -f docker-compose-grafana.yaml up -d
+	else
+		echo "Interface graphique pour syslog-ng (Grafana, Promtail, Loki) non implémentée."
+	fi
+
+else
+	echo "Syslog-ng non implémenté."
+	echo "Lancement des conteneurs"
+	podman-compose -f docker-compose.yaml up -d
+fi
 
 #Et l'adresse IP du conteneur Haproxy pour accéder à l'application
 AdresseIP=$(podman inspect haproxy | grep -oP '"IPAddress": "\K[^"]+') 
 echo "--> L'adresse IP de l'application sur laquelle se rendre est https://$AdresseIP:8443"
 echo "--> Vous pouvez faire un CTRL + [clique gauche] sur l'URL ci-dessus."
-
-
-
-
+if podman ps | grep -q "grafana"; then
+	AddresseIpGraph=$(podman inspect grafana | grep -oP '"IPAddress": "\K[^"]+')
+	echo "Si vous avez choisi d'implémenter une IHM avec votre syslog-ng, vous pouvez vous rendre sur https://$AddresseIpGraph:3000"
+fi

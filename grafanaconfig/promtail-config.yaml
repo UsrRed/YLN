@@ -1,0 +1,27 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://172.18.0.8:3100/loki/api/v1/push
+
+#scrape_configs:
+#- job_name: system
+  #static_configs:
+  #- targets:
+    #- localhost
+    #labels:
+      #job: varlogs
+      #__path__: /var/log/*log
+
+scrape_configs:
+  - job_name: syslog
+    static_configs:
+      - targets:
+          - "172.18.0.7:514"  
+        labels:
+          job: "syslog"
+          __path__: "/var/log/YLN/*.log"

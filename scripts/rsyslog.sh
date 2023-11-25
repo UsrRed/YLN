@@ -21,7 +21,7 @@ fi
 
 # Pour déplacer la configuration rsyslog : 
 
-sudo cp -r rsyslogconfig/* /etc/
+sudo cp -r ./rsyslogconfig/* /etc/
 
 #Configuration containeurs : 
 
@@ -62,4 +62,3 @@ fi
 #Pull de l'image syslog-ng : 
 
 podman pull balabit/syslog-ng:latest
-podman-compose down && podman-compose up -d
