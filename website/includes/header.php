@@ -130,33 +130,30 @@
                 </div>
     </div>
 </nav>
-
+<!--Script dont nous ne sommes pas l'auteur. On utilise les cookies pour stocker l'état du thème-->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Attend que le document soit chargé
+	document.addEventListener('DOMContentLoaded', function () {
+		var themeButton = document.getElementById('toggle-btn');
+		
+		themeButton.addEventListener('click', function () {
+		// Bascule entre les classes 'bg-light' et 'bg-dark' du body
+			document.body.classList.toggle('bg-light');
+			document.body.classList.toggle('bg-dark');
 
-        var themeButton = document.getElementById('toggle-btn');
+			// Bascule entre les classes 'text-dark' et 'text-light' pour le texte
+			document.body.classList.toggle('text-dark');
+			document.body.classList.toggle('text-light');
 
-        // Ajoute un écouteur d'événements pour le clic sur le bouton
-        themeButton.addEventListener('click', function () {
-            // Bascule entre les classes 'bg-light' et 'bg-dark' du body
-            document.body.classList.toggle('bg-light');
-            document.body.classList.toggle('bg-dark');
+			//Stocke l'état du thème dans un cookie
+			var themeState = document.body.classList.contains('bg-dark') ? 'dark' : 'light';
+			document.cookie = 'theme=' + themeState + '; path=/';
+		});
 
-            // Bascule entre les classes 'text-dark' et 'text-light' pour le texte
-            document.body.classList.toggle('text-dark');
-            document.body.classList.toggle('text-light');
-
-            // Stocke l'état du thème dans un cookie
-            var themeState = document.body.classList.contains('bg-dark') ? 'dark' : 'light';
-            document.cookie = 'theme=' + themeState + '; path=/';
-        });
-
-        // Récupère l'état du thème depuis le cookie lors du chargement de la page
-        var themeCookie = document.cookie.replace(/(?:(?:^|.*;\s*)theme\s*=\s*([^;]*).*$)|^.*$/, "$1");
-        if (themeCookie === 'dark') {
-            // Applique la classe 'bg-dark' au body si le thème sombre est enregistré
-            document.body.classList.add('bg-dark', 'text-light');
-        }
-    });
+		//Ca récupère l'état du thème depuis le cookie 
+		var themeCookie = document.cookie.replace(/(?:(?:^|.*;\s*)theme\s*=\s*([^;]*).*$)|^.*$/, "$1");
+		if (themeCookie === 'dark') {
+			// Applique la classe 'bg-dark' au body
+			document.body.classList.add('bg-dark', 'text-light');
+		}
+	});
 </script>
