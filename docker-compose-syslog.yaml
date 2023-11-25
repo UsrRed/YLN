@@ -1,0 +1,110 @@
+version: "3.8"
+services:
+  nginx1:
+    image: docker.io/library/nginx:alpine
+    ports:
+      #- "8080:80"
+       - "8080:443"
+    volumes:
+      - ../sae501-502-theotime-martel/public:/usr/share/nginx/html:z
+      - ../sae501-502-theotime-martel/website/Pages/configNGINX:/etc/nginx/conf.d:z
+      - ../sae501-502-theotime-martel/opensslkeys:/home:z
+      #- ../sae501-502-theotime-martel/composer:/usr/share/nginx/composer:z
+    container_name: nginx1
+    networks:
+      sae:
+        ipv4_address: 172.18.0.2
+    links:
+      - php
+
+  nginx2:
+    image: docker.io/library/nginx:alpine
+    ports:
+      #- "8081:80"
+      - "8081:443"
+    volumes:
+      - ../sae501-502-theotime-martel/public:/usr/share/nginx/html:z
+      - ../sae501-502-theotime-martel/website/Pages/configNGINX:/etc/nginx/conf.d:z
+      - ../sae501-502-theotime-martel/opensslkeys:/home:z
+      #- ../sae501-502-theotime-martel/composer:/usr/share/nginx/composer:z
+    container_name: nginx2
+    networks:
+      sae:
+        ipv4_address: 172.18.0.3
+    links:
+      - php
+
+  haproxy:
+    build:
+      context: .
+      dockerfile: DockerfileHa
+    #image: haproxy:alpine
+    container_name: haproxy
+    ports:
+      #- "8083:80"
+      - "8443:443"
+       
+    volumes:
+      - ../sae501-502-theotime-martel/opensslkeys/myserver.pem:/etc/ssl/certs/myserver.pem:z
+      - ../sae501-502-theotime-martel/loadbalancing/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:z
+    depends_on:
+      - nginx1
+      - nginx2
+    networks:
+      sae:
+        ipv4_address: 172.18.0.253
+
+  mysql:
+    image: mysql:latest  
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: nathiotime
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql:z
+    networks:
+      sae:
+        ipv4_address: 172.18.0.5
+
+  php:
+    #image: php:8.2-fpm
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 9000:9000
+    container_name: php
+    volumes :
+      - ../sae501-502-theotime-martel/public:/usr/share/nginx/html:z
+      - ../sae501-502-theotime-martel/composer:/usr/share/nginx/composer:z
+      - ../sae501-502-theotime-martel/website:/home:z
+      #- ../sae501-502-theotime-martel/.msmtprc:/root/.msmtprc:z
+      #- ../sae501-502-theotime-martel/PHPMailer:/usr/share/nginx/PHPMailer:z
+    networks:
+      sae:
+        ipv4_address: 172.18.0.6  
+
+  syslog-ng:
+    image: balabit/syslog-ng:latest
+    volumes:
+      - ../sae501-502-theotime-martel/syslog/syslog-ng.conf:/etc/syslog-ng/syslog-ng.conf:z
+      - ../sae501-502-theotime-martel/syslog/syslog-ng:/etc/default/syslog-ng:z
+    ports:
+      - "514:514/udp"
+    restart: always
+    container_name: syslog-ng
+    networks:
+      sae:
+        ipv4_address: 172.18.0.7 
+
+volumes: 
+  db_data:
+
+networks:
+  sae:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16

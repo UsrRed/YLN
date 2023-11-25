@@ -42,7 +42,7 @@ services:
     container_name: haproxy
     ports:
       #- "8083:80"
-      - "443:443"
+      - "8443:443"
        
     volumes:
       - ../sae501-502-theotime-martel/opensslkeys/myserver.pem:/etc/ssl/certs/myserver.pem:z
@@ -86,22 +86,8 @@ services:
       sae:
         ipv4_address: 172.18.0.6  
 
-  syslog-ng:
-    image: balabit/syslog-ng:latest
-    volumes:
-      - ../sae501-502-theotime-martel/syslog/syslog-ng.conf:/etc/syslog-ng/syslog-ng.conf:z
-      - ../sae501-502-theotime-martel/syslog/syslog-ng:/etc/default/syslog-ng:z
-    ports:
-      - "514:514/udp"
-    restart: always
-    container_name: syslog-ng
-    networks:
-      sae:
-        ipv4_address: 172.18.0.7
-
 volumes: 
   db_data:
-
 
 networks:
   sae:
