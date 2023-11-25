@@ -1,5 +1,12 @@
 #!/bin/bash
 
+echo "__   __  _       _   _ "
+echo "\ \ / / | |     | \ | |"
+echo " \ V /  | |     |  \| |"
+echo "  | |   | |___  | |\  |"
+echo "  |_|   |_____| |_| \_|"
+echo ""
+
 if [ $# -ne 0 ]; then
 	echo "Ce script ne prend pas de paramètre, il doit être exécuté sans paramètres"
 	exit 1
