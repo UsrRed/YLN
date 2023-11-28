@@ -8,6 +8,11 @@ if (!isset($_SESSION['utilisateur_id'])) {
         exit();
 }
 
+if (!isset($_SESSION['nb_favoris'])) {
+    $_SESSION['nb_favoris'] = 0;
+}
+$_SESSION['nb_favoris']++;
+
 include('/home/Pages/configBDD/config.php');
 
 #Récup de l'ID de l'utilisateur actuel

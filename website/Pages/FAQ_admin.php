@@ -9,6 +9,11 @@ if (!isset($_SESSION['utilisateur_id'])) {
         exit();
 }
 
+if (!isset($_SESSION['nb_faq'])) {
+    $_SESSION['nb_faq'] = 0;
+}
+$_SESSION['nb_faq']++;
+
 include('/home/Pages/configBDD/config.php');
 
 $utilisateur_id = $_SESSION['utilisateur_id'];
@@ -94,7 +99,12 @@ $resultat_faq = $connexion->query($req_faq);
         # Quand il n'y a aucune question
         echo "<br><br><br><h3>Il n'y a aucune question pour le moment.</h3>";
     }
-    ?>
+?>
+
+
+
+
+
 </div>
 </body>
 

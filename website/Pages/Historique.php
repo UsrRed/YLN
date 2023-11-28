@@ -9,6 +9,11 @@ if (!isset($_SESSION['utilisateur'])) {
         exit();
 }
 
+if (!isset($_SESSION['nb_historique'])) {
+    $_SESSION['nb_historique'] = 0;
+}
+$_SESSION['nb_historique']++;
+
 include('/home/Pages/configBDD/config.php');
 
 $nom_utilisateur = $_SESSION['utilisateur'];
