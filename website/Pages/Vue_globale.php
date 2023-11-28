@@ -91,6 +91,17 @@ $num_resultat_utilisateur = mysqli_num_rows($resultat_utilisateur);
     </table>
     <?php
     }
-    ?>
+?>
+
+<br/>
+
+<center>
+<form method="post" action="/trait_stat" class="justify-content-between">
+	<button type="submit" class="btn btn-success">Statistiques de l'application</button>
+</form>
+</center>
+
+
+
 </div>
 </body>

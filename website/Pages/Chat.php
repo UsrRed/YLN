@@ -9,6 +9,11 @@ if (!isset($_SESSION['utilisateur_id'])) {
         exit();
 }
 
+if (!isset($_SESSION['nb_chat'])) {
+    $_SESSION['nb_chat'] = 0;
+}
+$_SESSION['nb_chat']++;
+
 function remplacer_texte_vers_lien($texte){
     #Regex pour détecter les éléments dans le format ::element1||element2::
         $pattern = '/::(.*?)\|\|(.*?)::/';

@@ -1,4 +1,11 @@
-<?php include('/home/includes/header.php'); ?>
+<?php include('/home/includes/header.php'); 
+
+if (!isset($_SESSION['nb_inscri'])) {
+    $_SESSION['nb_inscri'] = 1;
+}
+$_SESSION['nb_inscri']++;
+
+?>
 
 <body class="bg-light">
 <div class="container mt-5">
