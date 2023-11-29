@@ -29,6 +29,7 @@ $nom_utilisateur = $_SESSION['utilisateur']; #Pour récupérer le nom d'utilisat
 #echo "test";
 # On fait la connexion à la base de données
 include('/home/Pages/configBDD/config.php');
+
 #echo "test";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -40,6 +41,9 @@ $comparaison2 = filter_var($comparaison2, FILTER_UNSAFE_RAW);
 $comparaison2 = htmlspecialchars($comparaison2);
 #echo "$comparaison1 $comparaison2";
 #echo "test";
+
+$logs = date('Y-m-d H:i:s') . " - [INFO] - L'utilisateur " . $nom_utilisateur . " vient de faire une comparaison entre $comparaison1 et $comparaison2.";
+shell_exec('echo "' . $logs . '" >> /home/logs/logs.txt');
 
 if (!empty($comparaison1) && !empty($comparaison2)) {
         # On récupère l'ID de l'utilisateur avec une Requête SQL

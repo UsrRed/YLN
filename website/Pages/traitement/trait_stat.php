@@ -8,6 +8,11 @@ if (!isset($_SESSION['utilisateur_id'])) {
 	exit();
 }
 
+$nom_utilisateur = $_SESSION['utilisateur'];
+
+if ($nom_utilisateur !== 'admin') {
+        header("Location : /accueil");
+}
 
 #On récup les données et c'est 0 si c'est vide (évite les erreurs et affiche le pie chart comme ça
 
@@ -30,13 +35,13 @@ $pageData = [
 <br/><br/>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-8 mx-auto">
-				<canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+			<div class="col-md-8 mx-auto ">
+				<canvas id="myChart" style="width:150%;max-width:600px"></canvas>
 			</div>
 		</div><br/><br/>
 		<div class="row mt-4">
 			<div class="col-md-8 mx-auto">
-				<canvas id="myChart2" style="width:100%;max-width:600px"></canvas>
+				<canvas id="myChart2" style="width:150%;max-width:600px"></canvas>
 			</div>
 		</div>
 	</div>
@@ -113,6 +118,13 @@ new Chart("myChart2", {
 	}
 });
 </script>
+<div class="container mt-5">
+<div class="d-flex justify-content-between">
+            <!--Pour que ce soit aligné avec le formulaire, a droite, source : https://getbootstrap.com/docs/4.0/utilities/flex/ -->
+            <a href="/Vue_globale" class="btn btn-info">Vue globale</a>
+            <a href="/trait_logs" class="btn btn-info">Logs de l'application</a>
+           
+</div></div>
 
 </body>
 </html>

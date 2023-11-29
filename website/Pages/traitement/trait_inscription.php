@@ -80,7 +80,11 @@ if (mysqli_num_rows($res) > 0) {
         if (mysqli_query($connexion, $sql)) {
                 if (session_status() == PHP_SESSION_NONE) session_start();
                 $_SESSION['status'] = "success";
-                $_SESSION['message'] = "Inscription réussie, veuillez-vous connecter";
+		$_SESSION['message'] = "Inscription réussie, veuillez-vous connecter";
+
+		$logs = date('Y-m-d H:i:s') . " - [INFO] - L'utilisateur " . $nouv_utilisateur . " s'est inscrit.";
+		shell_exec('echo "' . $logs . '" >> /home/logs/logs.txt');
+
                 header("Location: /Connexion");
         } else {
                 if (session_status() == PHP_SESSION_NONE) session_start();

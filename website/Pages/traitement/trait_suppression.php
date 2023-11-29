@@ -20,6 +20,12 @@ $utilisateur_id = $_SESSION['utilisateur_id'];
 
 #Il faut d'abord supprimer les favoris, sinon problème et pareil pour l'historique
 
+$suppression_likes_dislikes_req = "DELETE FROM LikesDislikes WHERE id_utilisateur = $utilisateur_id";
+$suppression_likes_dislikes_res = mysqli_query($connexion, $suppression_likes_dislikes_req);
+
+$suppression_messages_req = "DELETE FROM Messages WHERE utilisateur_id = $utilisateur_id";
+$suppression_messages_res = mysqli_query($connexion, $suppression_messages_req);
+
 $suppression_faq_req = "DELETE FROM FAQ WHERE utilisateur_id = $utilisateur_id";
 $suppression_faq_rey = mysqli_query($connexion, $suppression_faq_req);
 
@@ -36,5 +42,9 @@ session_destroy();
 if (session_status() == PHP_SESSION_NONE) session_start();
 $_SESSION['status'] = "success";
 $_SESSION['message'] = "Le compte " . $utilisateur . " a bien été supprimé";
+
+$logs = date('Y-m-d H:i:s') . " - [CRITICAL] - L'utilisateur " . $utilisateur . " vient de supprimer son compte.";
+shell_exec('echo "' . $logs . '" >> /home/logs/logs.txt');
+
 header("Location: /Inscription");
 ?>

@@ -61,6 +61,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $modif_Stmt->execute();
                 $modif_Stmt->close();
 
+		$logs = date('Y-m-d H:i:s') . " - [WARNING] - L'utilisateur " . $utilisateur . " a rempli avec succès le formulaire pour l'oubli du mot de passe. Mail envoyé.";
+		shell_exec('echo "' . $logs . '" >> /home/logs/logs.txt');
 
                 $mail = new PHPMailer\PHPMailer\PHPMailer();
 

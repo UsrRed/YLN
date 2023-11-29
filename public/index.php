@@ -525,9 +525,20 @@ $app->get('/trait_info_application', function (Request $request, Response $respo
         return $response;
 });
 
-$app->post('/trait_stat', function (Request $request, Response $response, $args) {
+$app->get('/trait_stat', function (Request $request, Response $response, $args) {
 
         $fich = '/home/Pages/traitement/trait_stat.php';
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+
+        return $response;
+});
+
+$app->get('/trait_logs', function (Request $request, Response $response, $args) {
+
+        $fich = '/home/Pages/traitement/trait_logs.php';
         ob_start();
         include($fich);
         $output = ob_get_clean();

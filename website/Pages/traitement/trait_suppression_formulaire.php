@@ -10,6 +10,9 @@ if (!isset($_SESSION['utilisateur_id'])) {
 
 $nom_utilisateur = $_SESSION['utilisateur'];
 
+$logs = date('Y-m-d H:i:s') . " - [WARNING] - L'utilisateur " . $nom_utilisateur . " s'est rendu sur la page de suppression de compte.";
+shell_exec('echo "' . $logs . '" >> /home/logs/logs.txt');
+
 ?>
 <?php include('/home/includes/header.php'); ?>
 

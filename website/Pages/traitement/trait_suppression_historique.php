@@ -36,6 +36,11 @@ if (filter_var($historique_id, FILTER_VALIDATE_INT)) {
 
 	$_SESSION['status'] = "success";
 	$_SESSION['message'] = "Suppression de la ligne avec succès. Si la ligne ne s'est pas supprimée, c'est parce qu'il y avait une doublure.";
+	$utilisateur = $_SESSION['utilisateur'];
+
+	$logs = date('Y-m-d H:i:s') . " - [INFO] - L'utilisateur " . $utilisateur . " vient de supprimer une ligne de l'historique de ses comparaisons.";
+	shell_exec('echo "' . $logs . '" >> /home/logs/logs.txt');
+	
 	header("Location: /Historique");
 }
 

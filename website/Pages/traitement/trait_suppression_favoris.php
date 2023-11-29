@@ -30,6 +30,11 @@ if ($resultat_verif_favoris->num_rows > 0) {
 
 $_SESSION['status'] = "success";
 $_SESSION['message'] = "Suppression du favori avec succès";
+
+$utilisateur = $_SESSION['utilisateur'];
+$logs = date('Y-m-d H:i:s') . " - [INFO] - L'utilisateur " . $utilisateur . " vient de supprimer une comparaison mise en favoris.";
+shell_exec('echo "' . $logs . '" >> /home/logs/logs.txt');
+
 header("Location: /Favoris"); 
  
 $connexion->close();

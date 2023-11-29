@@ -95,13 +95,12 @@ $num_resultat_utilisateur = mysqli_num_rows($resultat_utilisateur);
 
 <br/>
 
-<center>
-<form method="post" action="/trait_stat" class="justify-content-between">
-	<button type="submit" class="btn btn-success">Statistiques de l'application</button>
-</form>
-</center>
-
-
+<div class="d-flex justify-content-between">
+            <!--Pour que ce soit aligné avec le formulaire, a droite, source : https://getbootstrap.com/docs/4.0/utilities/flex/ -->
+	    <a href="/trait_stat" class="btn btn-info">Statistiques de l'application</a>
+            <a href="/trait_logs" class="btn btn-info">Logs de l'application</a>
+           
+</div>
 
 </div>
 </body>
