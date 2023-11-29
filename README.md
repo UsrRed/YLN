@@ -66,29 +66,21 @@ Therefore, as soon as a connection is made to the database, by using an .sql scr
 ### Where to start
 
 First, clone the project from the Git repository :
-
 ```
 git clone https://scm.univ-tours.fr/22107454t/sae501-502-theotime-martel.git
 ```
-
 Navigate to the project directory : 
-
 ```
 cd sae501-502-theotime-martel
 ```
-
 The installation of the application is simple and automated. You just need to run as a superuser with sudo the setup.sh script : 
-
 ```
 bash setup.sh 
 ```
-
 Or : 
-
 ```
 ./setup.sh
 ```
-
 This will install podman, podman-compose, and the necessary container images for the proper functioning of the application.
 Next, when running the script, you will need to choose whether you want to implement a syslog with syslog-ng in the application and, if yes, whether you also want to have a graphical interface to view the logs.
 Finally, once your choice regarding the log management part is made and the script execution is complete, an IP address and a port are available. This is the IP address of the application to visit (very rarely different from `https://172.18.0.253:8443`).
@@ -111,7 +103,6 @@ Pull the image again (3) :
 ```
 podman pull docker.io/library/mysql:latest
 ```
-
 Finally restart the setup script (4). The mysql:latest image occasionally experiences some difficulties with our application.
 
 From this page, it is possible to register/login with an account by clicking on the "Login" page in the top right-hand corner of the page. If you register, you will need to log in with the same login credentials.
@@ -128,7 +119,11 @@ The installation of a syslog server and a graphical interface to view logs more 
 
 **Without syslog** : Without syslog, the application works perfectly; it just won't be possible to have centralized logs for the application. It will be composed of 5 containers.
 
-**With syslog without GUI** : With syslog but without a GUI, a syslog-ng container will be added to the application. It will then be composed of 6 containers, and it will be possible to view the application logs by connecting to the syslog-ng container with the command `podman exec -it syslog-ng /bin/bash`, then navigating to `cd /var/log/` floder. A folder named "YLN" should be created with all the logs stored by syslog-ng and by each container inside it. Therefore, there will be log files for all 6 containers (after full use of the application). The advantage of syslog-ng is that logs are sorted by containers.
+**With syslog without GUI** : With syslog but without a GUI, a syslog-ng container will be added to the application. It will then be composed of 6 containers, and it will be possible to view the application logs by connecting to the syslog-ng container with the command :
+```
+podman exec -it syslog-ng /bin/bash
+```
+Then navigating to the `cd /var/log/` floder. A folder named "YLN" should be created with all the logs stored by syslog-ng and by each container inside it. Therefore, there will be log files for all 6 containers (after full use of the application). The advantage of syslog-ng is that logs are sorted by containers.
 
 <img src = "./imageREADME/syslog-ng.png" />
 
