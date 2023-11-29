@@ -10,6 +10,7 @@ if (!isset($_SESSION['utilisateur_id'])) {
 
 include('/home/Pages/configBDD/config.php');
 
+$utilisateur = $_SESSION['utilisateur'];
 $age = filter_var($_POST['age'], FILTER_SANITIZE_NUMBER_INT);
 $age = htmlspecialchars($age);
 $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
@@ -25,7 +26,11 @@ if ($age>0 && $age<125) {
                 #echo "Données mises à jour avec succès.";
                 if (session_status() == PHP_SESSION_NONE) session_start();
                 $_SESSION['status'] = "success";
-                $_SESSION['message'] = "Les données ont été mises à jour avec succès";
+		$_SESSION['message'] = "Les données ont été mises à jour avec succès";
+
+		$logs = date('Y-m-d H:i:s') . " - [INFO] - L'utilisateur " . $utilisateur . " a remplit les informations de son profil.";
+		shell_exec('echo "' . $logs . '" >> /home/logs/logs.txt');
+
                 header("Location: /Paramètres");
         } else {
                 #echo "Erreur lors de la mise à jour des données : " . $connexion->error;

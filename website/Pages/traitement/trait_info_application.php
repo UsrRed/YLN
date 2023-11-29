@@ -78,7 +78,7 @@ $adresse_email = $info_utilisateur['adresse_email'];
 			</div>
 			<div class="col-md-4 text-center d-flex align-items-center"> <!-- Centré verticalement -->
 				<div class="center" style="margin: auto;">
-				<span>&copy; Dernière MAJ : 17/11/2023</span><br/>
+				<span>&copy; Dernière MAJ : 05/01/2024</span><br/>
 				<span>Date : <?php echo date("M-Y"); ?></span>
 				</div>                
 			</div>

@@ -21,6 +21,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $message = mysqli_real_escape_string($connexion, $mess);
         $sql = "INSERT INTO Messages (utilisateur_id, texte, date, like_count, dislike_count) VALUES ('$id_utilisateur', '$message', NOW(), 0, 0)";
 
+	$logs = date('Y-m-d H:i:s') . " - [INFO] - L'utilisateur " . $nom_utilisateur . " vient de poster un message sur le chat.";
+	shell_exec('echo "' . $logs . '" >> /home/logs/logs.txt');
+
         # Vérifie la requête
         if ($connexion->query($sql) !== TRUE) {
                 echo "Erreur : " . $sql . "<br>" . $connexion->error;

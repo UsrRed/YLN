@@ -73,7 +73,11 @@ if (mysqli_num_rows($res) === 1) { # On vérifie que l'utilisateur existe
                         $nouveauMotDePasse = password_hash($nouveauMotDePasse, PASSWORD_DEFAULT);
                         # Si le nouveau mot de passe correspond à la confirmation, on le met à jour dans la base de données
                         $modif_req = "UPDATE Utilisateur SET mot_de_passe = '$nouveauMotDePasse', date_creation_motdepasse = NOW() WHERE nom_utilisateur = '$utilisateur'";
-                        $modif_res = mysqli_query($connexion, $modif_req);
+			$modif_res = mysqli_query($connexion, $modif_req);
+
+			$logs = date('Y-m-d H:i:s') . " - [WARNING] - L'utilisateur " . $utilisateur . " vient de changer de mot de passe.";
+			shell_exec('echo "' . $logs . '" >> /home/logs/logs.txt');
+
                         session_destroy(); # On le déconnecte
                         session_start();
                         $_SESSION['status'] = "success";
@@ -82,13 +86,21 @@ if (mysqli_num_rows($res) === 1) { # On vérifie que l'utilisateur existe
                 } else {
                         if (session_status() == PHP_SESSION_NONE) session_start();
                         $_SESSION['status'] = "warning";
-                        $_SESSION['message'] = "Le nouveau mot de passe ne correspond pas à la confirmation";
+			$_SESSION['message'] = "Le nouveau mot de passe ne correspond pas à la confirmation";
+
+			$logs = date('Y-m-d H:i:s') . " - [WARNING] - L'utilisateur " . $utilisateur . " a tenté de changer de mot de passe.";
+			shell_exec('echo "' . $logs . '" >> /home/logs/logs.txt');
+
                         header("Location: /trait_changement_mdp_formulaire");
                 }
         } else {
                 if (session_status() == PHP_SESSION_NONE) session_start();
                 $_SESSION['status'] = "warning";
-                $_SESSION['message'] = "Le mot de passe actuel est incorrect";
+		$_SESSION['message'] = "Le mot de passe actuel est incorrect";
+
+		$logs = date('Y-m-d H:i:s') . " - [WARNING] - L'utilisateur " . $utilisateur . " a tenté de changer de mot de passe.";
+		shell_exec('echo "' . $logs . '" >> /home/logs/logs.txt');
+
                 header("Location: /trait_changement_mdp_formulaire");
         }
 } else {

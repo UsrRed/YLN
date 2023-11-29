@@ -1,0 +1,5 @@
+
+2023-11-29 16:21:02 - [INFO] - L'utilisateur admin s'est connecté.
+2023-11-29 16:21:14 - [WARNING] - L'utilisateur admin s'est rendu sur la page de suppression de compte.
+2023-11-29 16:28:55 - [INFO] - L'utilisateur admin vient de se déconnecter.
+2023-11-29 16:30:23 - [INFO] - L'utilisateur admin s'est connecté.

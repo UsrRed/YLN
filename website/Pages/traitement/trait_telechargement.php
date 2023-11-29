@@ -42,6 +42,10 @@ $nomfichier = 'resultat_comparaisons_' . $comparaison1 . '_' . $comparaison2 . '
 header('Content-Type: text/csv');
 header('Content-Disposition: attachment; filename="' . $nomfichier . '"');
 
+$utilisateur = $_SESSION['utilisateur'];
+$logs = date('Y-m-d H:i:s') . " - [INFO] - L'utilisateur " . $utilisateur . " vient de télécharger sa comparaison entre $comparaison1 et $comparaison2.";
+shell_exec('echo "' . $logs . '" >> /home/logs/logs.txt');
+
 #On écrit le contenu qui a été généré
 echo $donnees;
 exit();

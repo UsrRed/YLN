@@ -3,6 +3,7 @@ if (session_status() == PHP_SESSION_NONE) session_start();
 
 $nouveau_motdepasse = $_POST['nouveau_motdepasse'];
 $confirmer_motdepasse = $_POST['confirmer_motdepasse'];
+$utilisateur = $_SESSION['utilisateur'];
 
 if ($nouveau_motdepasse === $confirmer_motdepasse) {
 	#On vérif que les mots de passe correspondent
@@ -16,6 +17,10 @@ if ($nouveau_motdepasse === $confirmer_motdepasse) {
 	if (mysqli_query($connexion, $nouv)) {
 		$_SESSION['status'] = "success";
 		$_SESSION['message'] = "Votre mot de passe a été réinitialisé avec succès. Vous pouvez maintenant vous connecter avec le nouveau mot de passe.";
+
+		$logs = date('Y-m-d H:i:s') . " - [WARNING] - L'utilisateur " . $utilisateur . " vient de réinitialiser son mot de passe avec succès.";
+		shell_exec('echo "' . $logs . '" >> /home/logs/logs.txt');
+
 		session_destroy(); #On détruit la session pour le forcer à se connecter
 	} else {
 		$_SESSION['status'] = "danger";

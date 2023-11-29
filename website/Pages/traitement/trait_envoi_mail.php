@@ -66,7 +66,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($mail->send()) {
                 if (session_status() == PHP_SESSION_NONE) session_start();
                 $_SESSION['status'] = "success";
-                $_SESSION['message'] = "Mail envoyé avec succès ! On vous répondra dans les plus brefs délais";
+		$_SESSION['message'] = "Mail envoyé avec succès ! On vous répondra dans les plus brefs délais";
+
+		$logs = date('Y-m-d H:i:s') . " - [INFO] - L'utilisateur " . $nom_utilisateur . " vient de faire une demande au support.";
+		shell_exec('echo "' . $logs . '" >> /home/logs/logs.txt');
+
                 header("Location: /accueil");
         } else {
                 if (session_status() == PHP_SESSION_NONE) session_start();

@@ -8,6 +8,8 @@ if (!isset($_SESSION['utilisateur_id'])) {
         exit();
 }
 
+$utilisateur = $_SESSION['utilisateur'];
+
 include('/home/Pages/configBDD/config.php');
 
 if (isset($_POST['ajouter_favoris'])) {
@@ -21,9 +23,13 @@ if (isset($_POST['ajouter_favoris'])) {
         #Pour avoir la comparaison dans la table des favris
 
         $req_favo = "INSERT INTO Favoris (utilisateur_id, historique_id, date_favoris) VALUES ('$id_utilisateur', '$comparaison_id', NOW())";
-        mysqli_query($connexion, $req_favo);
+	mysqli_query($connexion, $req_favo);
 
-        #Et on redirige vers une page favoris
+	$utilisateur = $_SESSION['utilisateur'];
+	$logs = date('Y-m-d H:i:s') . " - [INFO] - L'utilisateur " . $utilisateur . " vient de mettre en favoris la comparaison de $comparaison1 et $comparaison2.";
+	shell_exec('echo "' . $logs . '" >> /home/logs/logs.txt');
+	
+	#Et on redirige vers une page favoris
         if (session_status() == PHP_SESSION_NONE) session_start();
         $_SESSION['status'] = "success";
         $_SESSION['message'] = "Ajout du favoris avec succès";

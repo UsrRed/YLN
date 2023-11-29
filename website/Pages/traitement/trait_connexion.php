@@ -34,6 +34,10 @@ if ($resul) {
 			$_SESSION['message'] = "Mot de passe expiré. Veuillez réinitialiser votre mot de passe.";
 			$_SESSION['utilisateur_id'] = $par_ligne['id'];
 			$_SESSION['utilisateur'] = $par_ligne['nom_utilisateur'];
+
+			$logs = date('Y-m-d H:i:s') . " - [INFO] - Le mot de pase de l'utilisateur " . $utilisateur . " vient d'expirer.";
+			shell_exec('echo "' . $logs . '" >> /home/logs/logs.txt');
+
 			header("Location: /trait_reinitialisation_mdp_formulaire");
 			exit();
 			}
@@ -53,11 +57,23 @@ if ($resul) {
 			$majten = "UPDATE Utilisateur SET tentatives_echouees=0, temps_blocage=0 WHERE nom_utilisateur='$utilisateur'";
 			mysqli_query($connexion, $majten);
 
+			#shell_exec("echo 'L\'utilisateur $utilisateur vient de se connecter' >> /home/Pages/test.txt");
+			#$output = shell_exec("test variable");
+
+			$logs = date('Y-m-d H:i:s') . " - [INFO] - L'utilisateur " . $utilisateur . " s'est connecté.";
+			shell_exec('echo "' . $logs . '" >> /home/logs/logs.txt');
+			
+			#shell_exec('echo "" >> /home/logs/logs.txt');
+
 			header("Location: /trait_profil");
 			#header("Location: /");
 			exit();
 		} else {
 			#Mauvais mot de passe
+
+			$logs = date('Y-m-d H:i:s') . " - [WARNING] - L'utilisateur " . $utilisateur . " a tenté de se connecter.";
+			shell_exec('echo "' . $logs . '" >> /home/logs/logs.txt');
+
 			if ($par_ligne['tentatives_echouees'] < 2) {
 				# On incrémente le compteur de tentatives de connexion échouées
 				$tentatives_echouees = $par_ligne['tentatives_echouees'] + 1;
@@ -102,6 +118,9 @@ if ($resul) {
 						if (session_status() == PHP_SESSION_NONE) session_start();
 						$_SESSION['status'] = "danger";
 						$_SESSION['message'] = "Compte temporairement bloqué. Réessayez dans $temps_restant secondes. Un mail a été envoyé !";
+
+						$logs = date('Y-m-d H:i:s') . " - [CRITICAL] - L'utilisateur " . $utilisateur . " vient de se faire bannir.";
+						shell_exec('echo "' . $logs . '" >> /home/logs/logs.txt');
 
 						$mail = new PHPMailer\PHPMailer\PHPMailer();
 						$mail->isSMTP();
