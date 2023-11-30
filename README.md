@@ -13,6 +13,7 @@
 5. [How to use the application](#how-to-use-the-application)
 6. [Installation of syslog](#installation-of-syslog)
 7. [Improvement notes](#improvement-notes)
+8. [License](#license)
 
 ### About this project
 
