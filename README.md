@@ -149,6 +149,10 @@ Finally, execute by clicking on "Run Query". You can have results like the ones 
 * Container PHP load balancing
 * JavaScript graph on a page accessible only by the administrator for the logs of the application
 
+### Licence
+
+You can check out the full licence [here](LICENSE.md)
+
 <!--
 ## Getting started
 
