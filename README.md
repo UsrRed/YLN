@@ -153,6 +153,7 @@ Finally, execute by clicking on "Run Query". You can have results like the ones 
 ### License
 
 >You can check out the full license [here](LICENSE)
+
 This project is licensed under the terms of the **MIT** license.
 
 <!--
