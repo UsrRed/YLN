@@ -151,7 +151,7 @@ Finally, execute by clicking on "Run Query". You can have results like the ones 
 
 ### Licence
 
-You can check out the full licence [here](LICENSE.md)
+You can check out the full licence [here](LICENSE)
 
 <!--
 ## Getting started
