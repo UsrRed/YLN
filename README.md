@@ -93,7 +93,7 @@ Once the .yaml file is started, open a web browser and enter `https://[IP_Addres
 
 **Caution** : You may encounter the following error when attempting to register for the first time on the site: 2002 Error. This means that the MySQL server did not start correctly or is not running. If this error occurs, you need to stop the docker-compose (1) :
 ```
-podman-compose down
+podman stop -a && podman rm -fa
 ```
 Delete the mysql:latest image (2) : 
 ```
