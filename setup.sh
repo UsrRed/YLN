@@ -53,6 +53,8 @@ else
 	#podman pull docker.io/balabit/syslog-ng:latest
 fi
 
+chmod 666 ./website/logs/logs.txt
+
 #Partie syslog-ng et grafana : 
 
 #echo ""
@@ -121,7 +123,6 @@ else
 	echo "Lancement des conteneurs sans gestion des logs..."
 	podman-compose -f docker-compose-sans.yaml up -d
 fi
-
 
 #Et l'adresse IP du conteneur Haproxy pour accéder à l'application
 AdresseIP=$(podman inspect haproxy | grep -oP '"IPAddress": "\K[^"]+') 
