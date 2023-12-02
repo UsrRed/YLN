@@ -117,16 +117,21 @@ $reqSqlThread = "START SLAVE SQL_THREAD";
 $slave = "START SLAVE";
 $repli_reset = "RESET REPLICA";
 $repli = "START REPLICA";
+$code_3021 = "STOP REPLICA IO_THREAD FOR CHANNEL ''";
 
 $connexionSlave->query($stop);
+$connexionSlave->query($repli_reset);
+$connexionSlave->query($repli);
+$connexionSlave->query($code_3021);
 $connexionSlave->query($reqMaster);
+$connexionSlave->query($slave);
 $connexionSlave->query($reqCounter);
 $connexionSlave->query($start);
 $connexionSlave->query($reqIoThread);
 $connexionSlave->query($reqSqlThread);
-$connexionSlave->query($slave);
-$connexionSlave->query($repli_reset);
-$connexionSlave->query($repli);
+#$connexionSlave->query($slave);
+#$connexionSlave->query($repli_reset);
+#$connexionSlave->query($repli);
 
 $connexionSlave->close();
 ?>
