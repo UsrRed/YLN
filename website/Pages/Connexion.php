@@ -22,7 +22,11 @@ $_SESSION['nb_connex']++;
             <label for="motdepasse">Mot de passe :</label>
             <input type="password" class="form-control" id="motdepasse" name="motdepasse"
                    placeholder="Entrez votre mot de passe" required>
-        </div>
+	</div>
+	<!--<small class="form-text text-muted">
+		<a href="/Inscription">Pas de compte ?</a>
+	</small>
+	<br/>-->
         <div class="d-flex justify-content-between">
             <!--Pour que ce soit aligné avec le formulaire, a droite, source : https://getbootstrap.com/docs/4.0/utilities/flex/ -->
             <button type="submit" class="btn btn-success">Se connecter</button>

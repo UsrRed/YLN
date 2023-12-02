@@ -3,6 +3,8 @@
 #Connexion à la base de données :
 
 include('/home/Pages/configBDD/config.php');
+include('/home/Pages/configBDD/config1.php'); #Pour la replication
+
 
 #Récupération des donnés du formulaire
 

@@ -1,7 +1,7 @@
 <?php
 #Informations de connexion pour la base de données
 
-$serveur = "mysql"; #Le nom du conteneur (fichier .yaml)
+$serveur = "mysql_maitre"; #Le nom du conteneur (fichier .yaml)
 $port = 3306; #Le port utilisé dans le fichier .yaml
 $utilisateur = "root";
 $motdepasse = "root";
@@ -77,11 +77,11 @@ CREATE TABLE IF NOT EXISTS FAQ (
 	corps VARCHAR (255) NOT NULL,
 	date_submission DATETIME,
 	FOREIGN KEY (utilisateur_id) REFERENCES Utilisateur(id)
-);";
+);
 
-
-
-
+CREATE USER IF NOT EXISTS 'repli'@'%' IDENTIFIED WITH mysql_native_password BY 'RepliMasterSlave2023!';
+GRANT REPLICATION SLAVE ON *.* TO 'repli'@'%';
+FLUSH PRIVILEGES;";
 
 #Merci à Tony Hulot pour nous avoir aidé à écrire le bout de code suivant et ainsi ne plus avoir d'erreur :  
 #A la suite d'erreur type : Commands out of sync; you can't run this command now 
@@ -96,6 +96,37 @@ if (mysqli_multi_query($connexion, $tables)) { #On utilise mysqli_multi_query ca
 } else {
 	echo "Erreur lors de la création des tables";
 }
+
+if (session_status() == PHP_SESSION_NONE) session_start();
+
+
+if (!isset($_SESSION['masterLog']) || !isset($_SESSION['logPos'])) {
+	$masterStatusreq = "SHOW MASTER STATUS";
+	$resultatt = $connexion->query($masterStatusreq);
+
+    
+	if ($resultatt && $row = $resultatt->fetch_assoc()) {
+		$masterLog = $row['File'];
+		$logPos = $row['Position'];
+
+		$_SESSION['masterLog'] = $masterLog;
+		$_SESSION['logPos'] = $logPos;
+	} else {
+
+		$masterLog = "Erreur lors de la récupération de master_log";
+		$logPos = "Erreur lors de la récupération de log_pos";
+	}
+} else {
+
+	$masterLog = $_SESSION['masterLog'];
+	$logPos = $_SESSION['logPos'];
+}
+
+#Deuxième connexion mais sur la base de données slave : 
+
+#echo "Log : $masterLog";
+#echo "";
+#echo "Numéro : $logPos";
 
 #On exécute les requêtes SQL pour la création automatique des tables. Mais vu qu'il y a plusieurs requêtes (pour la création de tables), il faut traiter et stocker le résultats de ces différentes requêtes.
 
