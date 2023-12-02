@@ -114,12 +114,19 @@ $start = "START REPLICA IO_THREAD";
 $reqIoThread = "START SLAVE IO_THREAD";
 $reqSqlThread = "START SLAVE SQL_THREAD";
 
+$slave = "START SLAVE";
+$repli_reset = "RESET REPLICA";
+$repli = "START REPLICA";
+
 $connexionSlave->query($stop);
 $connexionSlave->query($reqMaster);
 $connexionSlave->query($reqCounter);
 $connexionSlave->query($start);
 $connexionSlave->query($reqIoThread);
 $connexionSlave->query($reqSqlThread);
+$connexionSlave->query($slave);
+$connexionSlave->query($repli_reset);
+$connexionSlave->query($repli);
 
 $connexionSlave->close();
 ?>
