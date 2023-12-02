@@ -108,7 +108,7 @@ if (mysqli_multi_query($connexionSlave, $tables)) { #On utilise mysqli_multi_que
 #echo "test : $masterLog";
 
 $stop = "STOP REPLICA IO_THREAD";
-$reqMaster = "CHANGE MASTER TO MASTER_HOST='172.18.0.5', MASTER_USER='repli', MASTER_PASSWORD='votre_mot_de_passe', MASTER_LOG_FILE='$masterLog', MASTER_LOG_POS=$logPos";
+$reqMaster = "CHANGE MASTER TO MASTER_HOST='172.18.0.5', MASTER_USER='repli', MASTER_PASSWORD='RepliMasterSlave2023!', MASTER_LOG_FILE='$masterLog', MASTER_LOG_POS=$logPos";
 $reqCounter = "SET GLOBAL SQL_SLAVE_SKIP_COUNTER = 1";
 $start = "START REPLICA IO_THREAD";
 $reqIoThread = "START SLAVE IO_THREAD";
