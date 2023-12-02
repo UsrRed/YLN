@@ -2,24 +2,22 @@
 
 if (session_status() == PHP_SESSION_NONE) session_start();
 
-// Récupérer les valeurs de logPos de la session
 $masterLog = $_SESSION['masterLog'];
 $logPos = $_SESSION['logPos'];
 
-echo $logPos;
-echo "test : $masterLog";
+#echo $logPos;
+#echo "test : $masterLog";
 
-$hostSlave = "mysql_esclave";
+$conteneurSlave = "mysql_esclave";
 $portSlave = 3306;
-$userSlave = "root";
-$passwordSlave = "root";
-$databaseSlave = "nathiotime";
+$utiliSlave = "root";
+$motdepasseSlave = "root";
+$BDDSlave = "nathiotime";
 
-$connSlave = new mysqli($hostSlave, $userSlave, $passwordSlave, $databaseSlave, $portSlave);
+$connexionSlave = new mysqli($conteneurSlave, $utiliSlave, $motdepasseSlave, $BDDSlave, $portSlave);
 
-// Vérifier la connexion
-if ($connSlave->connect_error) {
-    die("La connexion à la base de données esclave a échoué : " . $connSlave->connect_error);
+if ($connexionSlave->connect_error) {
+	die("La connexion à la base de données esclave a échoué : " . $connexionSlave->connect_error);
 }
 
 $tables = "CREATE DATABASE IF NOT EXISTS nathiotime;
@@ -92,43 +90,36 @@ CREATE TABLE IF NOT EXISTS FAQ (
 #Merci à Tony Hulot pour nous avoir aidé à écrire le bout de code suivant et ainsi ne plus avoir d'erreur :  
 #A la suite d'erreur type : Commands out of sync; you can't run this command now 
 
-if (mysqli_multi_query($connexion, $tables)) { #On utilise mysqli_multi_query car il y a plusieurs requêtes à la base de données.
+if (mysqli_multi_query($connexionSlave, $tables)) { #On utilise mysqli_multi_query car il y a plusieurs requêtes à la base de données.
 	do { # Boucle pour lire et traiter les résultats des requêtes SQL qui ont été éxécutées avant : 
-		if ($res_ancienne_requete = mysqli_store_result($connexion)) { # On vérifie si des résultats sont disponibles pour les requêtes SQLs précédentes
+		if ($res_ancienne_requete = mysqli_store_result($connexionSlave)) { # On vérifie si des résultats sont disponibles pour les requêtes SQLs précédentes
 			mysqli_free_result($res_ancienne_requete); # On "libère" la mémoire utilisée lors du traitement des anciennes requêtes
 		}
-	} while (mysqli_next_result($connexion));
+	} while (mysqli_next_result($connexionSlave));
 	echo "";
 } else {
 	echo "Erreur lors de la création des tables";
 }
 
-
-
-// Récupérer les valeurs de logPos de la session
 #$masterLog = $_SESSION['masterLog'];
 #$logPos = $_SESSION['logPos'];
 
 #echo $logPos;
 #echo "test : $masterLog";
 
-// Commandes pour configurer la réplication sur la deuxième base de données
 $stop = "STOP REPLICA IO_THREAD";
-$changeMasterQuery = "CHANGE MASTER TO MASTER_HOST='172.18.0.5', MASTER_USER='repli', MASTER_PASSWORD='votre_mot_de_passe', MASTER_LOG_FILE='$masterLog', MASTER_LOG_POS=$logPos";
-$skipCounterQuery = "SET GLOBAL SQL_SLAVE_SKIP_COUNTER = 1";
+$reqMaster = "CHANGE MASTER TO MASTER_HOST='172.18.0.5', MASTER_USER='repli', MASTER_PASSWORD='votre_mot_de_passe', MASTER_LOG_FILE='$masterLog', MASTER_LOG_POS=$logPos";
+$reqCounter = "SET GLOBAL SQL_SLAVE_SKIP_COUNTER = 1";
 $start = "START REPLICA IO_THREAD";
-$startIoThreadQuery = "START SLAVE IO_THREAD";
-$startSqlThreadQuery = "START SLAVE SQL_THREAD";
+$reqIoThread = "START SLAVE IO_THREAD";
+$reqSqlThread = "START SLAVE SQL_THREAD";
 
-// Exécuter les commandes sur la deuxième base de données
-$connSlave->query($stop);
-$connSlave->query($changeMasterQuery);
-$connSlave->query($skipCounterQuery);
-$connSlave->query($start);
-$connSlave->query($startIoThreadQuery);
-$connSlave->query($startSqlThreadQuery);
+$connexionSlave->query($stop);
+$connexionSlave->query($reqMaster);
+$connexionSlave->query($reqCounter);
+$connexionSlave->query($start);
+$connexionSlave->query($reqIoThread);
+$connexionSlave->query($reqSqlThread);
 
-
-$connSlave->close();
+$connexionSlave->close();
 ?>
-

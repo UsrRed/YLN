@@ -101,26 +101,25 @@ if (session_status() == PHP_SESSION_NONE) session_start();
 
 
 if (!isset($_SESSION['masterLog']) || !isset($_SESSION['logPos'])) {
-    $masterStatusQuery = "SHOW MASTER STATUS";
-    $result = $connexion->query($masterStatusQuery);
+	$masterStatusreq = "SHOW MASTER STATUS";
+	$resultatt = $connexion->query($masterStatusreq);
 
     
-    if ($result && $row = $result->fetch_assoc()) {
-        $masterLog = $row['File'];
-        $logPos = $row['Position'];
+	if ($resultatt && $row = $resultatt->fetch_assoc()) {
+		$masterLog = $row['File'];
+		$logPos = $row['Position'];
 
-      
-        $_SESSION['masterLog'] = $masterLog;
-        $_SESSION['logPos'] = $logPos;
-    } else {
-        
-        $masterLog = "Erreur lors de la récupération de master_log";
-        $logPos = "Erreur lors de la récupération de log_pos";
-    }
+		$_SESSION['masterLog'] = $masterLog;
+		$_SESSION['logPos'] = $logPos;
+	} else {
+
+		$masterLog = "Erreur lors de la récupération de master_log";
+		$logPos = "Erreur lors de la récupération de log_pos";
+	}
 } else {
-  
-    $masterLog = $_SESSION['masterLog'];
-    $logPos = $_SESSION['logPos'];
+
+	$masterLog = $_SESSION['masterLog'];
+	$logPos = $_SESSION['logPos'];
 }
 
 #Deuxième connexion mais sur la base de données slave : 

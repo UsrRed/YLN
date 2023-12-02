@@ -12,3 +12,5 @@
 2023-12-02 17:56:46 - [INFO] - L'utilisateur admin s'est connecté.
 2023-12-02 18:06:17 - [INFO] - L'utilisateur Bonjour s'est inscrit.
 2023-12-02 18:06:24 - [INFO] - L'utilisateur Bonjour s'est connecté.
+2023-12-02 18:34:50 - [INFO] - L'utilisateur TestFinal s'est inscrit.
+2023-12-02 18:34:57 - [INFO] - L'utilisateur TestFinal s'est connecté.
