@@ -79,8 +79,8 @@ CREATE TABLE IF NOT EXISTS FAQ (
 	FOREIGN KEY (utilisateur_id) REFERENCES Utilisateur(id)
 );
 
-CREATE USER IF NOT EXISTS 'repli'@'%' IDENTIFIED WITH mysql_native_password BY 'RepliMasterSlave2023!';
-GRANT REPLICATION SLAVE ON *.* TO 'repli'@'%';
+CREATE USER IF NOT EXISTS 'repli'@'172.18.0.144' IDENTIFIED WITH mysql_native_password BY 'RepliMasterSlave2023!';
+GRANT REPLICATION SLAVE ON *.* TO 'repli'@'172.18.0.144';
 FLUSH PRIVILEGES;";
 
 #Merci à Tony Hulot pour nous avoir aidé à écrire le bout de code suivant et ainsi ne plus avoir d'erreur :  

@@ -107,31 +107,56 @@ if (mysqli_multi_query($connexionSlave, $tables)) { #On utilise mysqli_multi_que
 #echo $logPos;
 #echo "test : $masterLog";
 
+#$stop = "STOP REPLICA IO_THREAD";
+#$reqMaster = "CHANGE MASTER TO MASTER_HOST='172.18.0.5', MASTER_USER='repli', MASTER_PASSWORD='RepliMasterSlave2023!', MASTER_LOG_FILE='$masterLog', MASTER_LOG_POS=$logPos";
+#$reqCounter = "SET GLOBAL SQL_SLAVE_SKIP_COUNTER = 1";
+#$start = "START REPLICA IO_THREAD";
+#$reqIoThread = "START SLAVE IO_THREAD";
+#$reqSqlThread = "START SLAVE SQL_THREAD";
+
+#$slave = "START SLAVE";
+#$repli_reset = "RESET REPLICA";
+#$repli = "START REPLICA";
+#$code_3021 = "STOP REPLICA IO_THREAD FOR CHANNEL ''";
+
+#$connexionSlave->query($stop);
+#$connexionSlave->query($code_3021);
+#$connexionSlave->query($repli_reset);
+#$connexionSlave->query($repli);
+#$connexionSlave->query($code_3021);
+#$connexionSlave->query($reqMaster);
+#$connexionSlave->query($slave);
+#$connexionSlave->query($reqCounter);
+#$connexionSlave->query($start);
+#$connexionSlave->query($reqIoThread);
+#$connexionSlave->query($reqSqlThread);
+#$connexionSlave->query($slave);
+#$connexionSlave->query($repli_reset);
+#$connexionSlave->query($repli);
+
 $stop = "STOP REPLICA IO_THREAD";
+$code_3021 = "STOP REPLICA IO_THREAD FOR CHANNEL ''";
+$repli_reset = "RESET REPLICA";
+$repli = "START REPLICA";
 $reqMaster = "CHANGE MASTER TO MASTER_HOST='172.18.0.5', MASTER_USER='repli', MASTER_PASSWORD='RepliMasterSlave2023!', MASTER_LOG_FILE='$masterLog', MASTER_LOG_POS=$logPos";
 $reqCounter = "SET GLOBAL SQL_SLAVE_SKIP_COUNTER = 1";
 $start = "START REPLICA IO_THREAD";
 $reqIoThread = "START SLAVE IO_THREAD";
 $reqSqlThread = "START SLAVE SQL_THREAD";
+$code_3081 = "STOP REPLICA FOR CHANNEL ''";
 
-$slave = "START SLAVE";
-$repli_reset = "RESET REPLICA";
-$repli = "START REPLICA";
-$code_3021 = "STOP REPLICA IO_THREAD FOR CHANNEL ''";
-
+$connexionSlave->query($code_3081);
 $connexionSlave->query($stop);
+$connexionSlave->query($code_3021);
+
 $connexionSlave->query($repli_reset);
 $connexionSlave->query($repli);
 $connexionSlave->query($code_3021);
 $connexionSlave->query($reqMaster);
-$connexionSlave->query($slave);
 $connexionSlave->query($reqCounter);
 $connexionSlave->query($start);
 $connexionSlave->query($reqIoThread);
 $connexionSlave->query($reqSqlThread);
-#$connexionSlave->query($slave);
-#$connexionSlave->query($repli_reset);
-#$connexionSlave->query($repli);
 
 $connexionSlave->close();
 ?>
