@@ -1,0 +1,14 @@
+2023-12-02 17:52:34 - [INFO] - L'utilisateur admin vient de se déconnecter.
+2023-12-02 17:52:43 - [INFO] - L'utilisateur admin s'est connecté.
+2023-12-02 17:55:28 - [INFO] - L'utilisateur TestTest s'est inscrit.
+2023-12-02 17:55:36 - [INFO] - L'utilisateur TestTest s'est connecté.
+2023-12-02 17:55:47 - [INFO] - L'utilisateur TestTest vient de poster un message sur le chat.
+2023-12-02 17:55:53 - [INFO] - L'utilisateur TestTest vient de faire une comparaison entre Paris Saint-Germain Football Club et Olympique de Marseille.
+2023-12-02 17:56:01 - [INFO] - L'utilisateur TestTest vient de mettre en favoris la comparaison de  et .
+2023-12-02 17:56:10 - [INFO] - L'utilisateur TestTest vient de supprimer une ligne de l'historique de ses comparaisons.
+2023-12-02 17:56:31 - [INFO] - L'utilisateur TestTest a remplit les informations de son profil.
+2023-12-02 17:56:34 - [WARNING] - L'utilisateur TestTest s'est rendu sur la page de suppression de compte.
+2023-12-02 17:56:38 - [INFO] - L'utilisateur TestTest vient de se déconnecter.
+2023-12-02 17:56:46 - [INFO] - L'utilisateur admin s'est connecté.
+2023-12-02 18:06:17 - [INFO] - L'utilisateur Bonjour s'est inscrit.
+2023-12-02 18:06:24 - [INFO] - L'utilisateur Bonjour s'est connecté.

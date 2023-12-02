@@ -159,8 +159,8 @@ if ($resul) {
 		#L'utilisateur n'existe pas
 		if (session_status() == PHP_SESSION_NONE) session_start();
 		$_SESSION['status'] = "danger";
-		$_SESSION['message'] = $error_message;
-		header("Location: /Connexion");
+		$_SESSION['message'] = "Utilisateur introuvable, inscrivez-vous d'abord";
+		header("Location: /Inscription");
 	}
 } else {
 		$message = "Erreur de requête : " . mysqli_error($connexion);

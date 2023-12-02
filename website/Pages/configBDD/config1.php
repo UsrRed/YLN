@@ -1,20 +1,26 @@
 <?php
-#Informations de connexion pour la base de données
 
-$serveur = "mysql_maitre"; #Le nom du conteneur (fichier .yaml)
-$port = 3306; #Le port utilisé dans le fichier .yaml
-$utilisateur = "root";
-$motdepasse = "root";
-$basededonnees = "nathiotime";
+if (session_status() == PHP_SESSION_NONE) session_start();
 
-#Connexion sur la base de données
-$connexion = mysqli_connect($serveur, $utilisateur, $motdepasse, $basededonnees, $port);
+// Récupérer les valeurs de logPos de la session
+$masterLog = $_SESSION['masterLog'];
+$logPos = $_SESSION['logPos'];
 
-if (!$connexion) {
-	die("La connexion à la base de données a échoué : " . mysqli_connect_error());
+echo $logPos;
+echo "test : $masterLog";
+
+$hostSlave = "mysql_esclave";
+$portSlave = 3306;
+$userSlave = "root";
+$passwordSlave = "root";
+$databaseSlave = "nathiotime";
+
+$connSlave = new mysqli($hostSlave, $userSlave, $passwordSlave, $databaseSlave, $portSlave);
+
+// Vérifier la connexion
+if ($connSlave->connect_error) {
+    die("La connexion à la base de données esclave a échoué : " . $connSlave->connect_error);
 }
-
-# Variable tables pour la création de tables automatiques. Par défaut, après un podman-compose down, les données dans la base de données sont perdues. Av
 
 $tables = "CREATE DATABASE IF NOT EXISTS nathiotime;
 
@@ -77,11 +83,11 @@ CREATE TABLE IF NOT EXISTS FAQ (
 	corps VARCHAR (255) NOT NULL,
 	date_submission DATETIME,
 	FOREIGN KEY (utilisateur_id) REFERENCES Utilisateur(id)
-);
+);";
 
-CREATE USER IF NOT EXISTS 'repli'@'%' IDENTIFIED WITH mysql_native_password BY 'RepliMasterSlave2023!';
-GRANT REPLICATION SLAVE ON *.* TO 'repli'@'%';
-FLUSH PRIVILEGES;";
+
+
+
 
 #Merci à Tony Hulot pour nous avoir aidé à écrire le bout de code suivant et ainsi ne plus avoir d'erreur :  
 #A la suite d'erreur type : Commands out of sync; you can't run this command now 
@@ -97,56 +103,32 @@ if (mysqli_multi_query($connexion, $tables)) { #On utilise mysqli_multi_query ca
 	echo "Erreur lors de la création des tables";
 }
 
-if (session_status() == PHP_SESSION_NONE) session_start();
 
 
-if (!isset($_SESSION['masterLog']) || !isset($_SESSION['logPos'])) {
-    $masterStatusQuery = "SHOW MASTER STATUS";
-    $result = $connexion->query($masterStatusQuery);
+// Récupérer les valeurs de logPos de la session
+#$masterLog = $_SESSION['masterLog'];
+#$logPos = $_SESSION['logPos'];
 
-    
-    if ($result && $row = $result->fetch_assoc()) {
-        $masterLog = $row['File'];
-        $logPos = $row['Position'];
+#echo $logPos;
+#echo "test : $masterLog";
 
-      
-        $_SESSION['masterLog'] = $masterLog;
-        $_SESSION['logPos'] = $logPos;
-    } else {
-        
-        $masterLog = "Erreur lors de la récupération de master_log";
-        $logPos = "Erreur lors de la récupération de log_pos";
-    }
-} else {
-  
-    $masterLog = $_SESSION['masterLog'];
-    $logPos = $_SESSION['logPos'];
-}
+// Commandes pour configurer la réplication sur la deuxième base de données
+$stop = "STOP REPLICA IO_THREAD";
+$changeMasterQuery = "CHANGE MASTER TO MASTER_HOST='172.18.0.5', MASTER_USER='repli', MASTER_PASSWORD='votre_mot_de_passe', MASTER_LOG_FILE='$masterLog', MASTER_LOG_POS=$logPos";
+$skipCounterQuery = "SET GLOBAL SQL_SLAVE_SKIP_COUNTER = 1";
+$start = "START REPLICA IO_THREAD";
+$startIoThreadQuery = "START SLAVE IO_THREAD";
+$startSqlThreadQuery = "START SLAVE SQL_THREAD";
 
-#Deuxième connexion mais sur la base de données slave : 
-
-#echo "Log : $masterLog";
-#echo "";
-#echo "Numéro : $logPos";
-
-#On exécute les requêtes SQL pour la création automatique des tables. Mais vu qu'il y a plusieurs requêtes (pour la création de tables), il faut traiter et stocker le résultats de ces différentes requêtes.
-
-#Aide : 
-
-#https://dev.mysql.com/doc/refman/8.0/en/commands-out-of-sync.html
-#https://www.php.net/manual/fr/mysqli.multi-query.php
-#https://stackoverflow.com/questions/614671/commands-out-of-sync-you-cant-run-this-command-now
+// Exécuter les commandes sur la deuxième base de données
+$connSlave->query($stop);
+$connSlave->query($changeMasterQuery);
+$connSlave->query($skipCounterQuery);
+$connSlave->query($start);
+$connSlave->query($startIoThreadQuery);
+$connSlave->query($startSqlThreadQuery);
 
 
-#Test pour l'insert d'un utilisateur pour éviter un bug : 
-
-
-# Insertion dans la table Utilisateur si la ligne n'existe pas
-#$insertUtilisateur = "INSERT IGNORE INTO Utilisateur (nom_utilisateur, mot_de_passe, age, adresse_email, mot_de_passe_application) VALUES ('admin', 'admin', 20, 'admin@sae.rt', 'test test test test')";
-
-# Insertion dans la table FAQ si la ligne n'existe pas
-#$insertFAQ = "INSERT IGNORE INTO FAQ (utilisateur_id, objet, corps, date_submission) VALUES (999, 'test', 'test', '2023-11-06 12:35:52')";
-
-#mysqli_query($connexion, $insertFAQ);
-
+$connSlave->close();
 ?>
+

@@ -56,19 +56,37 @@ services:
       sae:
         ipv4_address: 172.18.0.253
 
-  mysql:
+  mysql-master:
     image: mysql:latest  
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: nathiotime
-    container_name: mysql
+    container_name: mysql_maitre
     ports:
       - "3306:3306"
     volumes:
+      - ../sae501-502-theotime-martel/website/Pages/configBDD/maitre/my.cnf:/etc/my.cnf:z
       - db_data:/var/lib/mysql:z
     networks:
       sae:
         ipv4_address: 172.18.0.5
+
+
+  mysql-slave:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: nathiotime
+    container_name: mysql_esclave
+    ports:
+      - "3307:3306"
+    volumes:
+      - ../sae501-502-theotime-martel/website/Pages/configBDD/slave/my.cnf:/etc/my.cnf:z
+      - db_data_esclave:/var/lib/mysql:z
+    networks:
+      sae:
+        ipv4_address: 172.18.0.144
+
 
   php:
     #image: php:8.2-fpm
@@ -90,6 +108,7 @@ services:
 
 volumes: 
   db_data:
+  db_data_esclave:
 
 networks:
   sae:
