@@ -1,2 +1,0 @@
-2023-12-03 17:51:28 - [INFO] - L'utilisateur N s'est connecté.
-2023-12-03 17:51:38 - [INFO] - L'utilisateur N vient de faire une demande au support.
