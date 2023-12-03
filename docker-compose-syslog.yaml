@@ -1,124 +1,123 @@
 version: "3.8"
 services:
   nginx1:
-    image: docker.io/library/nginx:alpine
+    image: ${VERSION_NGINX1}
     ports:
-      #- "8080:80"
-       - "8080:443"
+      - ${PORT_HOTE_NGINX1}:${PORT_CONTAINER_NGINX1}
     volumes:
       - ../sae501-502-theotime-martel/public:/usr/share/nginx/html:z
       - ../sae501-502-theotime-martel/website/Pages/configNGINX:/etc/nginx/conf.d:z
       - ../sae501-502-theotime-martel/opensslkeys:/home:z
       - ../sae501-502-theotime-martel/website/Pages/ErrorPages/HTML_Template_http_codes:/usr/share/Error/:z
-     #- ../sae501-502-theotime-martel/composer:/usr/share/nginx/composer:z
-    container_name: nginx1
+    container_name: ${NAME_NGINX1}
     networks:
       sae:
-        ipv4_address: 172.18.0.2
+        ipv4_address: ${IP_NGINX1}
     links:
-      - php
+      - ${NAME_PHP}
 
   nginx2:
-    image: docker.io/library/nginx:alpine
+    image: ${VERSION_NGINX2}
     ports:
-      #- "8081:80"
-      - "8081:443"
+      - ${PORT_HOTE_NGINX2}:${PORT_CONTAINER_NGINX2}
     volumes:
       - ../sae501-502-theotime-martel/public:/usr/share/nginx/html:z
       - ../sae501-502-theotime-martel/website/Pages/configNGINX:/etc/nginx/conf.d:z
       - ../sae501-502-theotime-martel/opensslkeys:/home:z
       - ../sae501-502-theotime-martel/website/Pages/ErrorPages/HTML_Template_http_codes:/usr/share/Error/:z
-     #- ../sae501-502-theotime-martel/composer:/usr/share/nginx/composer:z
-    container_name: nginx2
+    container_name: ${NAME_NGINX2}
     networks:
       sae:
-        ipv4_address: 172.18.0.3
+        ipv4_address: ${IP_NGINX2}
     links:
-      - php
+      - ${NAME_PHP}
 
   haproxy:
     build:
       context: .
-      dockerfile: DockerfileHa
-    #image: haproxy:alpine
-    container_name: haproxy
+      dockerfile: ${DOCKERFILE_HAPROXY}
+    env_file:
+      - ../sae501-502-theotime-martel/.env
+    container_name: ${NAME_HAPROXY}
     ports:
-      #- "8083:80"
-      - "8443:443"
-       
+      - ${PORT_HOTE_HAPROXY}:${PORT_CONTAINER_HAPROXY} 
     volumes:
       - ../sae501-502-theotime-martel/opensslkeys/myserver.pem:/etc/ssl/certs/myserver.pem:z
       - ../sae501-502-theotime-martel/loadbalancing/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:z
     depends_on:
-      - nginx1
-      - nginx2
+      - ${NAME_NGINX1}
+      - ${NAME_NGINX2}
     networks:
       sae:
-        ipv4_address: 172.18.0.253
-
+        ipv4_address: ${IP_HAPROXY}
 
   mysql-master:
-    image: mysql:latest  
+    image: ${VERSION_MYSQL_MASTER}
+    env_file:
+        - ../sae501-502-theotime-martel/.env
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: nathiotime
-    container_name: mysql_maitre
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    container_name: ${NAME_MASTER}
     ports:
-      - "3306:3306"
+      - ${PORT_HOTE_MYSQL_MASTER}:${PORT_CONTAINER_MYSQL_MASTER}
     volumes:
       - ../sae501-502-theotime-martel/website/Pages/configBDD/maitre/my.cnf:/etc/my.cnf:z
       - db_data:/var/lib/mysql:z
     networks:
       sae:
-        ipv4_address: 172.18.0.5
-
+        ipv4_address: ${IP_MYSQL_MASTER}
 
   mysql-slave:
-    image: mysql:latest
+    image: ${VERSION_MYSQL_SLAVE}
+    env_file:
+      - ../sae501-502-theotime-martel/.env
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: nathiotime
-    container_name: mysql_esclave
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    container_name: ${NAME_SLAVE}
     ports:
-      - "3307:3306"
+      - ${PORT_HOTE_MYSQL_SLAVE}:${PORT_CONTAINER_MYSQL_SLAVE}
     volumes:
       - ../sae501-502-theotime-martel/website/Pages/configBDD/slave/my.cnf:/etc/my.cnf:z
       - db_data_esclave:/var/lib/mysql:z
     networks:
       sae:
-        ipv4_address: 172.18.0.144
-
+        ipv4_address: ${IP_MYSQL_SLAVE}
 
   php:
-    #image: php:8.2-fpm
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: {DOCKERFILE_PHP}
+    env_file:
+      - ../sae501-502-theotime-martel/.env
     ports:
-      - 9000:9000
-    container_name: php
+      - ${PORT_HOTE_PHP}:${PORT_CONTAINER_PHP}
+    container_name: ${NAME_PHP}
     volumes :
       - ../sae501-502-theotime-martel/public:/usr/share/nginx/html:z
       - ../sae501-502-theotime-martel/composer:/usr/share/nginx/composer:z
       - ../sae501-502-theotime-martel/website:/home:z
-      #- ../sae501-502-theotime-martel/.msmtprc:/root/.msmtprc:z
-      #- ../sae501-502-theotime-martel/PHPMailer:/usr/share/nginx/PHPMailer:z
+      - ../sae501-502-theotime-martel/.env:/home/website/Pages/configBDD/.env:z
     networks:
       sae:
-        ipv4_address: 172.18.0.6  
+        ipv4_address: ${IP_PHP}
+
 
   syslog-ng:
-    image: balabit/syslog-ng:latest
+    image: ${VERSION_SYSLOG_NG}
+    env_file:
+      - ../sae501-502-theotime-martel/.env
     volumes:
       - ../sae501-502-theotime-martel/syslog/syslog-ng.conf:/etc/syslog-ng/syslog-ng.conf:z
       - ../sae501-502-theotime-martel/syslog/syslog-ng:/etc/default/syslog-ng:z
-    ports:
-      - "514:514/udp"
+    ports: 
+      - ${PORT_HOTE_SYSLOG_NG}:${PORT_CONTAINER_SYSLOG_NG}   
     restart: always
-    container_name: syslog-ng
+    container_name: ${NAME_SYSLOG_NG}
     networks:
       sae:
-        ipv4_address: 172.18.0.7 
+        ipv4_address: ${IP_SYSLOG_NG}
 
 volumes: 
   db_data:

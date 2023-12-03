@@ -8,11 +8,11 @@ $logPos = $_SESSION['logPos'];
 #echo $logPos;
 #echo "test : $masterLog";
 
-$conteneurSlave = "mysql_esclave";
-$portSlave = 3306;
-$utiliSlave = "root";
-$motdepasseSlave = "root";
-$BDDSlave = "nathiotime";
+$conteneurSlave = getenv('NAME_SLAVE');
+$portSlave = getenv('PORT_CONTAINER_MYSQL_SLAVE');
+$utiliSlave = getenv('MYSQL_USER');
+$motdepasseSlave = getenv('MYSQL_ROOT_PASSWORD');
+$BDDSlave = getenv('MYSQL_DATABASE');
 
 $connexionSlave = new mysqli($conteneurSlave, $utiliSlave, $motdepasseSlave, $BDDSlave, $portSlave);
 

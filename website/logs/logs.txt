@@ -1,0 +1,46 @@
+2023-12-03 10:17:38 - [INFO] - L'utilisateur Nathan147 s'est inscrit.
+2023-12-03 10:17:45 - [INFO] - L'utilisateur Nathan147 s'est connecté.
+2023-12-03 10:18:35 - [INFO] - L'utilisateur Nathan147 a remplit les informations de son profil.
+2023-12-03 10:19:24 - [INFO] - L'utilisateur Nathan147 a remplit les informations de son profil.
+2023-12-03 10:21:20 - [INFO] - L'utilisateur Nathan147 vient de faire une comparaison entre Porsche et Peugeot.
+2023-12-03 10:21:39 - [INFO] - L'utilisateur Nathan147 vient de mettre en favoris la comparaison de  et .
+2023-12-03 10:23:17 - [INFO] - L'utilisateur Nathan147 vient de supprimer une comparaison mise en favoris.
+2023-12-03 10:24:06 - [INFO] - L'utilisateur Nathan147 vient de se déconnecter.
+2023-12-03 10:24:12 - [INFO] - L'utilisateur admin s'est connecté.
+2023-12-03 10:26:08 - [INFO] - L'utilisateur admin vient de se déconnecter.
+2023-12-03 10:26:15 - [INFO] - L'utilisateur Nathan9 s'est connecté.
+2023-12-03 11:57:52 - [INFO] - L'utilisateur Nathan9 s'est connecté.
+2023-12-03 11:57:54 - [INFO] - L'utilisateur Nathan9 vient de se déconnecter.
+2023-12-03 11:58:03 - [INFO] - L'utilisateur Nathan14789 s'est inscrit.
+2023-12-03 12:02:58 - [INFO] - L'utilisateur Nathan9 s'est connecté.
+2023-12-03 12:03:00 - [INFO] - L'utilisateur Nathan9 vient de se déconnecter.
+2023-12-03 12:03:11 - [INFO] - L'utilisateur Nathan123456789 s'est inscrit.
+2023-12-03 12:08:57 - [INFO] - L'utilisateur Nathan15951 s'est inscrit.
+2023-12-03 12:09:06 - [INFO] - L'utilisateur Nathan15951 s'est connecté.
+2023-12-03 12:09:08 - [INFO] - L'utilisateur Nathan15951 vient de se déconnecter.
+2023-12-03 12:09:20 - [INFO] - L'utilisateur admin s'est connecté.
+2023-12-03 12:09:26 - [INFO] - L'utilisateur admin vient de faire une comparaison entre Paris Saint-Germain Football Club et Olympique de Marseille.
+2023-12-03 12:09:43 - [INFO] - L'utilisateur admin vient de mettre en favoris la comparaison de  et .
+2023-12-03 12:09:45 - [INFO] - L'utilisateur admin vient de supprimer une comparaison mise en favoris.
+2023-12-03 12:09:49 - [INFO] - L'utilisateur admin vient de supprimer une ligne de l'historique de ses comparaisons.
+2023-12-03 12:09:50 - [INFO] - L'utilisateur admin vient de supprimer une ligne de l'historique de ses comparaisons.
+2023-12-03 12:09:51 - [INFO] - L'utilisateur admin vient de supprimer une ligne de l'historique de ses comparaisons.
+2023-12-03 12:09:52 - [INFO] - L'utilisateur admin vient de supprimer une ligne de l'historique de ses comparaisons.
+2023-12-03 12:09:54 - [INFO] - L'utilisateur admin vient de supprimer une ligne de l'historique de ses comparaisons.
+2023-12-03 13:54:20 - [INFO] - L'utilisateur Nathan99 s'est inscrit.
+2023-12-03 13:56:24 - [INFO] - L'utilisateur Nathan9 s'est connecté.
+2023-12-03 13:56:27 - [INFO] - L'utilisateur Nathan9 vient de se déconnecter.
+2023-12-03 14:13:36 - [INFO] - L'utilisateur N s'est inscrit.
+2023-12-03 14:13:42 - [INFO] - L'utilisateur N s'est connecté.
+2023-12-03 14:21:35 - [INFO] - L'utilisateur Nathan999 s'est inscrit.
+2023-12-03 14:21:40 - [INFO] - L'utilisateur Nathan999 s'est connecté.
+2023-12-03 14:21:49 - [INFO] - L'utilisateur Nathan999 vient de faire une comparaison entre Porsche et Peugeot.
+2023-12-03 14:28:40 - [INFO] - L'utilisateur NathanTest s'est inscrit.
+2023-12-03 14:28:47 - [INFO] - L'utilisateur NathanTest s'est connecté.
+2023-12-03 14:28:59 - [INFO] - L'utilisateur NathanTest vient de se déconnecter.
+2023-12-03 14:37:35 - [INFO] - L'utilisateur Nathan9 s'est connecté.
+2023-12-03 14:37:49 - [INFO] - L'utilisateur Nathan9 a remplit les informations de son profil.
+2023-12-03 14:42:15 - [INFO] - L'utilisateur Nathan9 vient de faire une demande au support.
+2023-12-03 15:13:15 - [INFO] - L'utilisateur Nathan9 s'est connecté.
+2023-12-03 15:15:01 - [INFO] - L'utilisateur Nathan9999 s'est inscrit.
+2023-12-03 15:15:07 - [INFO] - L'utilisateur Nathan9999 s'est connecté.
