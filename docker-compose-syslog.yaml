@@ -2,6 +2,8 @@ version: "3.8"
 services:
   nginx1:
     image: ${VERSION_NGINX1}
+    env_file:
+      - ../sae501-502-theotime-martel/.env
     ports:
       - ${PORT_HOTE_NGINX1}:${PORT_CONTAINER_NGINX1}
     volumes:
@@ -18,6 +20,8 @@ services:
 
   nginx2:
     image: ${VERSION_NGINX2}
+    env_file:
+      - ../sae501-502-theotime-martel/.env
     ports:
       - ${PORT_HOTE_NGINX2}:${PORT_CONTAINER_NGINX2}
     volumes:
@@ -88,7 +92,7 @@ services:
   php:
     build:
       context: .
-      dockerfile: {DOCKERFILE_PHP}
+      dockerfile: ${DOCKERFILE_PHP}
     env_file:
       - ../sae501-502-theotime-martel/.env
     ports:
