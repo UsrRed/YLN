@@ -44,3 +44,6 @@
 2023-12-03 15:13:15 - [INFO] - L'utilisateur Nathan9 s'est connecté.
 2023-12-03 15:15:01 - [INFO] - L'utilisateur Nathan9999 s'est inscrit.
 2023-12-03 15:15:07 - [INFO] - L'utilisateur Nathan9999 s'est connecté.
+2023-12-03 17:33:45 - [INFO] - L'utilisateur N s'est connecté.
+2023-12-03 17:36:54 - [INFO] - L'utilisateur N a remplit les informations de son profil.
+2023-12-03 17:37:35 - [INFO] - L'utilisateur N vient de faire une demande au support.

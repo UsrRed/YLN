@@ -95,7 +95,7 @@ read rep_logs
 if [ "$rep_logs" == "O" ] || [ "$rep_logs" == "o" ]; then
 	echo "Faites votre choix"
 	echo "1- Syslog-ng"
-	echo "2- Grafana"
+	echo "2- Grafana (GUI)"
 	read rep_log_choix
 
 	case $rep_log_choix in
