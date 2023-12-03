@@ -102,7 +102,7 @@ services:
       - ../sae501-502-theotime-martel/public:/usr/share/nginx/html:z
       - ../sae501-502-theotime-martel/composer:/usr/share/nginx/composer:z
       - ../sae501-502-theotime-martel/website:/home:z
-      - ../sae501-502-theotime-martel/.env:/home/website/Pages/configBDD/.env:z
+     #- ../sae501-502-theotime-martel/.env:/home/website/Pages/configBDD/.env:z
     networks:
       sae:
         ipv4_address: ${IP_PHP}
