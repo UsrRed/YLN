@@ -37,7 +37,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mot_de_passe_application = $par_ligne['mot_de_passe_application'];
         $nom_utilisateur = $par_ligne['nom_utilisateur'];
 
-        $destinataire1 = 'nathan.martel@etu.univ-tours.fr';
+	#$destinataire1 = getenv('EMAIL1');
+	$destinataire1 = 'nathan.martel@etu.univ-tours.fr';
         $destinataire2 = 'lukas.theotime@etu.univ-tours.fr';
         $destinataire3 = 'yohann.denoyelle@etu.univ-tours.fr';
 

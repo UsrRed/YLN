@@ -1,11 +1,11 @@
 <?php
 #Informations de connexion pour la base de données
 
-$serveur = "mysql_maitre"; #Le nom du conteneur (fichier .yaml)
-$port = 3306; #Le port utilisé dans le fichier .yaml
-$utilisateur = "root";
-$motdepasse = "root";
-$basededonnees = "nathiotime";
+$serveur = getenv('NAME_MASTER');
+$port = getenv('PORT_CONTAINER_MYSQL_MASTER');
+$utilisateur = getenv('MYSQL_USER');
+$motdepasse = getenv('MYSQL_ROOT_PASSWORD');
+$basededonnees = getenv('MYSQL_DATABASE');
 
 #Connexion sur la base de données
 $connexion = mysqli_connect($serveur, $utilisateur, $motdepasse, $basededonnees, $port);
