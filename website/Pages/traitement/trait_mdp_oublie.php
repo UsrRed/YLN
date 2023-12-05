@@ -64,19 +64,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$logs = date('Y-m-d H:i:s') . " - [WARNING] - L'utilisateur " . $utilisateur . " a rempli avec succès le formulaire pour l'oubli du mot de passe. Mail envoyé.";
 		shell_exec('echo "' . $logs . '" >> /home/logs/logs.txt');
 
+		$smtp_host = getenv('SMTP_HOST_OWN');
+		$smtp_user = getenv('SMTP_USERNAME_OWN');
+		$smtp_motdepasse = getenv('SMTP_PASSWORD_OWN');
+		$smtp_secure = getenv('SMTP_SECURE_OWN');
+		$smtp_port = getenv('SMTP_PORT_OWN');
+
                 $mail = new PHPMailer\PHPMailer\PHPMailer();
 
                 #Compte gmail sae501502gmail.com créé pour l'envoi de mail à l'utilisateur qui a oublié son mot de passe
 
                 $mail->isSMTP();
-                $mail->Host = 'smtp.gmail.com';
+                $mail->Host = $smtp_host;
                 $mail->SMTPAuth = true;
-                $mail->Username = 'sae501502@gmail.com'; #Adresse e-mail gmail pour l'envoi
-                $mail->Password = 'xqifxpjrieknuntn'; #Mot de passe d'application
-                $mail->SMTPSecure = 'tls';
-                $mail->Port = 587;
+                $mail->Username = $smtp_user; #Adresse e-mail gmail pour l'envoi
+                $mail->Password = $smtp_motdepasse; #Mot de passe d'application
+                $mail->SMTPSecure = $smtp_secure;
+                $mail->Port = $smtp_port;
 
-                $mail->setFrom('sae501502@gmail.com', 'SAE501-502 - mot de passe');
+                $mail->setFrom($smtp_host, 'SAE501-502 - mot de passe');
                 $mail->addAddress($vrai_adresse_email); #adresse e-mail récupérée depuis la base de données. Le destinataire
 
                 $mail->isHTML(false);
@@ -113,7 +119,8 @@ $connexion->close();
 function mdp_aleatoire($long = 24)
 {
 
-        $carac = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!?,#&@*';
+	#$carac = getenv('CARAC');
+	$carac = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!?,#&@*';
         $mdp = '';
         for ($i = 0; $i < $long; $i++) {
                 $mdp .= $carac[rand(0, strlen($carac) - 1)]; #On se sert des indices d'ou le moins 1, c'est pour ca que ca ne fonctionnait pas depuis le début

@@ -122,29 +122,38 @@ if ($resul) {
 						$logs = date('Y-m-d H:i:s') . " - [CRITICAL] - L'utilisateur " . $utilisateur . " vient de se faire bannir.";
 						shell_exec('echo "' . $logs . '" >> /home/logs/logs.txt');
 
+						$destinataire_email1 = getenv('EMAIL1');
+						$destinataire_email2 = getenv('EMAIL2');
+						$destinataire_email3 = getenv('EMAIL3');
+						$smtp_user = getenv('SMTP_USERNAME_OWN');
+						$smtp_password = getenv('SMTP_PASSWORD_OWN');
+						$smtp_host = getenv('SMTP_HOST_OWN');
+						$smtp_port = getenv('SMTP_PORT_OWN');
+						$smtp_secure = getenv('SMTP_SECURE_OWN');
+												
 						$mail = new PHPMailer\PHPMailer\PHPMailer();
 						$mail->isSMTP();
-						$mail->Host = 'smtp.gmail.com';
-						#$mail->Host = getenv('SMTP_HOST_OWN');
+						#$mail->Host = 'smtp.gmail.com';
+						$mail->Host = $smtp_host;
              	   				$mail->SMTPAuth = true;
-						$mail->Username = 'sae501502@gmail.com'; #Adresse e-mail gmail pour l'envoi
-						#$mail->Username = getenv('SMTP_USERNAME_OWN');
-						$mail->Password = 'xqifxpjrieknuntn'; #Mot de passe d'application
-						#$mail->Password = getenv('SMTP_PASSWORD_OWN');
-						$mail->SMTPSecure = 'tls';
-						#$mail->SMTPSecure = getenv('SMTP_SECURE_OWN');
-						$mail->Port = 587;
-						#$mail->Port = getenv('SMTP_PORT_OWN');
-						$mail->setFrom('sae501502@gmail.com', 'SAE501-502 - bannissement');
-						#$mail->setFrom(getenv('SMTP_USERNAME_OWN'), 'SAÉ501-502 - bannissement');
+						#$mail->Username = 'sae501502@gmail.com'; #Adresse e-mail gmail pour l'envoi
+						$mail->Username = $smtp_user;
+						#$mail->Password = 'xqifxpjrieknuntn'; #Mot de passe d'application
+						$mail->Password = $smtp_password;
+						#$mail->SMTPSecure = 'tls';
+						$mail->SMTPSecure = $smtp_secure;
+						#$mail->Port = 587;
+						$mail->Port = $smtp_port;
+						#$mail->setFrom('sae501502@gmail.com', 'SAE501-502 - bannissement');
+						$mail->setFrom($smtp_user, 'SAÉ501-502 - bannissement');
 
 						#$mail->addAddress('nathan.martel@etu.univ-tours.fr');
 						#$mail->addAddress('lukas.theotime@etu.univ-tours.fr');
 						#$mail->addAddress('yohann.denoyelle@etu.univ-tours.fr');
 
-						#$mail->addAddress(getenv('EMAIL1'));
-						#$mail->addAddress(getenv('EMAIL_TO_2'));
-						#$mail->addAddress(getenv('EMAIL_TO_3'));
+						$mail->addAddress($destinataire_email1);
+						$mail->addAddress($destinataire_email2);
+						$mail->addAddress($destinataire_email3);
 
 						$mail->isHTML(true);
    	        				$mail->Subject = "[WARNING] - SAÉ501-502";

@@ -40,6 +40,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$destinataire1 = getenv('EMAIL1');
 	$destinataire2 = getenv('EMAIL2');
 	$destinataire3 = getenv('EMAIL3');
+	$smtp_host = getenv('SMTP_HOST_OWN');
+	$smtp_secure = getenv('SMTP_SECURE_OWN');
+	$smtp_port = getenv('SMTP_PORT_OWN');
+
 	#$destinataire1 = 'nathan.martel@etu.univ-tours.fr';
         #$destinataire2 = 'lukas.theotime@etu.univ-tours.fr';
         #$destinataire3 = 'yohann.denoyelle@etu.univ-tours.fr';
@@ -49,19 +53,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail = new PHPMailer\PHPMailer\PHPMailer();
 
         $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
+        $mail->Host = $smtp_host;
         $mail->SMTPAuth = true;
         $mail->Username = $adresse_email;
         $mail->Password = $mot_de_passe_application;
-        $mail->SMTPSecure = 'tls';
-        $mail->Port = 587;
+        $mail->SMTPSecure = $smtp_secure;
+        $mail->Port = $smtp_port;
 
         $mail->setFrom($adresse_email, $nom_utilisateur);
         $mail->addAddress($destinataire1);
         $mail->addAddress($destinataire2);
         $mail->addAddress($destinataire3);
 
-        $mail->isHTML(false);
+        $mail->isHTML(true);
         $mail->Subject = $objet;
         $mail->Body = $body;
 
