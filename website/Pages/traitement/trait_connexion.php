@@ -124,18 +124,30 @@ if ($resul) {
 
 						$mail = new PHPMailer\PHPMailer\PHPMailer();
 						$mail->isSMTP();
-				                $mail->Host = 'smtp.gmail.com';
+						$mail->Host = 'smtp.gmail.com';
+						#$mail->Host = getenv('SMTP_HOST_OWN');
              	   				$mail->SMTPAuth = true;
-              	  				$mail->Username = 'sae501502@gmail.com'; #Adresse e-mail gmail pour l'envoi
-           	     				$mail->Password = 'xqifxpjrieknuntn'; #Mot de passe d'application
-               	 				$mail->SMTPSecure = 'tls';
-             					$mail->Port = 587;
+						$mail->Username = 'sae501502@gmail.com'; #Adresse e-mail gmail pour l'envoi
+						#$mail->Username = getenv('SMTP_USERNAME_OWN');
+						$mail->Password = 'xqifxpjrieknuntn'; #Mot de passe d'application
+						#$mail->Password = getenv('SMTP_PASSWORD_OWN');
+						$mail->SMTPSecure = 'tls';
+						#$mail->SMTPSecure = getenv('SMTP_SECURE_OWN');
+						$mail->Port = 587;
+						#$mail->Port = getenv('SMTP_PORT_OWN');
 						$mail->setFrom('sae501502@gmail.com', 'SAE501-502 - bannissement');
-						$mail->addAddress('nathan.martel@etu.univ-tours.fr');
-						$mail->addAddress('lukas.theotime@etu.univ-tours.fr');
-						$mail->addAddress('yohann.denoyelle@etu.univ-tours.fr');
-						$mail->isHTML(false);
-   	        				$mail->Subject = "[WARNING] - SAE501-502";
+						#$mail->setFrom(getenv('SMTP_USERNAME_OWN'), 'SAÉ501-502 - bannissement');
+
+						#$mail->addAddress('nathan.martel@etu.univ-tours.fr');
+						#$mail->addAddress('lukas.theotime@etu.univ-tours.fr');
+						#$mail->addAddress('yohann.denoyelle@etu.univ-tours.fr');
+
+						#$mail->addAddress(getenv('EMAIL1'));
+						#$mail->addAddress(getenv('EMAIL_TO_2'));
+						#$mail->addAddress(getenv('EMAIL_TO_3'));
+
+						$mail->isHTML(true);
+   	        				$mail->Subject = "[WARNING] - SAÉ501-502";
        	         				$mail->Body = "L'utilisateur $utilisateur vient de se faire bannir 5 minutes sur l'application suite à trois tentatives de connexions infructueuses.";
 						$mail->send();
 

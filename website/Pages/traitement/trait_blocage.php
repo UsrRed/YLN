@@ -22,23 +22,23 @@
 <body class="bg-light" disabled> <!--Pour que l'utilisateur ne puisse rien faire -->
 <div class="container mt-5 text-center"> <!-- Ajout de la classe text-center pour centrer le contenu -->
     
-<br><br><br><h2>Votre compte est temporairement <b>bloqué</b>. Vous serez redirigé vers la page de connexion à la fin du compte a rebours</h2><br/><br/><br/><br/><br/><br/><br/>
+<br><br><br><h2>Votre compte est temporairement <b>bloqué</b>. Vous serez redirigé vers la page de connexion à la fin du compte a rebours</h2><br/><br/><br/><br/>
 	<h1><span id="countdown" class="display-1">300</span></h1> <!-- Ajout de la classe display-1 pour le texte en très gros -->
 
 	<script>
 
 	/* Fonctions dont nous ne sommes pas l'auteur*/
 
-	var seconds;
-	function startCountdown() {
-		if (localStorage.getItem("countdownSeconds")) {
-			seconds = parseInt(localStorage.getItem("countdownSeconds"), 10);
-		} else {
-			seconds = 300; // Changer la valeur initiale à 300
-			localStorage.setItem("countdownSeconds", seconds.toString()); // Ajoutez cette ligne pour stocker la valeur initiale
-		}
+var seconds;
 
- 	function updateCountdown() {
+function startCountdown() {
+	if (localStorage.getItem("countdownSeconds")) {
+		seconds = parseInt(localStorage.getItem("countdownSeconds"), 10);
+	} else {
+		seconds = 300; 
+		localStorage.setItem("countdownSeconds_" + Date.now(), seconds.toString());
+	}
+	function updateCountdown() {
 		var minutes = Math.floor(seconds / 60);
 		var remainingSeconds = seconds % 60;
 
@@ -52,13 +52,29 @@
 			seconds--;
 			localStorage.setItem("countdownSeconds", seconds.toString());
 			setTimeout(updateCountdown, 1000);
-			}
 		}
-		updateCountdown();
 	}
-	startCountdown();
 
-	</script>
+		window.onbeforeunload = function (event) {
+		if (seconds > 0) {
+			event.returnValue = "Vous n'avez pas le droit de quitter la page. Merci d'attendre le compte à rebours";
+		} else {
+			localStorage.removeItem("countdownSeconds");
+ 		}
+
+	};
+
+	updateCountdown();
+}
+
+startCountdown();
+
+</script>
+
+<br/><br/>
+
+<!-- Regarder : https://www.qphi.dev/posts/faites-vos-propres-animations-en-javascript -->
+
 </div>
 </body>
 </html>

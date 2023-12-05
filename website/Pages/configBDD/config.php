@@ -105,9 +105,9 @@ if (!isset($_SESSION['masterLog']) || !isset($_SESSION['logPos'])) {
 	$resultatt = $connexion->query($masterStatusreq);
 
     
-	if ($resultatt && $row = $resultatt->fetch_assoc()) {
-		$masterLog = $row['File'];
-		$logPos = $row['Position'];
+	if ($resultatt && $par_ligne = $resultatt->fetch_assoc()) {
+		$masterLog = $par_ligne['File'];
+		$logPos = $par_ligne['Position'];
 
 		$_SESSION['masterLog'] = $masterLog;
 		$_SESSION['logPos'] = $logPos;
