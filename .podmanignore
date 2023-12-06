@@ -1,0 +1,11 @@
+#Git file
+
+.gitignore
+
+#Git folder
+
+.git
+
+#Markdown file
+
+*.md

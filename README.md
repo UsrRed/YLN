@@ -57,6 +57,7 @@ The main features of the project are as follows:
 * A graphical interface for viewing logs is available via Grafana (functional).
 * Password expiration date in the database (functional).
 * Master/Slave Database Replication (functional)
+* The management of containers is done through Portainer. (functional).
 
 ### What script to execute to create tables in the database
 
@@ -151,6 +152,7 @@ Finally, execute by clicking on "Run Query". You can have results like the ones 
 
 * Container PHP load balancing
 * Application available in French and English
+* Vault hashicorp container
 
 ### License
 

@@ -107,9 +107,30 @@ services:
       sae:
         ipv4_address: ${IP_PHP}
 
+  portainer:
+    image: ${VERSION_PORTAINER}
+    container_name: ${NAME_PORTAINER}
+    ports:
+      - ${PORT_HOTE_PORTAINER}:${PORT_CONTAINER_PORTAINER}
+    volumes:
+      - /run/podman/podman.sock:/var/run/docker.sock:z
+      - ../sae501-502-theotime-martel/opensslkeys:/certs:z
+      - portainer_data:/data:z
+    restart: always
+    command:
+      --ssl
+      --sslcert /certs/myserver.crt
+      --sslkey /certs/myserver.key
+    networks:
+      sae:
+        ipv4_address: ${IP_PORTAINER}
+
+
+
 volumes: 
   db_data:
   db_data_esclave:
+  portainer_data:
 
 networks:
   sae:
