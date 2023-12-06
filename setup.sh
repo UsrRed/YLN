@@ -39,7 +39,7 @@ else
 fi
 
 #Pour récupérer des images avec podman
-if podman images | grep 'docker.io/library/nginx.*alpine' && podman images | grep 'docker.io/library/php.*8.2-fpm' && podman images | grep 'docker.io/library/mysql.*latest' && podman images | grep 'docker.io/library/haproxy.*alpine'; then
+if podman images | grep 'docker.io/library/nginx.*alpine' && podman images | grep 'docker.io/library/php.*8.2-fpm' && podman images | grep 'docker.io/library/mysql.*latest' && podman images | grep 'docker.io/library/haproxy.*alpine' && podman images | grep 'docker.io/portainer/portainer-ce.*latest'; then
 	echo "Les images sont déjà installées"
 else
 	echo "Pulling des images pour le lancement des conteneurs.."
@@ -47,6 +47,7 @@ else
 	podman pull docker.io/library/php:8.2-fpm
 	podman pull docker.io/library/nginx:alpine
 	podman pull docker.io/library/haproxy:alpine
+	podman pull docker.io/library/portainer/portainer-ce
 	#podman pull grafana/grafana
 	#podman pull grafana/loki
 	#podman pull grafana/promtail    
@@ -126,8 +127,13 @@ fi
 
 #Et l'adresse IP du conteneur Haproxy pour accéder à l'application
 AdresseIP=$(podman inspect haproxy | grep -oP '"IPAddress": "\K[^"]+') 
+AdresseIP_Portainer=$(podman inspect portainer | grep -oP '"IPAddress": "\K[^"]+')
+echo ""
 echo "--> L'adresse IP de l'application sur laquelle se rendre est https://$AdresseIP:8443"
 echo "--> Vous pouvez faire un CTRL + [clique gauche] sur l'URL ci-dessus."
+echo ""
+echo "--> La gestion des conteneurs se fait sur https://$AdresseIP_Portainer:9443"
+echo "";
 if podman ps | grep -q "grafana"; then
 	AddresseIpGrafana=$(podman inspect grafana | grep -oP '"IPAddress": "\K[^"]+')
 	echo "Si vous avez choisi d'implémenter une IHM avec votre syslog-ng, vous pouvez vous rendre sur https://$AddresseIpGrafana:3000"
