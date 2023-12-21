@@ -126,6 +126,19 @@ services:
         ipv4_address: ${IP_PORTAINER}
 
 
+  #vault:
+    #image: vault:1.13.3
+    #container_name: vault
+    #ports:
+      #- "8200:8200"
+    #environment:
+      ##- VAULT_DEV_ROOT_TOKEN_ID=root_token
+      #- VAULT_ADDR=http://127.0.0.1:8200
+    #restart: always
+    #networks:
+      #sae:
+        #ipv4_address: 172.18.0.155
+
 
 volumes: 
   db_data:

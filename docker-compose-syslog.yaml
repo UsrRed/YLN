@@ -115,6 +115,7 @@ services:
     volumes:
       - ../sae501-502-theotime-martel/syslog/syslog-ng.conf:/etc/syslog-ng/syslog-ng.conf:z
       - ../sae501-502-theotime-martel/syslog/syslog-ng:/etc/default/syslog-ng:z
+      - syslog-ng_data:/var/log/syslog-ng:z
     ports: 
       - ${PORT_HOTE_SYSLOG_NG}:${PORT_CONTAINER_SYSLOG_NG}   
     restart: always
@@ -147,6 +148,7 @@ volumes:
   db_data:
   db_data_esclave:
   portainer_data:
+  syslog-ng_data:
 
 networks:
   sae:

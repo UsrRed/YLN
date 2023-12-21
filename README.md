@@ -87,13 +87,15 @@ Or :
 ```
 This will install podman, podman-compose, and the necessary container images for the proper functioning of the application.
 Next, when running the script, you will need to choose whether you want to implement a syslog with syslog-ng in the application and, if yes, whether you also want to have a graphical interface to view the logs.
-Finally, once your choice regarding the log management part is made and the script execution is complete, an IP address and a port are available. This is the IP address of the application to visit (very rarely different from `https://172.18.0.253:8443`).
-
+Finally, once your choice regarding the log management part is made and the script execution is complete, an IP address and a port are available. This is the IP address of the application to visit (very rarely different from `https://172.18.0.253:8443`) or `https://yln.fr:8443`.
+```
+https://yln.fr:8443
+```
 **Caution** : The entire syslog-ng section, including its operation, is explained in the "Installation of syslog" section.
 
 ### How to use the application
 
-Once the .yaml file is started, open a web browser and enter `https://[IP_Address_Provided_By_The_Script]:8443` (the PHP and Nginx container provides the user interface). It's not possible to connect with the HTTP protocol, it's automatically redirected to HTTPS. The IP address is the Haproxy container which will distribute the load between two nginx WEB containers. Make sure to add the port. 
+Once the setup.sh script is started, open a web browser and enter `https://[IP_Address_Provided_By_The_Script]:8443` or `https://yln.fr:8443` (the PHP and Nginx container provides the user interface). It's not possible to connect with the HTTP protocol, it's automatically redirected to HTTPS. The IP address is the Haproxy container which will distribute the load between two nginx WEB containers. Make sure to add the port. 
 
 **Caution** : You may encounter the following error when attempting to register for the first time on the site: 2002 Error. This means that the MySQL server did not start correctly or is not running. If this error occurs, you need to stop the docker-compose (1) :
 ```
@@ -131,11 +133,11 @@ Then navigating to the `cd /var/log/` floder. A folder named "YLN" should be cre
 
 <img src = "./imageREADME/syslog-ng.png" />
 
-**With a log management interface (GUI)** : With a GUI to exploit the logs, three containers are linked. Promtail will collect the logs, loki will efficiently manage all these logs so that Grafana can visualize the logging data stored in Loki. Therefore, with this configuration, it is possible to visualize logs from a GUI managed by Grafana. The log viewing address is secure (HTTPS) and is as follows: `https://172.18.0.10:3000`. Note that it is not possible to connect to it until logs aren't generated and stored in Loki. The advantage of the GUI, despite logs not being sorted, is that it provides an interface that is clearer.
+**With a log management interface (GUI)** : With a GUI to exploit the logs, three containers are linked. Promtail will collect the logs, loki will efficiently manage all these logs so that Grafana can visualize the logging data stored in Loki. Therefore, with this configuration, it is possible to visualize logs from a GUI managed by Grafana. The log viewing address is secure (HTTPS) and is as follows: `https://172.18.0.10:3000` or `https://grafana.yln.fr:3000`. Note that it is not possible to connect to it until logs aren't generated and stored in Loki. The advantage of the GUI, despite logs not being sorted, is that it provides an interface that is clearer.
 
 **To use the GUI and configure it** :
 
-Once the logs are generated, go to the Grafana GUI (`https://172.18.0.10:3000`). The default username and password are **admin**/**admin**. Grafana will prompt you to change them after the first login.
+Once the logs are generated, go to the Grafana GUI (`https://grafana.yln.fr:3000`). The default username and password are **admin**/**admin**. Grafana will prompt you to change them after the first login.
 
 After successfully logging in to Grafana, you'll need to configure a data source. In the menu at the top left, go to "**Configuration**" > "**Data Sources**" > "**Add data source**". Scroll down a bit and choose the **Loki** data source. In the Connection URL, put `http://172.18.0.8:3100` and click "**Save & Test**" at the bottom of the page. You should see a message "**Data source successfully connected**".
 
@@ -146,13 +148,21 @@ Finally, execute by clicking on "Run Query". You can have results like the ones 
 <img src = "./imageREADME/GUI1.png" />
 <img src = "./imageREADME/GUI2.png" />
 
-##### ENJOYY !!
+### Portainer
+
+Portainer provides an overall view of the containers in use. Access is granted via HTTPS using the following URL : `https://172.18.0.254:9443` or `https://portainer.yln.fr:9443`
+
+### Vault Hashicorp
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec posuere nisl non orci auctor viverra. Suspendisse sit amet tellus non felis dignissim gravida vel ut felis. Curabitur faucibus libero eget pretium feugiat. Proin pellentesque lacus ac facilisis facilisis. Mauris hendrerit tellus quis leo elementum suscipit. Curabitur in ligula tortor. Donec nec metus efficitur urna ullamcorper iaculis. Aliquam non elit dictum, suscipit eros ut, pellentesque metus. Aenean lacus tellus, lacinia id fermentum ut, bibendum at ante. Cras nulla nibh, interdum posuere vulputate et, maximus ut urna. Nullam ultrices enim quis eleifend placerat. Proin nisi lorem, iaculis sit amet nisl ut, ullamcorper mollis dolor. Nam ac erat quam. Fusce malesuada odio at augue aliquam, ut hendrerit leo efficitur. Suspendisse in varius libero, eget varius nibh. Ut non iaculis diam.
 
 ### Improvement notes
 
 * Container PHP load balancing
 * Application available in French and English
 * Vault hashicorp container
+* Token JWT
+* PHP Response SLIM
 
 ### License
 

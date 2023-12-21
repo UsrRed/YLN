@@ -8,6 +8,7 @@ $_SESSION['nb_accueil']++;
 ?>
 
 <body class="bg-light">
+
 <div class="container mt-5">
         <?php afficher_etat(); ?>
     <form method="post" action="/trait_comparaison">
@@ -44,6 +45,7 @@ $_SESSION['nb_accueil']++;
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;     
+	cursor: crosshair;
 	}
 
     .container {
