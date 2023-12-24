@@ -146,9 +146,26 @@ else
         echo "Résolution ajoutée de portainer"
 fi
 
+echo "--> Voulez-vous surveiller en temps réel les performances des conteneurs ? (O/N)"
+read rep_netdata
+
+if [ "$rep_netdata" == "O" ] || [ "$rep_netdata" == "o" ]; then
+    podman pull docker.io/netdata/netdata
+    #podman run -d --name=netdata -p 172.18.0.20:19999:19999 -v /proc:/host/proc:ro -v /sys:/host/sys:ro -v /run/podman/podman.sock:/var/run/docker.sock:z --cap-add SYS_PTRACE --security-opt apparmor=unconfined --network sae501-502-theotime-martel_sae netdata/netdata
+
+
+    podman run -d --name=netdata -p 19999:19999 -v /proc:/host/proc:ro -v /sys:/host/sys:ro -v /run/podman/podman.sock:/var/run/docker.sock:z -v ./netdataconfig/netdata.conf:/etc/netdata/netdata.conf:z --cap-add SYS_PTRACE --security-opt apparmor=unconfined --network sae501-502-theotime-martel_sae netdata/netdata
+
+
+    echo "Netdata ajouté avec succès pour surveiller les performances des conteneurs."
+else
+    echo "Surveillance des performances non implémentée"
+fi
+
 echo ""
 echo "--> L'adresse IP de l'application sur laquelle se rendre est https://$AdresseIP:8443 ou https://yln.fr:8443"
-echo "--> Vous pouvez faire un CTRL + [clique gauche] sur l'URL ci-dessus."
+#sudo firefox "https://yln.fr:8443"
+echo "Vous pouvez faire un CTRL + [clique gauche] sur l'URL ci-dessus."
 echo ""
 echo "--> La gestion des conteneurs se fait sur https://$AdresseIP_Portainer:9443 ou sur https://portainer.yln.fr:9443"
 echo "";
@@ -163,6 +180,20 @@ if podman ps | grep -q "grafana"; then
         	echo "Résolution ajoutée de grafana"
 	fi
 
-	echo "Si vous avez choisi d'implémenter une IHM avec votre syslog-ng, vous pouvez vous rendre sur https://$AddresseIpGrafana:3000 ou sur https://grafana.yln.fr:3000"
+	echo "--> Pour votre syslog-ng, vous pouvez vous rendre sur https://$AddresseIpGrafana:3000 ou sur https://grafana.yln.fr:3000"
 	
+fi
+
+if podman ps | grep -q "netdata"; then
+	AddresseIpnetdata=$(podman inspect netdata | grep -oP '"IPAddress": "\K[^"]+')
+	res_fqdn_netdata="$AddresseIpnetdata	netdata.yln.fr"
+	if grep -q "$res_fqdn_netdata" /etc/hosts; then
+                echo "Résolution déjà présente de netdata"
+        else
+                echo "$res_fqdn_netdata" >> /etc/hosts
+                echo "Résolution ajoutée de netdata"
+        fi
+
+        echo "--> Pour la surveillance des conteneurs, vous pouvez vous rendre sur http://$AddresseIpnetdata:19999 ou sur http://netdata.yln.fr:19999"
+
 fi
