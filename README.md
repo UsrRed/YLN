@@ -57,7 +57,9 @@ The main features of the project are as follows:
 * A graphical interface for viewing logs is available via Grafana (functional).
 * Password expiration date in the database (functional).
 * Master/Slave Database Replication (functional)
-* The management of containers is done through Portainer. (functional).
+* The management of containers is done through Portainer (functional).
+* Monitoring a container with Netdata (functional)
+* HashiCorp Vault container for storing sensitive data (non-functional)
 
 ### What script to execute to create tables in the database
 
@@ -155,6 +157,8 @@ Portainer provides an overall view of the containers in use. Access is granted v
 ### Vault Hashicorp
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec posuere nisl non orci auctor viverra. Suspendisse sit amet tellus non felis dignissim gravida vel ut felis. Curabitur faucibus libero eget pretium feugiat. Proin pellentesque lacus ac facilisis facilisis. Mauris hendrerit tellus quis leo elementum suscipit. Curabitur in ligula tortor. Donec nec metus efficitur urna ullamcorper iaculis. Aliquam non elit dictum, suscipit eros ut, pellentesque metus. Aenean lacus tellus, lacinia id fermentum ut, bibendum at ante. Cras nulla nibh, interdum posuere vulputate et, maximus ut urna. Nullam ultrices enim quis eleifend placerat. Proin nisi lorem, iaculis sit amet nisl ut, ullamcorper mollis dolor. Nam ac erat quam. Fusce malesuada odio at augue aliquam, ut hendrerit leo efficitur. Suspendisse in varius libero, eget varius nibh. Ut non iaculis diam.
+
+### Monitoring with Netdata
 
 ### Improvement notes
 
