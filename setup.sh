@@ -47,7 +47,7 @@ else
 	podman pull docker.io/library/php:8.2-fpm
 	podman pull docker.io/library/nginx:alpine
 	podman pull docker.io/library/haproxy:alpine
-	podman pull docker.io/library/portainer/portainer-ce
+	podman pull docker.io/portainer/portainer-ce:latest
 	#podman pull grafana/grafana
 	#podman pull grafana/loki
 	#podman pull grafana/promtail    

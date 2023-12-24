@@ -3,3 +3,6 @@
 2023-12-06 22:01:24 - [INFO] - L'utilisateur Ayress vient de se déconnecter.
 2023-12-21 15:37:00 - [INFO] - L'utilisateur N s'est inscrit.
 2023-12-21 15:37:03 - [INFO] - L'utilisateur N s'est connecté.
+2023-12-23 23:31:35 - [INFO] - L'utilisateur Nathan s'est inscrit.
+2023-12-23 23:41:04 - [INFO] - L'utilisateur Nathan1 s'est inscrit.
+2023-12-24 11:16:06 - [INFO] - L'utilisateur Nathan s'est inscrit.

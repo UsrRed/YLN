@@ -3,12 +3,12 @@
 
 $serveur = getenv('NAME_MASTER');
 $port = getenv('PORT_CONTAINER_MYSQL_MASTER');
-$utilisateur = getenv('MYSQL_USER');
+$utilisateur = getenv('MYSQL_USED_USER');
 $motdepasse = getenv('MYSQL_ROOT_PASSWORD');
 $basededonnees = getenv('MYSQL_DATABASE');
 
 #Connexion sur la base de données
-$connexion = mysqli_connect($serveur, $utilisateur, $motdepasse, $basededonnees, $port);
+$connexion = mysqli_connect("mysql_maitre", "root", "root", "nathiotime", "3306");
 
 if (!$connexion) {
 	die("La connexion à la base de données a échoué : " . mysqli_connect_error());

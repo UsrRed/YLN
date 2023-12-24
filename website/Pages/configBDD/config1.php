@@ -14,7 +14,7 @@ $utiliSlave = getenv('MYSQL_USER');
 $motdepasseSlave = getenv('MYSQL_ROOT_PASSWORD');
 $BDDSlave = getenv('MYSQL_DATABASE');
 
-$connexionSlave = new mysqli($conteneurSlave, $utiliSlave, $motdepasseSlave, $BDDSlave, $portSlave);
+$connexionSlave = new mysqli("mysql_esclave", "root", "root", "nathiotime", "3306");
 
 if ($connexionSlave->connect_error) {
 	die("La connexion à la base de données esclave a échoué : " . $connexionSlave->connect_error);
@@ -150,7 +150,7 @@ $connexionSlave->query($stop);
 $connexionSlave->query($code_3021);
 
 $connexionSlave->query($repli_reset);
-$connexionSlave->query($repli);
+#$connexionSlave->query($repli);
 $connexionSlave->query($code_3021);
 $connexionSlave->query($reqMaster);
 $connexionSlave->query($reqCounter);
