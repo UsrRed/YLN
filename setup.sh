@@ -95,18 +95,37 @@ read rep_logs
 
 if [ "$rep_logs" == "O" ] || [ "$rep_logs" == "o" ]; then
 	echo "Faites votre choix"
-	echo "1- Syslog-ng"
-	echo "2- Grafana (GUI)"
+	echo "1- Syslog-ng (Vue en CLI - Gourmand en ressources)"
+	echo "2- Grafana (Vue en GUI - Modérément gourmand en ressources)"
 	read rep_log_choix
 
 	case $rep_log_choix in
 		1)
 			echo "Syslog-ng sélectionné. Ajout en cours..."
-			bash ./scripts/rsyslog.sh
-			echo "Syslog-ng ajouté avec succès."
-			echo "Lancement des conteneurs..."
-			podman-compose -f docker-compose-syslog.yaml up -d
-			;;
+        		bash ./scripts/rsyslog.sh
+        		echo "Syslog-ng ajouté avec succès."
+        		echo "Lancement des conteneurs..."
+
+        # Vérifier si la configuration existe déjà dans le fichier
+        		if grep -q "\[registries.search\]" "/etc/containers/registries.conf" && grep -q "registries = \['docker.io'\]" "/etc/containers/registries.conf"; then
+            			echo "La configuration existe déjà dans le fichier pour le syslog"
+        		else
+            # Ajouter la configuration au fichier
+            			echo -e "\n[registries.search]" >> "/etc/containers/registries.conf"
+            			echo "registries = ['docker.io']" >> "/etc/containers/registries.conf"
+            			echo "Configuration ajoutée au fichier."
+        		fi
+        		podman-compose -f docker-compose-syslog.yaml up -d
+			sleep 1
+			echo "Lancement partie crontab..."
+			sleep 1
+			#Partie crontab (car ne fonctionne pas avec un dockerfile) :
+			
+			sudo podman exec -it syslog-ng /bin/bash -c "apt-get update && apt-get install -y cron && touch /var/spool/cron/crontabs/root && apt-get install -y swaks && mkdir /var/log/BACKUP-$(date +\%Y-\%m-\%d) && mkdir /var/log/BACKUP-MONTH-YEAR-$(date +\%Y-\%m)" && sudo podman exec -it syslog-ng /bin/bash -c "echo '0 * * * * tar -zcf /var/log/YLN_backup.tar.gz -C /var/log YLN && mv /var/log/YLN_backup.tar.gz /var/log/BACKUP-$(date +\%Y-\%m-\%d)/YLN_backup-$(date +\%Y-\%m-\%d-\%H).tar.gz' >> /var/spool/cron/crontabs/root" && sudo podman exec -it syslog-ng /bin/bash -c "echo '59 23 * * * tar -zcf /var/log/BACKUP-$(date +\%Y-\%m-\%d).tar.gz -C /var/log BACKUP-$(date +\%Y-\%m-\%d) && swaks  --to nathan.martel@etu.univ-tours.fr --from sae501502@gmail.com --server smtp.gmail.com --port 587 --auth LOGIN --auth-user sae501502@gmail.com --auth-password xqifxpjrieknuntn --tls --attach /var/log/BACKUP-$(date +\%Y-\%m-\%d).tar.gz --header \"Subject: Backup de la journée \$(date +\%Y-\%m-\%d)\" --body \"Logs du syslog pour la journée du \$(date +\%Y-\%m-\%d)\" && mv /var/log/BACKUP-$(date +\%Y-\%m-\%d).tar.gz /var/log/BACKUP-MONTH-YEAR-$(date +\%Y-\%m)' >> /var/spool/cron/crontabs/root" sudo podman exec -it syslog-ng /bin/bash -c "echo '0 0 1 1 * rm -rf /var/log/BACKUP-MONTH-YEAR-$(date +\%Y-\%m)' >> /var/spool/cron/crontabs/root"
+
+			#Manque intégrité, SHA256 ? + cat "" >> fichiers. ou supprime le dossier YLN ? ou rm -rf YLN/* ?
+
+        		;;	
 		2)
 			echo "Grafana sélectionné. Ajout en cours..."
 			bash ./scripts/grafana.sh
@@ -180,7 +199,7 @@ if podman ps | grep -q "grafana"; then
         	echo "Résolution ajoutée de grafana"
 	fi
 
-	echo "--> Pour votre syslog-ng, vous pouvez vous rendre sur https://$AddresseIpGrafana:3000 ou sur https://grafana.yln.fr:3000"
+	echo "--> Pour l'accès grafana, vous pouvez vous rendre sur https://$AddresseIpGrafana:3000 ou sur https://grafana.yln.fr:3000"
 	
 fi
 
