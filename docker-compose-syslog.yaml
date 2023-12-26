@@ -12,6 +12,7 @@ services:
       - ../sae501-502-theotime-martel/opensslkeys:/home:z
       - ../sae501-502-theotime-martel/website/Pages/ErrorPages/HTML_Template_http_codes:/usr/share/Error/:z
     container_name: ${NAME_NGINX1}
+    restart: always
     networks:
       sae:
         ipv4_address: ${IP_NGINX1}
@@ -30,6 +31,7 @@ services:
       - ../sae501-502-theotime-martel/opensslkeys:/home:z
       - ../sae501-502-theotime-martel/website/Pages/ErrorPages/HTML_Template_http_codes:/usr/share/Error/:z
     container_name: ${NAME_NGINX2}
+    restart: always
     networks:
       sae:
         ipv4_address: ${IP_NGINX2}
@@ -44,7 +46,8 @@ services:
       - ../sae501-502-theotime-martel/.env
     container_name: ${NAME_HAPROXY}
     ports:
-      - ${PORT_HOTE_HAPROXY}:${PORT_CONTAINER_HAPROXY} 
+      - ${PORT_HOTE_HAPROXY}:${PORT_CONTAINER_HAPROXY}
+    restart: always
     volumes:
       - ../sae501-502-theotime-martel/opensslkeys/myserver.pem:/etc/ssl/certs/myserver.pem:z
       - ../sae501-502-theotime-martel/loadbalancing/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:z
@@ -65,6 +68,7 @@ services:
     container_name: ${NAME_MASTER}
     ports:
       - ${PORT_HOTE_MYSQL_MASTER}:${PORT_CONTAINER_MYSQL_MASTER}
+    restart: always
     volumes:
       - ../sae501-502-theotime-martel/website/Pages/configBDD/maitre/my.cnf:/etc/my.cnf:z
       - db_data:/var/lib/mysql:z
@@ -82,6 +86,7 @@ services:
     container_name: ${NAME_SLAVE}
     ports:
       - ${PORT_HOTE_MYSQL_SLAVE}:${PORT_CONTAINER_MYSQL_SLAVE}
+    restart: always
     volumes:
       - ../sae501-502-theotime-martel/website/Pages/configBDD/slave/my.cnf:/etc/my.cnf:z
       - db_data_esclave:/var/lib/mysql:z
@@ -98,6 +103,7 @@ services:
     ports:
       - ${PORT_HOTE_PHP}:${PORT_CONTAINER_PHP}
     container_name: ${NAME_PHP}
+    restart: always
     volumes :
       - ../sae501-502-theotime-martel/public:/usr/share/nginx/html:z
       - ../sae501-502-theotime-martel/composer:/usr/share/nginx/composer:z
@@ -117,7 +123,7 @@ services:
       - ../sae501-502-theotime-martel/syslog/syslog-ng:/etc/default/syslog-ng:z
       - syslog-ng_data:/var/log/syslog-ng:z
     ports: 
-      - ${PORT_HOTE_SYSLOG_NG}:${PORT_CONTAINER_SYSLOG_NG}   
+      - ${PORT_HOTE_SYSLOG_NG}:${PORT_CONTAINER_SYSLOG_NG}
     restart: always
     container_name: ${NAME_SYSLOG_NG}
     networks:

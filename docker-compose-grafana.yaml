@@ -6,6 +6,7 @@ services:
       - ../sae501-502-theotime-martel/.env
     ports:
       - ${PORT_HOTE_NGINX1}:${PORT_CONTAINER_NGINX1}
+    restart: always
     volumes:
       - ../sae501-502-theotime-martel/public:/usr/share/nginx/html:z
       - ../sae501-502-theotime-martel/website/Pages/configNGINX:/etc/nginx/conf.d:z
@@ -24,6 +25,7 @@ services:
       - ../sae501-502-theotime-martel/.env
     ports:
       - ${PORT_HOTE_NGINX2}:${PORT_CONTAINER_NGINX2}
+    restart: always
     volumes:
       - ../sae501-502-theotime-martel/public:/usr/share/nginx/html:z
       - ../sae501-502-theotime-martel/website/Pages/configNGINX:/etc/nginx/conf.d:z
@@ -48,6 +50,7 @@ services:
     volumes:
       - ../sae501-502-theotime-martel/opensslkeys/myserver.pem:/etc/ssl/certs/myserver.pem:z
       - ../sae501-502-theotime-martel/loadbalancing/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:z
+    restart: always
     depends_on:
       - ${NAME_NGINX1}
       - ${NAME_NGINX2}
@@ -68,6 +71,7 @@ services:
     volumes:
       - ../sae501-502-theotime-martel/website/Pages/configBDD/maitre/my.cnf:/etc/my.cnf:z
       - db_data:/var/lib/mysql:z
+    restart: always
     networks:
       sae:
         ipv4_address: ${IP_MYSQL_MASTER}
@@ -85,6 +89,7 @@ services:
     volumes:
       - ../sae501-502-theotime-martel/website/Pages/configBDD/slave/my.cnf:/etc/my.cnf:z
       - db_data_esclave:/var/lib/mysql:z
+    restart: always
     networks:
       sae:
         ipv4_address: ${IP_MYSQL_SLAVE}
@@ -103,6 +108,7 @@ services:
       - ../sae501-502-theotime-martel/composer:/usr/share/nginx/composer:z
       - ../sae501-502-theotime-martel/website:/home:z
      #- ../sae501-502-theotime-martel/.env:/home/website/Pages/configBDD/.env:z
+    restart: always
     networks:
       sae:
         ipv4_address: ${IP_PHP}
@@ -117,6 +123,7 @@ services:
       - ../sae501-502-theotime-martel/opensslkeys/myserver.key:/etc/loki/ssl/myserver.key:z
     ports:
       - ${PORT_HOTE_LOKI}:${PORT_CONTAINER_LOKI}
+    restart: always
     networks:
       sae:
         ipv4_address: ${IP_LOKI}
@@ -129,6 +136,7 @@ services:
     volumes:
       - ../sae501-502-theotime-martel/grafanaconfig/promtail-config.yaml:/etc/promtail/docker-config.yaml:z
       - /var/log:/var/log:z
+    restart: always
     networks:
       sae:
         ipv4_address: ${IP_PROMTAIL}
@@ -144,6 +152,7 @@ services:
       - ${PORT_HOTE_GRAFANA}:${PORT_CONTAINER_GRAFANA}
     depends_on:
       - ${NAME_LOKI}
+    restart: always
     networks:
       sae:
         ipv4_address: ${IP_GRAFANA}
@@ -180,6 +189,7 @@ services:
     #pid: host
     #volumes:
       #- /:/host:ro,rslave
+    #restart: always
     #environment:
       #NODE_ID: $(cat /etc/machine-id)
     #networks:
@@ -191,6 +201,7 @@ services:
     #container_name: prometheus
     #ports:
       #- "9090:9090"
+    #restart: always
     #volumes:
       #- ./prometheus.yml:/etc/prometheus/prometheus.yml:z
     #networks:
