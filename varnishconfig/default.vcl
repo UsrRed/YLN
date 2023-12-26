@@ -13,7 +13,7 @@ backend nginx2 {
 }
 
 sub vcl_recv {
-    # Choix du backend en fonction de la logique de votre application
+
     if (client.ip ~ hash_backend()) {
         set req.backend_hint = nginx1;
     } else {
@@ -22,10 +22,10 @@ sub vcl_recv {
 }
 
 sub vcl_backend_response {
-    # Ajoutez ici des règles personnalisées pour le traitement des réponses du backend
+
 }
 
 sub vcl_deliver {
-    # Ajoutez ici des règles personnalisées pour le contenu livré au client
+ 
 }
 
