@@ -18,6 +18,7 @@ services:
         ipv4_address: ${IP_NGINX1}
     links:
       - ${NAME_PHP}
+      #- ${NAME_REDIS}
 
   nginx2:
     image: ${VERSION_NGINX2}
@@ -37,6 +38,7 @@ services:
         ipv4_address: ${IP_NGINX2}
     links:
       - ${NAME_PHP}
+      #- ${NAME_REDIS}
 
   haproxy:
     build:
@@ -54,6 +56,7 @@ services:
     depends_on:
       - ${NAME_NGINX1}
       - ${NAME_NGINX2}
+      - php
     networks:
       sae:
         ipv4_address: ${IP_HAPROXY}
@@ -109,12 +112,17 @@ services:
       - ../sae501-502-theotime-martel/composer:/usr/share/nginx/composer:z
       - ../sae501-502-theotime-martel/website:/home:z
      #- ../sae501-502-theotime-martel/.env:/home/website/Pages/configBDD/.env:z
+    #environment:
+     #- REDIS_HOST=${IP_REDIS}
+     #- REDIS_PORT=${PORT_CONTAINER_REDIS}
     networks:
       sae:
         ipv4_address: ${IP_PHP}
 
   portainer:
     image: ${VERSION_PORTAINER}
+    env_file:
+      - ../sae501-502-theotime-martel/.env
     container_name: ${NAME_PORTAINER}
     ports:
       - ${PORT_HOTE_PORTAINER}:${PORT_CONTAINER_PORTAINER}
@@ -132,7 +140,24 @@ services:
         ipv4_address: ${IP_PORTAINER}
 
 
-  #vault:
+  #redis:
+    #image: docker.io/library/redis
+    #container_name: ${NAME_REDIS}
+    #env_file:
+      #- ../sae501-502-theotime-martel/.env
+    #ports:
+      #- ${PORT_HOTE_REDIS}:${PORT_CONTAINER_REDIS}
+    #volumes:
+      #- ./redisconfig/redis.conf:/etc/redis/redis.conf:z
+      #- redis_data:/data:z
+    #command: ["redis-server", "/etc/redis/redis.conf"]
+    #restart: always
+    #networks:
+      #sae:
+        #ipv4_address: ${IP_REDIS}
+
+
+    #vault:
     #image: vault:1.13.3
     #container_name: vault
     #ports:
@@ -144,12 +169,31 @@ services:
     #networks:
       #sae:
         #ipv4_address: 172.18.0.155
+        
 
+  #varnish:
+    #image: docker.io/library/varnish:latest
+    #container_name: varnish
+    #ports:
+      #- "8089:80"  # Port Varnish
+    #depends_on:
+      #- nginx1
+      #- nginx2
+    #volumes:
+      #- ./varnishconfig/default.vcl:/etc/varnish/default.vcl:z  # Ajoutez votre configuration VCL personnalisée
+    #depends_on:
+      #- nginx1
+      #- nginx2
+      #- php
+    #networks:
+      #sae:
+        #ipv4_address: ${IP_VARNISH}
 
 volumes: 
   db_data:
   db_data_esclave:
   portainer_data:
+  #redis_data:
 
 networks:
   sae:

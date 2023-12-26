@@ -48,6 +48,7 @@ else
 	podman pull docker.io/library/nginx:alpine
 	podman pull docker.io/library/haproxy:alpine
 	podman pull docker.io/portainer/portainer-ce:latest
+	#podman pull docker.io/library/redis:latest
 	#podman pull grafana/grafana
 	#podman pull grafana/loki
 	#podman pull grafana/promtail    
