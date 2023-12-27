@@ -1,0 +1,7 @@
+2023-12-26 21:49:45 - [INFO] - L'utilisateur N s'est connecté.
+2023-12-26 21:51:23 - [INFO] - L'utilisateur N a remplit les informations de son profil.
+2023-12-27 10:58:36 - [INFO] - L'utilisateur N s'est connecté.
+2023-12-27 10:59:07 - [INFO] - L'utilisateur N vient de faire une comparaison entre Peugeot et Porsche.
+2023-12-27 10:59:14 - [INFO] - L'utilisateur N vient de mettre en favoris la comparaison de  et .
+2023-12-27 12:58:11 - [INFO] - L'utilisateur N s'est connecté.
+2023-12-27 12:58:31 - [INFO] - L'utilisateur N a remplit les informations de son profil.

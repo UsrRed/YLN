@@ -120,12 +120,37 @@ if [ "$rep_logs" == "O" ] || [ "$rep_logs" == "o" ]; then
 			echo "Lancement partie crontab..."
 			sleep 1
 			#Partie crontab (car ne fonctionne pas avec un dockerfile) :
+
+			#mail_expe=$(cat .env | grep "SMTP_USERNAME_OWN" | cut -d '=' -f2)
 			
-			sudo podman exec -it syslog-ng /bin/bash -c "apt-get update && apt-get install -y cron && touch /var/spool/cron/crontabs/root && apt-get install -y swaks && mkdir /var/log/BACKUP-$(date +\%Y-\%m-\%d) && mkdir /var/log/BACKUP-MONTH-YEAR-$(date +\%Y-\%m)" && sudo podman exec -it syslog-ng /bin/bash -c "echo '0 * * * * tar -zcf /var/log/YLN_backup.tar.gz -C /var/log YLN && mv /var/log/YLN_backup.tar.gz /var/log/BACKUP-$(date +\%Y-\%m-\%d)/YLN_backup-$(date +\%Y-\%m-\%d-\%H).tar.gz' >> /var/spool/cron/crontabs/root" && sudo podman exec -it syslog-ng /bin/bash -c "echo '59 23 * * * tar -zcf /var/log/BACKUP-$(date +\%Y-\%m-\%d).tar.gz -C /var/log BACKUP-$(date +\%Y-\%m-\%d) && swaks  --to nathan.martel@etu.univ-tours.fr --from sae501502@gmail.com --server smtp.gmail.com --port 587 --auth LOGIN --auth-user sae501502@gmail.com --auth-password xqifxpjrieknuntn --tls --attach /var/log/BACKUP-$(date +\%Y-\%m-\%d).tar.gz --header \"Subject: Backup de la journée \$(date +\%Y-\%m-\%d)\" --body \"Logs du syslog pour la journée du \$(date +\%Y-\%m-\%d)\" && mv /var/log/BACKUP-$(date +\%Y-\%m-\%d).tar.gz /var/log/BACKUP-MONTH-YEAR-$(date +\%Y-\%m)' >> /var/spool/cron/crontabs/root" sudo podman exec -it syslog-ng /bin/bash -c "echo '0 0 1 1 * rm -rf /var/log/BACKUP-MONTH-YEAR-$(date +\%Y-\%m)' >> /var/spool/cron/crontabs/root"
+			commande1=$(cat .env | grep "COMMANDE_1" | cut -d '=' -f2)
+			commande2=$(cat .env | grep "COMMANDE_2" | cut -d '=' -f2)
+			commande3=$(cat .env | grep "COMMANDE_3" | cut -d '=' -f2)
+			commande4=$(cat .env | grep "COMMANDE_4" | cut -d '=' -f2)
+			commande5=$(cat .env | grep "COMMANDE_5" | cut -d '=' -f2)	
 
-			#Manque intégrité, SHA256 ? + cat "" >> fichiers. ou supprime le dossier YLN ? ou rm -rf YLN/* ?
+			podman exec -it syslog-ng /bin/bash -c "${commande1//$/\\$}"
+			podman exec -it syslog-ng /bin/bash -c "${commande2//$/\\$}"
+			podman exec -it syslog-ng /bin/bash -c "${commande3//$/\\$}"
+			podman exec -it syslog-ng /bin/bash -c "${commande4//$/\\$}"
+			podman exec -it syslog-ng /bin/bash -c "${commande5//$/\\$}"
 
-        		;;	
+			#source : https://tldp.org/LDP/abs/html/parameter-substitution.html
+
+
+			#sudo podman exec -it syslog-ng /bin/bash -c "apt-get update && apt-get install -y cron && touch /var/spool/cron/crontabs/root && apt-get install -y swaks && mkdir /var/log/BACKUP-\$(date +\%Y-\%m-\%d) && mkdir /var/log/BACKUP-MONTH-YEAR-\$(date +\%Y-\%m)"
+			#sudo podman exec -it syslog-ng /bin/bash -c "echo '58 * * * * sha256sum /var/log/YLN/* >> /var/log/BACKUP-\$(date +\%Y-\%m-\%d)/integrite-\$(date +\%Y-\%m-\%d-\%H).txt && tar -zcf /var/log/YLN_backup.tar.gz -C /var/log YLN && mv /var/log/YLN_backup.tar.gz /var/log/BACKUP-\$(date +\%Y-\%m-\%d)/YLN_backup-\$(date +\%Y-\%m-\%d-\%H).tar.gz' >> /var/spool/cron/crontabs/root"
+			#On ne peut pas garantir l'intégrité des données le jour même du coup...
+			#podman exec -it syslog-ng /bin/bash -c "echo '59 23 * * * tar -zcf /var/log/BACKUP-\$(date +\%Y-\%m-\%d).tar.gz -C /var/log BACKUP-\$(date +\%Y-\%m-\%d) && swaks  --to nathan.martel@etu.univ-tours.fr --from ayressios@gmail.com --server smtp.gmail.com --port 587 --auth LOGIN --auth-user ayressios@gmail.com --auth-password sueyuktjcoymcbrs --tls --attach /var/log/BACKUP-\$(date +\%Y-\%m-\%d).tar.gz --header \"Subject: Backup de la journée \$(date +\%Y-\%m-\%d)\" --body \"Logs du syslog pour la journée du \$(date +\%Y-\%m-\%d)\" && mv /var/log/BACKUP-\$(date +\%Y-\%m-\%d).tar.gz /var/log/BACKUP-MONTH-YEAR-\$(date +\%Y-\%m)' >> /var/spool/cron/crontabs/root"
+			#sudo podman exec -it syslog-ng /bin/bash -c "echo '59 23 1 * * rm -rf /var/log/BACKUP-MONTH-YEAR-\$(date +\%Y-\%m -d \"last month\") && mkdir /var/log/BACKUP-MONTH-YEAR-\$(date +\%Y-\%m)' >> /var/spool/cron/crontabs/root"
+			#sudo podman exec -it syslog-ng /bin/bash -c "service cron start"
+
+			#------------------#
+
+			#podman exec -it syslog-ng /bin/bash -c "echo '0 * * * * tar -zcf /var/log/YLN_backup.tar.gz -C /var/log YLN | swaks --to nathan.martel@etu.univ-tours.fr --from sae501502@gmail.com --server smtp.gmail.com --port 587 --auth LOGIN --auth-user sae501502@gmail.com --auth-password xqifxpjrieknuntn --tls --attach /var/log/YLN_backup.tar.gz --header \"Subject: Backup \$(date +\%Y-\%m-\%d\%H\%M)\" --body \"Logs du syslog à \$(date +\%Y-\%m-\%d-\%H)\" && rm -rf /var/log/YLN_backup.tar.gz' >> /var/spool/cron/crontabs/root"
+			#podman exec-it syslog-ng /bin/bash -c "echo '59 23 * * * tar -zcf /var/log/YLN_backup_$(date +\%Y\%m\%d).zip -C /var/log YLN && rm -rf /var/log/YLN && swaks --to nathan.martel@etu.univ-tours.fr --from sae501502@gmail.com --server smtp.gmail.com --port 587 --auth LOGIN --auth-user sae501502@gmail.com --auth-password xqifxpjrieknuntn --tls --attach /var/log/YLN_backup_$(date +\%Y\%m\%d).zip --header \"Subject: Backup de la journée \$(date +\%Y-\%m-\%d)\" --body \"Logs du syslog pour la journée du \$(date +\%Y-\%m-\%d)\"'"
+
+			;;	
 		2)
 			echo "Grafana sélectionné. Ajout en cours..."
 			bash ./scripts/grafana.sh
