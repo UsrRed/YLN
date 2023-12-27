@@ -2,7 +2,7 @@
 
 ## Version 3.X (**Future version**)
 
-Portainer, Vault hashicorp, strong password, internal logs, env file, grafana - loki - promtail, thème sombre, pie chart, replication maitre/slave, page de banissement, netdata
+Portainer, Vault hashicorp, strong password, internal logs, env file, grafana - loki - promtail, thème sombre, pie chart, replication maitre/slave, page de banissement, netdata, crontab-syslog, README (revoir si tout est inscrit)..
 
 ### New Features and Enhancements
 

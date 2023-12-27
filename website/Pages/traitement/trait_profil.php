@@ -17,7 +17,7 @@ if (!isset($_SESSION['utilisateur'])) {
 <div class="container mt-5">
     <h2>Complétez votre compte</h2>
         <?php afficher_etat(); ?>
-    <form action="/trait_info_profil" method="post">
+    <form action="/trait_profil_info" method="post">
         <div class="form-group">
             <label for="age">Âge :</label>
             <input type="number" class="form-control" id="age" name="age" placeholder="Entrez votre âge" required>

@@ -249,7 +249,7 @@ $app->get('/trait_mdp_appli', function (Request $request, Response $response, $a
 
 });
 
-$app->post('/trait_info_profil', function (Request $request, Response $response, $args) {
+$app->post('/trait_profil_info', function (Request $request, Response $response, $args) {
 
         $fich = '/home/Pages/traitement/trait_profil_info.php';
 
