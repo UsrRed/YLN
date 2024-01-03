@@ -40,7 +40,7 @@ The white rectangles representing the containers are "mandatory" containers nece
 
 ### MCD
 
-Here is the Database Conceptual Model (MCD) for the application : 
+Here is the MCD for the application : 
 
 <img src = "./imageREADME/MCD.png" />
 
