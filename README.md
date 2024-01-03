@@ -7,16 +7,18 @@
 <!--Source du sommaire : https://github.com/Relex12/Markdown-Table-of-Contents/blob/main/README.md-->
 
 1. [About this projet](#about-this-project)
-2. [Key features](#key-features)
-3. [What script to execute to create tables in the database](#what-script-to-execute-to-create-tables-in-the-database)
-4. [Where to start](#where-to-start)
-5. [How to use the application](#how-to-use-the-application)
-6. [Installation of syslog](#installation-of-syslog)
-7. [Portainer](#portainer)
-8. [Vault Hashicorp](#vault-hashicorp)
-9. [Monitoring with Netdata](#monitoring-with-netdata)
-10. [Improvement notes](#improvement-notes)
-11. [License](#license)
+2. [Application infrastructure](#application-infrastructure)
+3. [MCD](#mcd)
+4. [Key features](#key-features)
+5. [What script to execute to create tables in the database](#what-script-to-execute-to-create-tables-in-the-database)
+6. [Where to start](#where-to-start)
+7. [How to use the application](#how-to-use-the-application)
+8. [Installation of syslog](#installation-of-syslog)
+9. [Portainer](#portainer)
+10. [Vault Hashicorp](#vault-hashicorp)
+11. [Monitoring with Netdata](#monitoring-with-netdata)
+12. [Improvement notes](#improvement-notes)
+13. [License](#license)
 
 ### About this project
 
@@ -27,6 +29,20 @@ The authors of this projcet are :
 * THÉOTIME Lukas
 * DENOYELLE Yohann
 * MARTEL Nathan
+
+### Application infrastructure
+
+Here is the application infrastructure diagram : 
+
+<img src = "./imageREADME/Schéma-infra.png" />
+
+The white rectangles representing the containers are "mandatory" containers necessary for the functioning of the application. As for the rectangles of other colors, they are not "mandatory". The user can choose whether or not to implement them.
+
+### MCD
+
+Here is the Database Conceptual Model (MCD) for the application : 
+
+<img src = "./imageREADME/MCD.png" />
 
 ### Key features
 
