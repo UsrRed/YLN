@@ -101,6 +101,10 @@
 	color: #fff; /* Bouton VS page accueil */
 }
 
+.bg-dark h3 {
+	color: #fff;
+}
+
 /*
 body {
       cursor: url('https://cdn-icons-png.flaticon.com/512/3771/3771695.png'), auto;

@@ -28,10 +28,10 @@ include('/home/includes/header.php');
 <?php ################################################################ Voir pour ajouter des filtres ? ERROR, CRITICAL, INFO, etc avec strpos si je ne me trompe pas
 
 #if (file_exists("/home/logs/logs.txt")) {
-        #$logg = shell_exec("cat /home/logs/logs.txt");
-                #echo $logg;
+#        $logg = shell_exec("cat /home/logs/logs.txt");
+#                echo $logg;
 #} else {
-                #echo "Pas de logs pour le moment";
+#                echo "Pas de logs pour le moment";
 #}
 
 if (file_exists("/home/logs/logs.txt")) {

@@ -17,6 +17,21 @@ $requete_info_utilisateur->bind_param("i", $utilisateur_id);
 $requete_info_utilisateur->execute();
 $resultat_info_utilisateur = $requete_info_utilisateur->get_result();
 
+$nbr_hi = "SELECT COUNT(*) AS nombre_comparaisons FROM Historique WHERE utilisateur_id = $utilisateur_id";
+$res_hi = mysqli_query($connexion, $nbr_hi);
+$ligne_hi = mysqli_fetch_assoc($res_hi);
+$nombre_comparaisons = $ligne_hi['nombre_comparaisons'];
+
+$nbr_fa = "SELECT COUNT(*) AS nombre_favoris FROM Favoris WHERE utilisateur_id = $utilisateur_id";
+$res_fa = mysqli_query($connexion, $nbr_fa);  
+$ligne_fa = mysqli_fetch_assoc($res_fa);
+$nombre_favoris = $ligne_fa['nombre_favoris'];
+
+$nbr_quest = "SELECT COUNT(*) AS nombre_questions FROM FAQ WHERE utilisateur_id = $utilisateur_id";
+$res_quest = mysqli_query($connexion, $nbr_quest);  // Utilisez $connexion ici
+$ligne_quest = mysqli_fetch_assoc($res_quest);
+$nombre_questions = $ligne_quest['nombre_questions'];
+
 $info_utilisateur = $resultat_info_utilisateur->fetch_assoc();
 $nom_utilisateur = $info_utilisateur['nom_utilisateur'];
 $age = $info_utilisateur['age'];
@@ -35,6 +50,9 @@ $adresse_email = $info_utilisateur['adresse_email'];
 							<li class="list-group-item">Nom d'utilisateur : <?php echo $nom_utilisateur; ?></li>
 							<li class="list-group-item">Âge : <?php echo $age; ?></li>
 							<li class="list-group-item">Adresse e-mail : <?php echo $adresse_email; ?></li>
+							<li class="list-group-item">Nombre de comparaisons : <?php echo $nombre_comparaisons; ?></li>
+							<li class="list-group-item">Nombre de comparaisons favorites : <?php echo $nombre_favoris; ?></li>
+							<li class="list-group-item">Nombre de questions posées : <?php echo $nombre_questions; ?></li>
 						</ul>
 					</div>
 				</div>
@@ -44,7 +62,8 @@ $adresse_email = $info_utilisateur['adresse_email'];
 					<div class="card-body">
 						<h2 class="card-title">Informations sur l'application :</h2>
 						<ul class="list-group">
-							<li class="list-group-item">Version : 3.0</li>
+							<li class="list-group-item">Version : 3.2 (latest)</li>
+							<li class="list-group-item">Auteurs :</li>
 							<li class="list-group-item">
 							<a href="https://prezi.com/view/QH96kdy6QWjb5VYOIaqy/">
 							<img src="pf.png" width="25" height="25" style="border-radius: 50%;">
@@ -78,8 +97,8 @@ $adresse_email = $info_utilisateur['adresse_email'];
 			</div>
 			<div class="col-md-4 text-center d-flex align-items-center"> <!-- Centré verticalement -->
 				<div class="center" style="margin: auto;">
-				<span>&copy; Dernière MAJ : 05/01/2024</span><br/>
-				<span>Date : <?php echo date("M-Y"); ?></span>
+				<span>&copy; Dernière MAJ : 12-01-2024</span><br/>
+				<span>Date : <?php echo date("d-m-Y"); ?></span>
 				</div>                
 			</div>
 			<div class="col-md-4" style="display: flex; flex-direction: row-reverse;"> <!-- Aligné à droite -->

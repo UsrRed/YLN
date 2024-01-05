@@ -75,8 +75,8 @@ $_SESSION['nb_accueil']++;
                 
                     
                         <div class="center" style="margin: auto;">
-                            <span>&copy; Dernière MAJ : 17/11/2023</span><br/>
-                            <span>Date : <?php echo date("M-Y"); ?></span>
+                            <span>&copy; Dernière MAJ : 12-01-2024</span><br/>
+                            <span>Date : <?php echo date("d-m-Y"); ?></span>
                        </div>
                     
                 
