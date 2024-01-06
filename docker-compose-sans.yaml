@@ -132,24 +132,39 @@ services:
         ipv4_address: ${IP_PORTAINER}
 
 
-  #vault:
-    #image: vault:1.13.3
-    #container_name: vault
-    #ports:
-      #- "8200:8200"
-    #environment:
-      ##- VAULT_DEV_ROOT_TOKEN_ID=root_token
-      #- VAULT_ADDR=http://127.0.0.1:8200
-    #restart: always
-    #networks:
-      #sae:
-        #ipv4_address: 172.18.0.155
+  vault:
+    image: vault:1.13.3
+    container_name: vault
+    ports:
+      - "9200:8200"
+    environment:
+      #- VAULT_DEV_ROOT_TOKEN_ID=root_token
+      - VAULT_ADDR=http://172.18.0.155:8200
+      #- VAULT_CONFIG=/vault/config/vault-config.hcl    
+    restart: always
+    volumes:
+      #- ./opensslkeys/myserver.crt:/vault/tls/server.crt:z
+      #- ./opensslkeys/myserver.key:/vault/tls/server.key:z
+      #- ./vaultconfig/vault-config.hcl:/vault/config/vault-config.hcl:z
+      - vault_data:/vault/data:z
+    networks:
+      sae:
+        ipv4_address: 172.18.0.155
+    #cap_add:
+      #- IPC_LOCK
+
+  #--> podman logs vault | grep 'Root Token:' | tail -1 | cut -d ' ' -f3 > .token_vault.txt
+  #--> vault kv put secret/my-secret username=admin password=Admin1! (stocker)
+  #--> vault kv get secret/my-secret (récupérer tout)
+  #--> password=$(vault kv get -field=password secret/my-secret) && echo "Mot de passe récupéré : $password"
+  #--> (Sur PC HOTE) : test=$(podman exec -it vault /bin/sh -c "vault kv put secret/my-secret username=admin password=Admin1! && vault kv get secret/my-secret") && echo $test
 
 
 volumes: 
   db_data:
   db_data_esclave:
   portainer_data:
+  vault_data:
 
 networks:
   sae:

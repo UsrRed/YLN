@@ -39,7 +39,7 @@ else
 fi
 
 #Pour récupérer des images avec podman
-if podman images | grep 'docker.io/library/nginx.*alpine' && podman images | grep 'docker.io/library/php.*8.2-fpm' && podman images | grep 'docker.io/library/mysql.*latest' && podman images | grep 'docker.io/library/haproxy.*alpine' && podman images | grep 'docker.io/portainer/portainer-ce.*latest'; then
+if podman images | grep 'docker.io/library/nginx.*alpine' && podman images | grep 'docker.io/library/php.*8.2-fpm' && podman images | grep 'docker.io/library/mysql.*latest' && podman images | grep 'docker.io/library/haproxy.*alpine' && podman images | grep 'docker.io/portainer/portainer-ce.*latest' && podman images | grep 'docker.io/library/vault.*1.13.3'; then
 	echo "Les images sont déjà installées"
 else
 	echo "Pulling des images pour le lancement des conteneurs.."
@@ -48,6 +48,7 @@ else
 	podman pull docker.io/library/nginx:alpine
 	podman pull docker.io/library/haproxy:alpine
 	podman pull docker.io/portainer/portainer-ce:latest
+	podman pull docker.io/library/vault:1.13.3
 	#podman pull grafana/grafana
 	#podman pull grafana/loki
 	#podman pull grafana/promtail    
@@ -55,6 +56,7 @@ else
 fi
 
 chmod 666 ./website/logs/logs.txt
+#chmod 006 ./website/logs/logs.txt
 
 #Partie syslog-ng et grafana : 
 
