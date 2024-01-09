@@ -107,14 +107,20 @@ if [ "$rep_logs" == "O" ] || [ "$rep_logs" == "o" ]; then
         		echo "Lancement des conteneurs..."
 
         # Vérifier si la configuration existe déjà dans le fichier
-        		if grep -q "\[registries.search\]" "/etc/containers/registries.conf" && grep -q "registries = \['docker.io'\]" "/etc/containers/registries.conf"; then
-            			echo "La configuration existe déjà dans le fichier pour le syslog"
-        		else
+        		#if grep -q "\[registries.search\]" "/etc/containers/registries.conf" && grep -q "registries = \['docker.io'\]" "/etc/containers/registries.conf"; then
+            			#echo "La configuration existe déjà dans le fichier pour le syslog"
+        		#else
             # Ajouter la configuration au fichier
-            			echo -e "\n[registries.search]" >> "/etc/containers/registries.conf"
-            			echo "registries = ['docker.io']" >> "/etc/containers/registries.conf"
-            			echo "Configuration ajoutée au fichier."
-        		fi
+            			#echo -e "\n[registries.search]" >> "/etc/containers/registries.conf"
+            			#echo "registries = ['docker.io']" >> "/etc/containers/registries.conf"
+            			#echo "Configuration ajoutée au fichier."
+        		#fi
+
+			mv /etc/containers/registries.conf ./recuperation/registries.conf
+			cp -r syslog/registries.conf /etc/containers/
+
+			echo "syslog" > recuperation/choix.txt
+
         		podman-compose -f docker-compose-syslog.yaml up -d
 			sleep 1
 			echo "Lancement partie crontab..."
@@ -156,6 +162,9 @@ if [ "$rep_logs" == "O" ] || [ "$rep_logs" == "o" ]; then
 			bash ./scripts/grafana.sh
 			echo "Interface graphique pour syslog-ng (Grafana, Promtail, Loki) ajoutée avec succès."
 			echo "Lancement des conteneurs..."
+
+			echo "grafana" > recuperation/choix.txt
+
 			podman-compose -f docker-compose-grafana.yaml up -d
 			;;
 		*)
@@ -166,6 +175,9 @@ if [ "$rep_logs" == "O" ] || [ "$rep_logs" == "o" ]; then
 else
 	echo "Gestion des logs non implémentée."
 	echo "Lancement des conteneurs sans gestion des logs..."
+
+	echo "sans" > recuperation/choix.txt
+
 	podman-compose -f docker-compose-sans.yaml up -d
 fi
 
