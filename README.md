@@ -142,6 +142,8 @@ Additionally, a timestamped comparison history is available on the "History" pag
 
 Many other features are present in the application, it's up to you to discover them ! 
 
+**Possible issue :** If you are unable to install podman-compose on your operating system, follow this installation : https://access.redhat.com/discussions/6979552
+
 ### Installation of syslog 
 
 The installation of a syslog server and a graphical interface to view logs more clearly (because it's always possible to view syslog-ng logs in the container but without a graphical interface) is optional. If you decide to run the application, which consists of a syslog container you will need a lot of resources.
@@ -182,6 +184,8 @@ You can also add an existing Dashboard on https://grafana.com/grafana/dashboards
 Here is what you can have :
 
 <img src = "./imageREADME/grafana.png" />
+
+**Caution :** You may encounter a permission issue (depending on the machine and OS used) when starting the Promtail container. In fact, SELinux (Security-Enhanced Linux) prevents the process from relabeling the **/var/log** directory. You can temporarily disable SELinux to see if the issue persists. This can be done by modifying the **/etc/selinux/config** configuration file and changing the line from **SELINUX=enforcing** to **SELINUX=permissive** or **SELINUX=disabled**. Restart your system after making this change. Make sure to set it back to 'enforcing' when uninstalling the application.
 
 ### Portainer
 
