@@ -17,7 +17,7 @@
 9. [Portainer](#portainer)
 10. [Vault Hashicorp](#vault-hashicorp)
 11. [Monitoring with Netdata](#monitoring-with-netdata)
-12. [How to properly uninstall the application]($how-to-properly-uninstall-the-application)
+12. [How to properly uninstall the application](#how-to-properly-uninstall-the-application)
 13. [Improvement notes](#improvement-notes)
 14. [License](#license)
 
