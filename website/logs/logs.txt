@@ -1,0 +1,3 @@
+2024-01-10 13:16:25 - [INFO] - L'utilisateur N s'est inscrit.
+2024-01-10 13:16:30 - [INFO] - L'utilisateur Na s'est inscrit.
+2024-01-10 13:16:33 - [INFO] - L'utilisateur Na s'est connecté.
