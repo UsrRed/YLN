@@ -128,8 +128,6 @@ Once the setup.sh script is started, open a web browser and enter `https://[IP_A
 sudo bash uninstall.sh
 ```
 Choose the act of destroying the images with the script. (2)
-podman rmi mysql:latest 
-```
 Pull manually the image again (3) : 
 ```
 podman pull docker.io/library/mysql:latest
