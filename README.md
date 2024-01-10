@@ -17,8 +17,9 @@
 9. [Portainer](#portainer)
 10. [Vault Hashicorp](#vault-hashicorp)
 11. [Monitoring with Netdata](#monitoring-with-netdata)
-12. [Improvement notes](#improvement-notes)
-13. [License](#license)
+12. [How to properly uninstall the application](#how-to-properly-uninstall-the-application)
+13. [Improvement notes](#improvement-notes)
+14. [License](#license)
 
 ### About this project
 
@@ -82,6 +83,7 @@ The main features of the project are as follows:
 * HashiCorp Vault container for storing sensitive data (in progress)
 * Token JWT (non-functional)
 * Container PHP load balancing (non-functional)
+* Script for a clean uninstallation of the application (functional)
 
 ### What script to execute to create tables in the database
 
@@ -103,11 +105,11 @@ cd sae501-502-theotime-martel
 ```
 The installation of the application is simple and automated. You just need to run as a superuser with sudo the setup.sh script : 
 ```
-bash setup.sh 
+sudo bash setup.sh 
 ```
 Or : 
 ```
-./setup.sh
+sudo ./setup.sh
 ```
 This will install podman, podman-compose, and the necessary container images for the proper functioning of the application.
 Next, when running the script, you will need to choose whether you want to implement a syslog with syslog-ng in the application and, if yes, whether you also want to have a graphical interface to view the logs.
@@ -123,13 +125,10 @@ Once the setup.sh script is started, open a web browser and enter `https://[IP_A
 
 **Caution** : You may encounter the following error when attempting to register for the first time on the site: 2002 Error. This means that the MySQL server did not start correctly or is not running. If this error occurs, you need to stop the docker-compose (1) :
 ```
-podman stop -a && podman rm -fa
+sudo bash uninstall.sh
 ```
-Delete the mysql:latest image (2) : 
-```
-podman rmi mysql:latest 
-```
-Pull the image again (3) : 
+Choose the act of destroying the images with the script. (2)
+Pull manually the image again (3) : 
 ```
 podman pull docker.io/library/mysql:latest
 ```
@@ -201,6 +200,14 @@ We've set up a container to monitor the performance of other containers. We succ
 Here is what you could have with the netdata container :
 
 <img src = "./imageREADME/netdata.png" />
+
+### How to properly uninstall the application
+
+We've created a script that allows for the clean removal of the YLN application. To do this, in the directory sae501-502-theotime-martel, there is an uninstall.sh script. Execute it with the following command :
+```
+sudo bash uninstall.sh 
+```
+You'll need to answer some questions if you want to remove images from containers, backup volumes, ...
 
 ### Improvement notes
 
