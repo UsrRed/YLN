@@ -1,16 +1,15 @@
 # Changelog for the SAE501-502 Application
 
-## Version 3.2 (In Progress)
+## Version 3.2 (11/01/2024 - latest)
 
-Vault hashicorp ?
-
-### New features
+### New features and improvements
 
 - Master/slave database replication
 - Addition of an environment file (.env).
 - Addition of Netdata container.
-- Addition of a dark theme.
+- Addition of a dark theme
 - Addition of a crontab in the syslog container
+- Uninstall script
 
 ## Version 3.1 (02/12/2023)
 
