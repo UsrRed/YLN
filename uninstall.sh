@@ -11,6 +11,8 @@ echo " \ V /| |   |  \| | | | | |  \| || ||  \| \___ \ | | / _ \ | |   | |    "
 echo "  | | | |___| |\  | | |_| | |\  || || |\  |___) || |/ ___ \| |___| |___ "
 echo "  |_| |_____|_| \_|  \___/|_| \_|___|_| \_|____/ |_/_/   \_\_____|_____|"
 
+echo ""
+
 choix_utilisateur=$(cat recuperation/choix.txt)
 
 if [ "$choix_utilisateur" == "sans" ]; then
@@ -37,10 +39,13 @@ if [ "$choix_utilisateur" == "sans" ]; then
 		echo "Images supprimées avec succès."
 
 	elif [ "$reponse_image_sans" == "N" ] || [ "$reponse_image_sans" == "n" ]; then
+
 		echo "Aucune image n'a été supprimée."
 
 	else
+
 		echo "Réponse invalide. Veuillez répondre 'O' ou 'N'."
+
 	fi
 
 	echo "Voulez-vous supprimer les volumes qui ont servi à la sauvegarde des données de l'application YLN ? (O/N)"
@@ -52,11 +57,16 @@ if [ "$choix_utilisateur" == "sans" ]; then
 		sudo podman volume rm sae501-502-theotime-martel_db_data_esclave
 		sudo podman volume rm sae501-502-theotime-martel_portainer_data
 
+		echo "Volumes supprimés avec succès"
+
 	elif [ "$volume_sans" == "N" ] || [ "$volume_sans" == "n" ]; then
+
 		echo "Volumes non supprimés"
 
 	else
+
         	echo "Réponse invalide. Veuillez répondre 'O' ou 'N'."
+
 	fi
 
 	echo "Voulez-vous supprimer le réseau créé par le docker-compose.yaml qui a servi pour l'application YLN (O/N)"
@@ -66,11 +76,16 @@ if [ "$choix_utilisateur" == "sans" ]; then
 
                 sudo podman network rm sae501-502-theotime-martel_sae
 
+		echo "Réseau docker-compose supprimé avec succès"
+
         elif [ "$reseau_sans" == "N" ] || [ "$reseau_sans" == "n" ]; then
+
                 echo "Réseau du docker-compose.yaml non supprimé"
 
         else
+
                 echo "Réponse invalide. Veuillez répondre 'O' ou 'N'."
+
         fi
 
 elif [ "$choix_utilisateur" == "syslog" ]; then
@@ -98,10 +113,13 @@ elif [ "$choix_utilisateur" == "syslog" ]; then
                 echo "Images supprimées avec succès."
 
         elif [ "$reponse_image_syslog" == "N" ] || [ "$reponse_image_syslog" == "n" ]; then
+
                 echo "Aucune image n'a été supprimée."
 
         else
+
                 echo "Réponse invalide. Veuillez répondre 'O' ou 'N'."
+
         fi
 
 	echo "Voulez-vous supprimer les volumes qui ont servi à la sauvegarde des données de l'application YLN ? (O/N)"
@@ -114,11 +132,16 @@ elif [ "$choix_utilisateur" == "syslog" ]; then
                 sudo podman volume rm sae501-502-theotime-martel_portainer_data
 		sudo podman volume rm sae501-502-theotime-martel_syslog-ng_data
 
+		echo "Volumes supprimés avec succès"
+
         elif [ "$volume_syslog" == "N" ] || [ "$volume_syslog" == "n" ]; then
+
                 echo "Volumes non supprimés"
 
         else
+
                 echo "Réponse invalide. Veuillez répondre 'O' ou 'N'."
+
         fi
 
 	echo "Voulez-vous supprimer le réseau créé par le docker-compose.yaml qui a servi pour l'application YLN (O/N)"
@@ -128,11 +151,16 @@ elif [ "$choix_utilisateur" == "syslog" ]; then
 
                 sudo podman network rm sae501-502-theotime-martel_sae
 
+		echo "Réseau docker-compose supprimé avec succès"
+
         elif [ "$reseau_syslog" == "N" ] || [ "$reseau_syslog" == "n" ]; then
+
                 echo "Réseau du docker-compose.yaml non supprimé"
 
         else
+
                 echo "Réponse invalide. Veuillez répondre 'O' ou 'N'."
+
         fi
 
 	sudo rm -rf /etc/containers/registries.conf
@@ -145,7 +173,7 @@ elif [ "$choix_utilisateur" == "syslog" ]; then
 	elif [ -x "$(command -v yum)" ]; then
 		sudo yum remove -y rsyslog
 	else
-		echo "Système d'exploitation inconnu"
+		echo "Système d'exploitation inconnu pour la suppression du rsyslog"
 		exit 1
 	fi	
 
@@ -176,10 +204,13 @@ elif [ "$choix_utilisateur" == "grafana" ]; then
                 echo "Images supprimées avec succès."
 
         elif [ "$reponse_image_plg" == "N" ] || [ "$reponse_image_plg" == "n" ]; then
+
                 echo "Aucune image n'a été supprimée."
 
         else
+
                 echo "Réponse invalide. Veuillez répondre 'O' ou 'N'."
+
         fi
 
 	echo "Voulez-vous supprimer les volumes qui ont servi à la sauvegarde des données de l'application YLN ? (O/N)"
@@ -192,11 +223,16 @@ elif [ "$choix_utilisateur" == "grafana" ]; then
                 sudo podman volume rm sae501-502-theotime-martel_portainer_data
 		sudo podman volume rm sae501-502-theotime-martel_grafana_data
 
+		echo "Volumes supprimés avec succès"
+
         elif [ "$volume_plg" == "N" ] || [ "$volume_plg" == "n" ]; then
+
                 echo "Volumes non supprimés"
 
         else
+
                 echo "Réponse invalide. Veuillez répondre 'O' ou 'N'."
+
         fi
 
 	echo "Voulez-vous supprimer le réseau créé par le docker-compose.yaml qui a servi pour l'application YLN (O/N)"
@@ -207,16 +243,21 @@ elif [ "$choix_utilisateur" == "grafana" ]; then
                 sudo podman network rm sae501-502-theotime-martel_sae
 
         elif [ "$reseau_plg" == "N" ] || [ "$reseau_plg" == "n" ]; then
+
                 echo "Réseau du docker-compose.yaml non supprimé"
 
         else
+
                 echo "Réponse invalide. Veuillez répondre 'O' ou 'N'."
+
         fi
 
 elif [ -z "$choix_utilisateur" ]; then
+
 	echo "L'application n'a pas été lancée, pour la lancer, exécutez le script setup.sh avec la commande suivante : sudo bash setup.sh"
 
 else
-	echo "Problème sur la capacité à savoir quelle application a été lancée" 
-fi
 
+	echo "Problème sur la capacité à savoir quelle application a été lancée" 
+
+fi

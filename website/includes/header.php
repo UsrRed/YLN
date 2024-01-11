@@ -44,7 +44,7 @@
     <div class="container">
 
 <a class="navbar-brand" href="#">
-      &nbsp;<img src="logo.jpg" width="20" height="20"/>&ensp;SAÉ 501-502 - <span id="current-time">00:00:00</span>
+      &nbsp;<img src="logo.jpg" width="50" height="50"/>&ensp;SAÉ 501-502 - <span id="current-time">00:00:00</span>
 </a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

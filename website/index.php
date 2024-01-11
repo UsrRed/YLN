@@ -67,7 +67,7 @@ $_SESSION['nb_accueil']++;
             <div class="col-md-4 text-start"> <!-- Aligné à gauche -->
                 
                     
-                        <img src="logo.jpg" style="max-width: 90px; height: 90px;">
+                        <img src="logo.jpg" style="max-width: 120px; height: 120px;">
                     
                 
             </div>
